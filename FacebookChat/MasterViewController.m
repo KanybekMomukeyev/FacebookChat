@@ -8,7 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
-
+#import "ChatViewController.h"
 
 @implementation MasterViewController
 
@@ -49,9 +49,10 @@
     // Set up the edit and add buttons.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)] autorelease];
+    UIBarButtonItem *addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(apiGraphFriends)] autorelease];
     self.navigationItem.rightBarButtonItem = addButton;
-        
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(populateTextView:) name:@"messageCome" object:nil];
 }
 
 
@@ -59,8 +60,60 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"messageCome" 
+                                                  object:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+#pragma mark - Private Methods
+
+- (UIImage *)imageForObject:(NSString *)objectID {
+    // Get the object image
+    NSString *url = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture",objectID];
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+    [url release];
+    return image;
+}
+
+
+- (void)populateTextView:(NSString*)textMessage {
+    NSLog(@"message received!=%@",textMessage);
+}
+
+#pragma mark - Facebook API Calls
+
+- (void)apiGraphFriends {
+
+    // Do not set current API as this is commonly called by other methods
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[delegate facebook] requestWithGraphPath:@"me/friends" andDelegate:self];
+}
+
+
+#pragma mark - FBRequestDelegate Methods
+
+- (void)request:(FBRequest *)request didLoad:(id)result {
+    
+    if ([result isKindOfClass:[NSArray class]] && ([result count] > 0)) {
+        result = [result objectAtIndex:0];
+    }
+    
+    userFriends = [[NSMutableArray alloc] init];
+    NSArray *resultData = [result objectForKey:@"data"];
+    
+    if ([resultData count] > 0) {
+        for (NSUInteger i=0; i<[resultData count]; i++) {
+            [userFriends addObject:[resultData objectAtIndex:i]];
+        }
+    } 
+    else {
+        NSLog(@"User has no friends");
+    }
+    
+    NSLog(@"%@",userFriends);
+    [self.tableView reloadData];
 }
 
 
@@ -68,13 +121,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
+    //return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [userFriends count];
+    
+    //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    //return [sectionInfo numberOfObjects];
 }
 
 // Customize the appearance of table view cells.
@@ -88,7 +144,12 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    [self configureCell:cell atIndexPath:indexPath];
+    NSString *facebookName = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"name"];
+    NSString *facebookID = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"];
+    cell.textLabel.text = [NSString stringWithFormat:@"name = %@   id = %@",facebookName, facebookID];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
+    cell.imageView.image = [self imageForObject:[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    //[self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
@@ -130,12 +191,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    ChatViewController *chatViewController = [[ChatViewController alloc] init];
+    //chatViewController.managedObjectContext = managedObjectContext;
+    [self.navigationController pushViewController:chatViewController animated:YES];
+    [chatViewController release];
+    
+    /*
     if (!self.detailViewController) {
         self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil] autorelease];
     }
     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     self.detailViewController.detailItem = selectedObject;    
     [self.navigationController pushViewController:self.detailViewController animated:YES];
+     */
 }
 
 

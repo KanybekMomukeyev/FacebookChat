@@ -62,6 +62,20 @@
 		A8013FC314C56C0100B557E0 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013F8814C56C0100B557E0 /* SBJsonBase.m */; };
 		A8013FC414C56C0100B557E0 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013F8A14C56C0100B557E0 /* SBJsonParser.m */; };
 		A8013FC514C56C0100B557E0 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013F8C14C56C0100B557E0 /* SBJsonWriter.m */; };
+		A8013FFE14C59C5E00B557E0 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013FFD14C59C5E00B557E0 /* NSString+Additions.m */; };
+		A801400814C59C7900B557E0 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A801400014C59C7900B557E0 /* basicsound.wav */; };
+		A801400914C59C7900B557E0 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400114C59C7900B557E0 /* ChatBar.png */; };
+		A801400A14C59C7900B557E0 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400214C59C7900B557E0 /* ChatBubbleGray.png */; };
+		A801400B14C59C7900B557E0 /* ChatBubbleGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400314C59C7900B557E0 /* ChatBubbleGray@2x.png */; };
+		A801400C14C59C7900B557E0 /* ChatBubbleGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400414C59C7900B557E0 /* ChatBubbleGreen.png */; };
+		A801400D14C59C7900B557E0 /* ChatBubbleGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400514C59C7900B557E0 /* ChatBubbleGreen@2x.png */; };
+		A801400E14C59C7900B557E0 /* chatview-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400614C59C7900B557E0 /* chatview-screenshot.png */; };
+		A801400F14C59C7900B557E0 /* SendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400714C59C7900B557E0 /* SendButton.png */; };
+		A801401714C59C9400B557E0 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */; };
+		A801401814C59C9400B557E0 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401414C59C9400B557E0 /* Conversation.m */; };
+		A801401914C59C9400B557E0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401614C59C9400B557E0 /* Message.m */; };
+		A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401B14C59CAE00B557E0 /* ChatViewController.m */; };
+		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -177,6 +191,24 @@
 		A8013F8A14C56C0100B557E0 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		A8013F8B14C56C0100B557E0 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		A8013F8C14C56C0100B557E0 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		A8013FFC14C59C5E00B557E0 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		A8013FFD14C59C5E00B557E0 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
+		A801400014C59C7900B557E0 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
+		A801400114C59C7900B557E0 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
+		A801400214C59C7900B557E0 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
+		A801400314C59C7900B557E0 /* ChatBubbleGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ChatBubbleGray@2x.png"; sourceTree = "<group>"; };
+		A801400414C59C7900B557E0 /* ChatBubbleGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGreen.png; sourceTree = "<group>"; };
+		A801400514C59C7900B557E0 /* ChatBubbleGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ChatBubbleGreen@2x.png"; sourceTree = "<group>"; };
+		A801400614C59C7900B557E0 /* chatview-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatview-screenshot.png"; sourceTree = "<group>"; };
+		A801400714C59C7900B557E0 /* SendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendButton.png; sourceTree = "<group>"; };
+		A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
+		A801401314C59C9400B557E0 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		A801401414C59C9400B557E0 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		A801401514C59C9400B557E0 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		A801401614C59C9400B557E0 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		A801401A14C59CAE00B557E0 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		A801401B14C59CAE00B557E0 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */,
 				A8013F4514C56B0C00B557E0 /* libresolv.dylib in Frameworks */,
 				A8013EED14C569BF00B557E0 /* CFNetwork.framework in Frameworks */,
 				A8013EB014C5692800B557E0 /* UIKit.framework in Frameworks */,
@@ -200,6 +233,7 @@
 		A8013EA014C5692800B557E0 = {
 			isa = PBXGroup;
 			children = (
+				A8013FF914C59C2100B557E0 /* Chat */,
 				A8013F4A14C56BE600B557E0 /* FacebookSDK */,
 				A8013ED714C5697400B557E0 /* XMPPFramework */,
 				A8013EB714C5692800B557E0 /* FacebookChat */,
@@ -219,6 +253,7 @@
 		A8013EAE14C5692800B557E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A801402114C59CDF00B557E0 /* AudioToolbox.framework */,
 				A8013F4414C56B0C00B557E0 /* libresolv.dylib */,
 				A8013EEC14C569BF00B557E0 /* CFNetwork.framework */,
 				A8013EAF14C5692800B557E0 /* UIKit.framework */,
@@ -451,6 +486,54 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		A8013FF914C59C2100B557E0 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				A801401A14C59CAE00B557E0 /* ChatViewController.h */,
+				A801401B14C59CAE00B557E0 /* ChatViewController.m */,
+				A801401014C59C9400B557E0 /* Models */,
+				A8013FFF14C59C7900B557E0 /* Resources */,
+				A8013FFB14C59C4E00B557E0 /* Categories2 */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		A8013FFB14C59C4E00B557E0 /* Categories2 */ = {
+			isa = PBXGroup;
+			children = (
+				A8013FFC14C59C5E00B557E0 /* NSString+Additions.h */,
+				A8013FFD14C59C5E00B557E0 /* NSString+Additions.m */,
+			);
+			name = Categories2;
+			sourceTree = "<group>";
+		};
+		A8013FFF14C59C7900B557E0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A801400014C59C7900B557E0 /* basicsound.wav */,
+				A801400114C59C7900B557E0 /* ChatBar.png */,
+				A801400214C59C7900B557E0 /* ChatBubbleGray.png */,
+				A801400314C59C7900B557E0 /* ChatBubbleGray@2x.png */,
+				A801400414C59C7900B557E0 /* ChatBubbleGreen.png */,
+				A801400514C59C7900B557E0 /* ChatBubbleGreen@2x.png */,
+				A801400614C59C7900B557E0 /* chatview-screenshot.png */,
+				A801400714C59C7900B557E0 /* SendButton.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A801401014C59C9400B557E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */,
+				A801401314C59C9400B557E0 /* Conversation.h */,
+				A801401414C59C9400B557E0 /* Conversation.m */,
+				A801401514C59C9400B557E0 /* Message.h */,
+				A801401614C59C9400B557E0 /* Message.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -505,6 +588,14 @@
 				A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */,
 				A8013ED114C5692800B557E0 /* DetailViewController.xib in Resources */,
 				A8013FBC14C56C0100B557E0 /* FBDialog.bundle in Resources */,
+				A801400814C59C7900B557E0 /* basicsound.wav in Resources */,
+				A801400914C59C7900B557E0 /* ChatBar.png in Resources */,
+				A801400A14C59C7900B557E0 /* ChatBubbleGray.png in Resources */,
+				A801400B14C59C7900B557E0 /* ChatBubbleGray@2x.png in Resources */,
+				A801400C14C59C7900B557E0 /* ChatBubbleGreen.png in Resources */,
+				A801400D14C59C7900B557E0 /* ChatBubbleGreen@2x.png in Resources */,
+				A801400E14C59C7900B557E0 /* chatview-screenshot.png in Resources */,
+				A801400F14C59C7900B557E0 /* SendButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +650,11 @@
 				A8013FC314C56C0100B557E0 /* SBJsonBase.m in Sources */,
 				A8013FC414C56C0100B557E0 /* SBJsonParser.m in Sources */,
 				A8013FC514C56C0100B557E0 /* SBJsonWriter.m in Sources */,
+				A8013FFE14C59C5E00B557E0 /* NSString+Additions.m in Sources */,
+				A801401714C59C9400B557E0 /* AcaniChat.xcdatamodeld in Sources */,
+				A801401814C59C9400B557E0 /* Conversation.m in Sources */,
+				A801401914C59C9400B557E0 /* Message.m in Sources */,
+				A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +784,7 @@
 				A8013ED614C5692800B557E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -699,6 +796,16 @@
 			);
 			currentVersion = A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */;
 			path = FacebookChat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */,
+			);
+			currentVersion = A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */;
+			path = AcaniChat.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

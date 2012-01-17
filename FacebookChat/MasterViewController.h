@@ -19,6 +19,7 @@
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, FBRequestDelegate,
  FBDialogDelegate>
 {    
+    NSMutableArray *userFriends;
 }
 
 @property (strong, nonatomic) DetailViewController *detailViewController;

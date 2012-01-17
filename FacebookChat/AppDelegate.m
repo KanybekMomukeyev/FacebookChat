@@ -231,7 +231,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message 
 {
-    NSLog(@"******************************************");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:@"Hello World from notification!"];
 }
 
 
