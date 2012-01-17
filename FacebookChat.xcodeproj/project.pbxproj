@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A8013EB014C5692800B557E0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013EAF14C5692800B557E0 /* UIKit.framework */; };
+		A8013EB214C5692800B557E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013EB114C5692800B557E0 /* Foundation.framework */; };
+		A8013EB414C5692800B557E0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013EB314C5692800B557E0 /* CoreGraphics.framework */; };
+		A8013EB614C5692800B557E0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013EB514C5692800B557E0 /* CoreData.framework */; };
+		A8013EBC14C5692800B557E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8013EBA14C5692800B557E0 /* InfoPlist.strings */; };
+		A8013EBE14C5692800B557E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EBD14C5692800B557E0 /* main.m */; };
+		A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC114C5692800B557E0 /* AppDelegate.m */; };
+		A8013EC514C5692800B557E0 /* FacebookChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */; };
+		A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC714C5692800B557E0 /* MasterViewController.m */; };
+		A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013ECA14C5692800B557E0 /* DetailViewController.m */; };
+		A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECC14C5692800B557E0 /* MasterViewController.xib */; };
+		A8013ED114C5692800B557E0 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECF14C5692800B557E0 /* DetailViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A8013EAB14C5692800B557E0 /* FacebookChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FacebookChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8013EAF14C5692800B557E0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A8013EB114C5692800B557E0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A8013EB314C5692800B557E0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A8013EB514C5692800B557E0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A8013EB914C5692800B557E0 /* FacebookChat-Info.plist */ = {isa = PBXFileReference; path = "FacebookChat-Info.plist"; sourceTree = "<group>"; };
+		A8013EBB14C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A8013EBD14C5692800B557E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A8013EBF14C5692800B557E0 /* FacebookChat-Prefix.pch */ = {isa = PBXFileReference; path = "FacebookChat-Prefix.pch"; sourceTree = "<group>"; };
+		A8013EC014C5692800B557E0 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		A8013EC114C5692800B557E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FacebookChat.xcdatamodel; sourceTree = "<group>"; };
+		A8013EC614C5692800B557E0 /* MasterViewController.h */ = {isa = PBXFileReference; path = MasterViewController.h; sourceTree = "<group>"; };
+		A8013EC714C5692800B557E0 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		A8013EC914C5692800B557E0 /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
+		A8013ECA14C5692800B557E0 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		A8013ECD14C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
+		A8013ED014C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8013EA814C5692800B557E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8013EB014C5692800B557E0 /* UIKit.framework in Frameworks */,
+				A8013EB214C5692800B557E0 /* Foundation.framework in Frameworks */,
+				A8013EB414C5692800B557E0 /* CoreGraphics.framework in Frameworks */,
+				A8013EB614C5692800B557E0 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A8013EA014C5692800B557E0 = {
+			isa = PBXGroup;
+			children = (
+				A8013EB714C5692800B557E0 /* FacebookChat */,
+				A8013EAE14C5692800B557E0 /* Frameworks */,
+				A8013EAC14C5692800B557E0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A8013EAC14C5692800B557E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8013EAB14C5692800B557E0 /* FacebookChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A8013EAE14C5692800B557E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8013EAF14C5692800B557E0 /* UIKit.framework */,
+				A8013EB114C5692800B557E0 /* Foundation.framework */,
+				A8013EB314C5692800B557E0 /* CoreGraphics.framework */,
+				A8013EB514C5692800B557E0 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A8013EB714C5692800B557E0 /* FacebookChat */ = {
+			isa = PBXGroup;
+			children = (
+				A8013EC014C5692800B557E0 /* AppDelegate.h */,
+				A8013EC114C5692800B557E0 /* AppDelegate.m */,
+				A8013EC614C5692800B557E0 /* MasterViewController.h */,
+				A8013EC714C5692800B557E0 /* MasterViewController.m */,
+				A8013EC914C5692800B557E0 /* DetailViewController.h */,
+				A8013ECA14C5692800B557E0 /* DetailViewController.m */,
+				A8013ECC14C5692800B557E0 /* MasterViewController.xib */,
+				A8013ECF14C5692800B557E0 /* DetailViewController.xib */,
+				A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */,
+				A8013EB814C5692800B557E0 /* Supporting Files */,
+			);
+			path = FacebookChat;
+			sourceTree = "<group>";
+		};
+		A8013EB814C5692800B557E0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A8013EB914C5692800B557E0 /* FacebookChat-Info.plist */,
+				A8013EBA14C5692800B557E0 /* InfoPlist.strings */,
+				A8013EBD14C5692800B557E0 /* main.m */,
+				A8013EBF14C5692800B557E0 /* FacebookChat-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A8013EAA14C5692800B557E0 /* FacebookChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8013ED414C5692800B557E0 /* Build configuration list for PBXNativeTarget "FacebookChat" */;
+			buildPhases = (
+				A8013EA714C5692800B557E0 /* Sources */,
+				A8013EA814C5692800B557E0 /* Frameworks */,
+				A8013EA914C5692800B557E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FacebookChat;
+			productName = FacebookChat;
+			productReference = A8013EAB14C5692800B557E0 /* FacebookChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A8013EA214C5692800B557E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = A8013EA514C5692800B557E0 /* Build configuration list for PBXProject "FacebookChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A8013EA014C5692800B557E0;
+			productRefGroup = A8013EAC14C5692800B557E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A8013EAA14C5692800B557E0 /* FacebookChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A8013EA914C5692800B557E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8013EBC14C5692800B557E0 /* InfoPlist.strings in Resources */,
+				A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */,
+				A8013ED114C5692800B557E0 /* DetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A8013EA714C5692800B557E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8013EBE14C5692800B557E0 /* main.m in Sources */,
+				A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */,
+				A8013EC514C5692800B557E0 /* FacebookChat.xcdatamodeld in Sources */,
+				A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */,
+				A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A8013EBA14C5692800B557E0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8013EBB14C5692800B557E0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A8013ECC14C5692800B557E0 /* MasterViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8013ECD14C5692800B557E0 /* en */,
+			);
+			name = MasterViewController.xib;
+			sourceTree = "<group>";
+		};
+		A8013ECF14C5692800B557E0 /* DetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8013ED014C5692800B557E0 /* en */,
+			);
+			name = DetailViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A8013ED214C5692800B557E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A8013ED314C5692800B557E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A8013ED514C5692800B557E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FacebookChat/FacebookChat-Prefix.pch";
+				INFOPLIST_FILE = "FacebookChat/FacebookChat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A8013ED614C5692800B557E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FacebookChat/FacebookChat-Prefix.pch";
+				INFOPLIST_FILE = "FacebookChat/FacebookChat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8013EA514C5692800B557E0 /* Build configuration list for PBXProject "FacebookChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8013ED214C5692800B557E0 /* Debug */,
+				A8013ED314C5692800B557E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A8013ED414C5692800B557E0 /* Build configuration list for PBXNativeTarget "FacebookChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8013ED514C5692800B557E0 /* Debug */,
+				A8013ED614C5692800B557E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */,
+			);
+			currentVersion = A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */;
+			path = FacebookChat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A8013EA214C5692800B557E0 /* Project object */;
+}
