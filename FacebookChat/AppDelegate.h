@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBConnect.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class XMPPStream;
+@interface AppDelegate : UIResponder <UIApplicationDelegate,FBSessionDelegate> {
+    Facebook *facebook;
+    XMPPStream *xmppStream;
+    
+    BOOL allowSelfSignedCertificates;
+	BOOL allowSSLHostNameMismatch;
+    
+    UILabel *statusLabel;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -20,5 +30,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 @property (strong, nonatomic) UINavigationController *navigationController;
-
+@property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic,retain) UILabel *statusLabel;
 @end

@@ -7,8 +7,13 @@
 //
 
 #import "AppDelegate.h"
-
 #import "MasterViewController.h"
+#import "XMPP.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+
+#define FACEBOOK_APP_ID @"124242144347927"
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation AppDelegate
 
@@ -17,6 +22,8 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
+@synthesize facebook;
+@synthesize statusLabel;
 
 - (void)dealloc
 {
@@ -25,50 +32,38 @@
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
     [_navigationController release];
+    //[facebook release];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-
+        
     MasterViewController *masterViewController = [[[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] autorelease];
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
     masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
+    
+    xmppStream = [[XMPPStream alloc] initWithFacebookAppId:FACEBOOK_APP_ID];
+	[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+	
+	allowSelfSignedCertificates = NO;
+	allowSSLHostNameMismatch = NO;
+	
+	facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID andDelegate:self];
+	
+    self.statusLabel.text = @"Starting Facebook Authentication";
+    
+	// Note: Be sure to invoke this AFTER the [self.window makeKeyAndVisible] method call above,
+	//       or nothing will happen.
+    [facebook authorize:[NSArray arrayWithObject:@"xmpp_login"]];
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-     */
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -95,6 +90,150 @@
         } 
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Facebook Delegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    return [facebook handleOpenURL:url]; 
+}
+
+- (void)fbDidLogin
+{    
+	DDLogVerbose(@"%@: %@\nFacebook login successful!", THIS_FILE, THIS_METHOD);
+	DDLogVerbose(@"%@: facebook.accessToken: %@", THIS_FILE, facebook.accessToken);
+	DDLogVerbose(@"%@: facebook.expirationDate: %@", THIS_FILE, facebook.expirationDate);
+	
+    self.statusLabel.text = @"XMPP connecting...";
+    
+	NSError *error = nil;
+	if (![xmppStream connect:&error])
+	{
+		DDLogError(@"%@: Error in xmpp connection: %@", THIS_FILE, error);
+        self.statusLabel.text = @"XMPP connect failed";
+	}
+}
+
+- (void)fbDidNotLogin:(BOOL)cancelled
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    self.statusLabel.text = @"Facebook login failed";
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark XMPPStream Delegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)xmppStreamDidConnect:(XMPPStream *)sender
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+	
+    if (![xmppStream isSecure])
+    {
+        self.statusLabel.text = @"XMPP STARTTLS...";
+        NSError *error = nil;
+        BOOL result = [xmppStream secureConnection:&error];
+        
+        if (result == NO)
+        {
+            DDLogError(@"%@: Error in xmpp STARTTLS: %@", THIS_FILE, error);
+            self.statusLabel.text = @"XMPP STARTTLS failed";
+            NSLog(@"XMPP STARTTLS failed");
+        }
+    } 
+    else 
+    {
+        self.statusLabel.text = @"XMPP X-FACEBOOK-PLATFORM SASL...";
+        NSError *error = nil;
+        BOOL result = [xmppStream authenticateWithFacebookAccessToken:facebook.accessToken error:&error];
+        
+        if (result == NO)
+        {
+            DDLogError(@"%@: Error in xmpp auth: %@", THIS_FILE, error);
+            self.statusLabel.text = @"XMPP authentication failed";
+            NSLog(@"XMPP authentication failed");
+        }
+    }
+}
+
+- (void)xmppStream:(XMPPStream *)sender willSecureWithSettings:(NSMutableDictionary *)settings
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+	
+	if (allowSelfSignedCertificates)
+	{
+		[settings setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
+	}
+	
+	if (allowSSLHostNameMismatch)
+	{
+		[settings setObject:[NSNull null] forKey:(NSString *)kCFStreamSSLPeerName];
+	}
+	else
+	{
+		NSString *expectedCertName = [sender hostName];
+		if (expectedCertName == nil)
+		{
+			expectedCertName = [[sender myJID] domain];
+		}
+        
+		[settings setObject:expectedCertName forKey:(NSString *)kCFStreamSSLPeerName];
+	}
+}
+
+- (void)xmppStreamDidSecure:(XMPPStream *)sender
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    self.statusLabel.text = @"XMPP STARTTLS...";
+    NSLog(@"XMPP STARTTLS...");
+    
+}
+
+- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    self.statusLabel.text = @"XMPP authenticated";
+    NSLog(@"XMPP authenticated");
+    
+    //envoyer un message ICI !! :D    
+    NSString *messageStr = @"salut les coupains  !!!!!!";
+    
+    if([messageStr length] > 0)
+    {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:messageStr];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        [message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
+        [message addChild:body];
+        
+        [xmppStream sendElement:message];
+    }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+	DDLogVerbose(@"%@: %@ - error: %@", THIS_FILE, THIS_METHOD, error);
+    self.statusLabel.text = @"XMPP authentication failed";
+    NSLog(@"XMPP authentication failed");
+}
+
+- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
+{
+	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    self.statusLabel.text = @"XMPP disconnected";
+    NSLog(@"XMPP disconnected");
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message 
+{
+    NSLog(@"******************************************");
+}
+
 
 #pragma mark - Core Data stack
 
