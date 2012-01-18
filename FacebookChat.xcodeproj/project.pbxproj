@@ -14,7 +14,6 @@
 		A8013EBC14C5692800B557E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8013EBA14C5692800B557E0 /* InfoPlist.strings */; };
 		A8013EBE14C5692800B557E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EBD14C5692800B557E0 /* main.m */; };
 		A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC114C5692800B557E0 /* AppDelegate.m */; };
-		A8013EC514C5692800B557E0 /* FacebookChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */; };
 		A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC714C5692800B557E0 /* MasterViewController.m */; };
 		A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013ECA14C5692800B557E0 /* DetailViewController.m */; };
 		A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECC14C5692800B557E0 /* MasterViewController.xib */; };
@@ -76,6 +75,7 @@
 		A801401914C59C9400B557E0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401614C59C9400B557E0 /* Message.m */; };
 		A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401B14C59CAE00B557E0 /* ChatViewController.m */; };
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
+		A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,7 +90,6 @@
 		A8013EBF14C5692800B557E0 /* FacebookChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FacebookChat-Prefix.pch"; sourceTree = "<group>"; };
 		A8013EC014C5692800B557E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A8013EC114C5692800B557E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FacebookChat.xcdatamodel; sourceTree = "<group>"; };
 		A8013EC614C5692800B557E0 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		A8013EC714C5692800B557E0 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		A8013EC914C5692800B557E0 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -209,6 +208,7 @@
 		A801401A14C59CAE00B557E0 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		A801401B14C59CAE00B557E0 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,7 +275,7 @@
 				A8013ECA14C5692800B557E0 /* DetailViewController.m */,
 				A8013ECC14C5692800B557E0 /* MasterViewController.xib */,
 				A8013ECF14C5692800B557E0 /* DetailViewController.xib */,
-				A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */,
+				A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */,
 				A8013EB814C5692800B557E0 /* Supporting Files */,
 			);
 			path = FacebookChat;
@@ -608,7 +608,6 @@
 			files = (
 				A8013EBE14C5692800B557E0 /* main.m in Sources */,
 				A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */,
-				A8013EC514C5692800B557E0 /* FacebookChat.xcdatamodeld in Sources */,
 				A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */,
 				A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */,
 				A8013EE314C5698C00B557E0 /* DDAbstractDatabaseLogger.m in Sources */,
@@ -655,6 +654,7 @@
 				A801401814C59C9400B557E0 /* Conversation.m in Sources */,
 				A801401914C59C9400B557E0 /* Message.m in Sources */,
 				A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */,
+				A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,22 +789,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A8013EC314C5692800B557E0 /* FacebookChat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */,
-			);
-			currentVersion = A8013EC414C5692800B557E0 /* FacebookChat.xcdatamodel */;
-			path = FacebookChat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */,
 			);
 			currentVersion = A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */;
+			path = AcaniChat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */,
+			);
+			currentVersion = A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */;
 			path = AcaniChat.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

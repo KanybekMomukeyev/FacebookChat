@@ -115,6 +115,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 		DDLogError(@"%@: Error in xmpp connection: %@", THIS_FILE, error);
         self.statusLabel.text = @"XMPP connect failed";
 	}
+    
+    // update the friends in MasterViewController
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"facebookAuthorized" object:nil];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled
@@ -267,7 +270,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"FacebookChat" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"AcaniChat" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }

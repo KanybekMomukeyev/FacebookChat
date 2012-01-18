@@ -47,12 +47,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     // Set up the edit and add buttons.
+    /*
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(apiGraphFriends)] autorelease];
     self.navigationItem.rightBarButtonItem = addButton;
+    */
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(populateTextView:) name:@"messageCome" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(apiGraphFriends) name:@"facebookAuthorized" object:nil];
 }
 
 
@@ -64,8 +67,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:@"messageCome" 
                                                   object:nil];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"facebookAuthorized" 
+                                                  object:nil];
 }
 #pragma mark - Private Methods
 
@@ -193,7 +198,7 @@
 {
     
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
-    //chatViewController.managedObjectContext = managedObjectContext;
+    chatViewController.managedObjectContext = __managedObjectContext;
     [self.navigationController pushViewController:chatViewController animated:YES];
     [chatViewController release];
     
