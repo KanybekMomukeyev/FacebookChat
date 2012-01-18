@@ -2,6 +2,7 @@
 #import "ChatViewController.h"
 #import "Message.h"
 #import "NSString+Additions.h"
+#import "AppDelegate.h"
 
 // Exact same color as native iPhone Messages app.
 // Achieved by taking a screen shot of the iPhone by pressing Home & Sleep buttons together.
@@ -42,7 +43,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @implementation ChatViewController
 
 @synthesize receiveMessageSound;
-
+@synthesize facebookID;
 @synthesize chatContent;
 
 @synthesize chatBar;
@@ -77,8 +78,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark UIViewController
 
 - (void)viewDidUnload {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     self.chatContent = nil;
-    
+    self.facebookID = nil;
     self.chatBar = nil;
     self.chatInput = nil;
     self.sendButton = nil;
@@ -95,8 +97,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");
 
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     
     // Listen for keyboard.
@@ -104,7 +106,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                                  name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(populateTextView:)
+                                                 name:@"messageCome" object:nil];
+    
     self.view.backgroundColor = CHAT_BACKGROUND_COLOR; // shown during rotation    
     
     // Create chatContent.
@@ -163,33 +168,37 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [shadowColor release];
     [sendButton addTarget:self action:@selector(sendMessage)
          forControlEvents:UIControlEventTouchUpInside];
-//    // The following three lines aren't necessary now that we'are using background image.
-//    sendButton.backgroundColor = [UIColor clearColor];
-//    sendButton.layer.cornerRadius = 13; 
-//    sendButton.clipsToBounds = YES;
+    
     [self resetSendButton]; // disable initially
     [chatBar addSubview:sendButton];
     
     [self.view addSubview:chatBar];
     [self.view sendSubviewToBack:chatBar];
     
-//    // Test with lots of messages.
-//    NSDate *before = [NSDate date];
-//    for (NSUInteger i = 0; i < 500; i++) {
-//        Message *msg = (Message *)[NSEntityDescription
-//                                   insertNewObjectForEntityForName:@"Message"
-//                                   inManagedObjectContext:managedObjectContext];
-//    msg.text = [NSString stringWithFormat:@"This is message number %d", i];
-//    NSDate *now = [[NSDate alloc] init]; msg.sentDate = now; [now release];
-//    }
-////    sleep(2);
-//    NSLog(@"Creating messages in memory takes %f seconds", [before timeIntervalSinceNow]);
-//    NSError *error;
-//    if (![managedObjectContext save:&error]) {
-//        // TODO: Handle the error appropriately.
-//        NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
-//    }
-//    NSLog(@"Saving messages to disc takes %f seconds", [before timeIntervalSinceNow]);
+    /*
+    // Test with lots of messages.
+    NSDate *before = [NSDate date];
+    for (NSUInteger i = 0; i < 500; i++) {
+        Message *msg = (Message *)[NSEntityDescription
+                                   insertNewObjectForEntityForName:@"Message"
+                                   inManagedObjectContext:managedObjectContext];
+        msg.text = [NSString stringWithFormat:@"This is message number %d", i];
+        NSDate *now = [[NSDate alloc] init]; 
+        msg.sentDate = now;
+        [now release];
+    }
+    
+    sleep(2);
+    NSLog(@"Creating messages in memory takes %f seconds", [before timeIntervalSinceNow]);
+    
+    NSError *error;
+    if (![managedObjectContext save:&error]) { 
+        // TODO: Handle the error appropriately.
+        NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+    }
+    NSLog(@"Saving messages to disc takes %f seconds", [before timeIntervalSinceNow]);
+    */
+    ///////////////////////////////
     
     [self fetchResults];
     
@@ -208,12 +217,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated]; // below: work around for [chatContent flashScrollIndicators]
-    NSLog(@"viewWillAppear");
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     [chatContent performSelector:@selector(flashScrollIndicators) withObject:nil afterDelay:0.0];
     [self scrollToBottomAnimated:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     [chatInput resignFirstResponder];
     [super viewDidDisappear:animated];
 }
@@ -223,6 +233,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     [super setEditing:(BOOL)editing animated:(BOOL)animated];
     [chatContent setEditing:(BOOL)editing animated:(BOOL)animated]; // forward method call
 //    chatContent.separatorStyle = editing ?
@@ -242,25 +253,50 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 //        [chatInput resignFirstResponder];
 //    }
 }
+#pragma mark - Private Methods
+
+
+- (void)populateTextView:(NSNotification*)textMessage {
+    NSLog(@"message received!");
+    
+    if(textMessage.object) {
+        Message *msg = (Message *)[NSEntityDescription
+                               insertNewObjectForEntityForName:@"Message"
+                               inManagedObjectContext:managedObjectContext];
+        msg.text = [NSString stringWithFormat:@"%@", textMessage.object];
+        NSDate *now = [[NSDate alloc] init]; 
+        msg.sentDate = now;
+        [now release];
+        
+        // here there are some delegate methods whichwill save and display message!
+        NSError *error;
+        if (![managedObjectContext save:&error]) { 
+            // TODO: Handle the error appropriately.
+            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+        }
+    }
+}
+
 
 #pragma mark UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     CGFloat contentHeight = textView.contentSize.height - kMessageFontSize + 2.0f;
     NSString *rightTrimmedText = @"";
     
-//    NSLog(@"contentOffset: (%f, %f)", textView.contentOffset.x, textView.contentOffset.y);
-//    NSLog(@"contentInset: %f, %f, %f, %f", textView.contentInset.top, textView.contentInset.right,
-//          textView.contentInset.bottom, textView.contentInset.left);
-//    NSLog(@"contentSize.height: %f", contentHeight);
+    // NSLog(@"contentOffset: (%f, %f)", textView.contentOffset.x, textView.contentOffset.y);
+    // NSLog(@"contentInset: %f, %f, %f, %f", textView.contentInset.top, textView.contentInset.right,
+    //          textView.contentInset.bottom, textView.contentInset.left);
+    // NSLog(@"contentSize.height: %f", contentHeight);
     
     if ([textView hasText]) {
         rightTrimmedText = [textView.text
                             stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
         
-//        if (textView.text.length > 1024) { // truncate text to 1024 chars
-//            textView.text = [textView.text substringToIndex:1024];
-//        }
+        //        if (textView.text.length > 1024) { // truncate text to 1024 chars
+        //            textView.text = [textView.text substringToIndex:1024];
+        //        }
         
         // Resize textView to contentHeight
         if (contentHeight != previousContentHeight) {
@@ -304,6 +340,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // Fix a scrolling quirk.
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
  replacementText:(NSString *)text {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     textView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
     return YES;
 }
@@ -311,6 +348,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark ChatViewController
 
 - (void)enableSendButton {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     if (sendButton.enabled == NO) {
         sendButton.enabled = YES;
         sendButton.titleLabel.alpha = 1.0f;
@@ -318,12 +356,14 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)disableSendButton {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     if (sendButton.enabled == YES) {
         [self resetSendButton];
     }
 }
 
 - (void)resetSendButton {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     sendButton.enabled = NO;
     sendButton.titleLabel.alpha = 0.5f; // Sam S. says 0.4f
 }
@@ -339,7 +379,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [self resizeViewWithOptions:[notification userInfo]];
 }
 
-- (void)resizeViewWithOptions:(NSDictionary *)options {    
+- (void)resizeViewWithOptions:(NSDictionary *)options {  
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     NSTimeInterval animationDuration;
     UIViewAnimationCurve animationCurve;
     CGRect keyboardEndFrame;
@@ -353,13 +394,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     CGRect viewFrame = self.view.frame;
     NSLog(@"viewFrame y: %@", NSStringFromCGRect(viewFrame));
 
-//    // For testing.
-//    NSLog(@"keyboardEnd: %@", NSStringFromCGRect(keyboardEndFrame));
-//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
-//                             initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-//                             target:chatInput action:@selector(resignFirstResponder)];
-//    self.navigationItem.leftBarButtonItem = doneButton;
-//    [doneButton release];
+    //    // For testing.
+    //    NSLog(@"keyboardEnd: %@", NSStringFromCGRect(keyboardEndFrame));
+    //    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+    //                             initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+    //                             target:chatInput action:@selector(resignFirstResponder)];
+    //    self.navigationItem.leftBarButtonItem = doneButton;
+    //    [doneButton release];
 
     CGRect keyboardFrameEndRelative = [self.view convertRect:keyboardEndFrame fromView:nil];
     NSLog(@"self.view: %@", self.view);
@@ -376,6 +417,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     NSInteger bottomRow = [cellMap count] - 1;
     if (bottomRow >= 0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:bottomRow inSection:0];
@@ -387,11 +429,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark Message
 
 - (void)sendMessage {
-//    // TODO: Show progress indicator like iPhone Message app does. (Icebox)
-//    [activityIndicator startAnimating];
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     
-    NSString *rightTrimmedMessage =
-        [chatInput.text stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
+    // TODO: Show progress indicator like iPhone Message app does. (Icebox)
+    // [activityIndicator startAnimating];
+    
+    NSString *rightTrimmedMessage =[chatInput.text stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
     
     // Don't send blank messages.
     if (rightTrimmedMessage.length == 0) {
@@ -399,12 +442,14 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         return;
     }
     
-    // Create new message and save to Core Data.
+    // Create new message and save to Core Data and display by core data delegate methods.
     Message *newMessage = (Message *)[NSEntityDescription
                                       insertNewObjectForEntityForName:@"Message"
                                       inManagedObjectContext:managedObjectContext];
     newMessage.text = rightTrimmedMessage;
-    NSDate *now = [[NSDate alloc] init]; newMessage.sentDate = now; [now release];
+    NSDate *now = [[NSDate alloc] init]; 
+    newMessage.sentDate = now; 
+    [now release];
 
     NSError *error;
     if (![managedObjectContext save:&error]) {
@@ -412,8 +457,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         NSLog(@"sendMessage error %@, %@", error, [error userInfo]);
     }
     
-    [self clearChatInput];
+    // will send to facebook!
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];   
+    [delegate sendMessageToFacebook:rightTrimmedMessage];
     
+    [self clearChatInput];
     [self scrollToBottomAnimated:YES]; // must come after RESET_CHAT_BAR_HEIGHT above
     
     // Play sound or buzz, depending on user settings.
@@ -421,11 +469,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
     AudioServicesCreateSystemSoundID(baseURL, &receiveMessageSound);
     AudioServicesPlaySystemSound(receiveMessageSound);
-//    AudioServicesPlayAlertSound(receiveMessageSound); // use for receiveMessage (sound & vibrate)
-//    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
+    // AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
+    // AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
 }
 
 - (void)clearChatInput {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     chatInput.text = @"";
     if (previousContentHeight > 22.0f) {
         RESET_CHAT_BAR_HEIGHT;
@@ -438,6 +487,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // Returns number of objects added to cellMap (1 or 2).
 - (NSUInteger)addMessage:(Message *)message 
 {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     // Show sentDates at most every 15 minutes.
     NSDate *currentSentDate = message.sentDate;
     NSUInteger numberOfObjectsAdded = 1;
@@ -475,7 +525,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 // Returns number of objects removed from cellMap (1 or 2).
 - (NSUInteger)removeMessageAtIndex:(NSUInteger)index {
-//    NSLog(@"Delete message from cellMap");
+    
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     // Remove message from cellMap.
     [cellMap removeObjectAtIndex:index];
@@ -511,6 +562,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
 	switch (buttonIndex) {
 		case ClearConversationButtonIndex: {
             NSError *error;
@@ -540,7 +592,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    NSLog(@"number of rows: %d", [cellMap count]);
     return [cellMap count];
 }
 
@@ -550,14 +601,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 static NSString *kMessageCell = @"MessageCell";
 
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UILabel *msgSentDate;
     UIImageView *msgBackground;
     UILabel *msgText;
-    
-//    NSLog(@"cell for row: %d", [indexPath row]);
     
     NSObject *object = [cellMap objectAtIndex:[indexPath row]];
     UITableViewCell *cell;
@@ -720,7 +768,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"height for row: %d", [indexPath row]);
+    // NSLog(@"height for row: %d", [indexPath row]);
     
     NSObject *object = [cellMap objectAtIndex:[indexPath row]];
     
@@ -740,7 +788,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
            editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.editing) { // disable slide to delete
         return UITableViewCellEditingStyleDelete;
-//        return 3; // used to work for check boxes
+        // return 3; // used to work for check boxes
     }
     return UITableViewCellEditingStyleNone;
 }
@@ -748,6 +796,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark NSFetchedResultsController
 
 - (void)fetchResults {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     if (fetchedResultsController) return;
 
     // Create and configure a fetch request.
@@ -791,8 +840,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     
-    NSArray *indexPaths;
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     
+    NSArray *indexPaths;
     switch(type) {
         case NSFetchedResultsChangeInsert: {
             NSUInteger cellCount = [cellMap count];
@@ -800,10 +851,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:cellCount inSection:0];
             
             if ([self addMessage:anObject] == 1) {
-//                NSLog(@"insert 1 row at index: %d", cellCount);
+                // NSLog(@"insert 1 row at index: %d", cellCount);
                 indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath, nil];
             } else { // 2
-//                NSLog(@"insert 2 rows at index: %d", cellCount);
+                // NSLog(@"insert 2 rows at index: %d", cellCount);
                 indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath,
                               [NSIndexPath indexPathForRow:cellCount+1 inSection:0], nil];
             }
@@ -819,10 +870,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:objectIndex inSection:0];
             
             if ([self removeMessageAtIndex:objectIndex] == 1) {
-//                NSLog(@"delete 1 row");
+                // NSLog(@"delete 1 row");
                 indexPaths = [[NSArray alloc] initWithObjects:objectIndexPath, nil];
-            } else { // 2
-//                NSLog(@"delete 2 rows");
+            } else { 
+                // 2
+                // NSLog(@"delete 2 rows");
                 indexPaths = [[NSArray alloc] initWithObjects:objectIndexPath,
                               [NSIndexPath indexPathForRow:objectIndex-1 inSection:0], nil];
             }

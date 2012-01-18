@@ -26,6 +26,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+- (void)sendMessageToFacebook:(NSString*)textMessage;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

@@ -15,9 +15,7 @@
 		A8013EBE14C5692800B557E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EBD14C5692800B557E0 /* main.m */; };
 		A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC114C5692800B557E0 /* AppDelegate.m */; };
 		A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EC714C5692800B557E0 /* MasterViewController.m */; };
-		A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013ECA14C5692800B557E0 /* DetailViewController.m */; };
 		A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECC14C5692800B557E0 /* MasterViewController.xib */; };
-		A8013ED114C5692800B557E0 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECF14C5692800B557E0 /* DetailViewController.xib */; };
 		A8013EE314C5698C00B557E0 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EDA14C5698C00B557E0 /* DDAbstractDatabaseLogger.m */; };
 		A8013EE414C5698C00B557E0 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EDC14C5698C00B557E0 /* DDASLLogger.m */; };
 		A8013EE514C5698C00B557E0 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A8013EDE14C5698C00B557E0 /* DDFileLogger.m */; };
@@ -70,7 +68,6 @@
 		A801400D14C59C7900B557E0 /* ChatBubbleGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400514C59C7900B557E0 /* ChatBubbleGreen@2x.png */; };
 		A801400E14C59C7900B557E0 /* chatview-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400614C59C7900B557E0 /* chatview-screenshot.png */; };
 		A801400F14C59C7900B557E0 /* SendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A801400714C59C7900B557E0 /* SendButton.png */; };
-		A801401714C59C9400B557E0 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */; };
 		A801401814C59C9400B557E0 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401414C59C9400B557E0 /* Conversation.m */; };
 		A801401914C59C9400B557E0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401614C59C9400B557E0 /* Message.m */; };
 		A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401B14C59CAE00B557E0 /* ChatViewController.m */; };
@@ -92,10 +89,7 @@
 		A8013EC114C5692800B557E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A8013EC614C5692800B557E0 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		A8013EC714C5692800B557E0 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		A8013EC914C5692800B557E0 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		A8013ECA14C5692800B557E0 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		A8013ECD14C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
-		A8013ED014C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
 		A8013ED914C5698C00B557E0 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		A8013EDA14C5698C00B557E0 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		A8013EDB14C5698C00B557E0 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
@@ -200,7 +194,6 @@
 		A801400514C59C7900B557E0 /* ChatBubbleGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ChatBubbleGreen@2x.png"; sourceTree = "<group>"; };
 		A801400614C59C7900B557E0 /* chatview-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatview-screenshot.png"; sourceTree = "<group>"; };
 		A801400714C59C7900B557E0 /* SendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendButton.png; sourceTree = "<group>"; };
-		A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
 		A801401314C59C9400B557E0 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		A801401414C59C9400B557E0 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		A801401514C59C9400B557E0 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -271,10 +264,7 @@
 				A8013EC114C5692800B557E0 /* AppDelegate.m */,
 				A8013EC614C5692800B557E0 /* MasterViewController.h */,
 				A8013EC714C5692800B557E0 /* MasterViewController.m */,
-				A8013EC914C5692800B557E0 /* DetailViewController.h */,
-				A8013ECA14C5692800B557E0 /* DetailViewController.m */,
 				A8013ECC14C5692800B557E0 /* MasterViewController.xib */,
-				A8013ECF14C5692800B557E0 /* DetailViewController.xib */,
 				A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */,
 				A8013EB814C5692800B557E0 /* Supporting Files */,
 			);
@@ -525,7 +515,6 @@
 		A801401014C59C9400B557E0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */,
 				A801401314C59C9400B557E0 /* Conversation.h */,
 				A801401414C59C9400B557E0 /* Conversation.m */,
 				A801401514C59C9400B557E0 /* Message.h */,
@@ -586,7 +575,6 @@
 			files = (
 				A8013EBC14C5692800B557E0 /* InfoPlist.strings in Resources */,
 				A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */,
-				A8013ED114C5692800B557E0 /* DetailViewController.xib in Resources */,
 				A8013FBC14C56C0100B557E0 /* FBDialog.bundle in Resources */,
 				A801400814C59C7900B557E0 /* basicsound.wav in Resources */,
 				A801400914C59C7900B557E0 /* ChatBar.png in Resources */,
@@ -609,7 +597,6 @@
 				A8013EBE14C5692800B557E0 /* main.m in Sources */,
 				A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */,
 				A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */,
-				A8013ECB14C5692800B557E0 /* DetailViewController.m in Sources */,
 				A8013EE314C5698C00B557E0 /* DDAbstractDatabaseLogger.m in Sources */,
 				A8013EE414C5698C00B557E0 /* DDASLLogger.m in Sources */,
 				A8013EE514C5698C00B557E0 /* DDFileLogger.m in Sources */,
@@ -650,7 +637,6 @@
 				A8013FC414C56C0100B557E0 /* SBJsonParser.m in Sources */,
 				A8013FC514C56C0100B557E0 /* SBJsonWriter.m in Sources */,
 				A8013FFE14C59C5E00B557E0 /* NSString+Additions.m in Sources */,
-				A801401714C59C9400B557E0 /* AcaniChat.xcdatamodeld in Sources */,
 				A801401814C59C9400B557E0 /* Conversation.m in Sources */,
 				A801401914C59C9400B557E0 /* Message.m in Sources */,
 				A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */,
@@ -675,14 +661,6 @@
 				A8013ECD14C5692800B557E0 /* en */,
 			);
 			name = MasterViewController.xib;
-			sourceTree = "<group>";
-		};
-		A8013ECF14C5692800B557E0 /* DetailViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8013ED014C5692800B557E0 /* en */,
-			);
-			name = DetailViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -789,16 +767,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A801401114C59C9400B557E0 /* AcaniChat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */,
-			);
-			currentVersion = A801401214C59C9400B557E0 /* AcaniChat.xcdatamodel */;
-			path = AcaniChat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

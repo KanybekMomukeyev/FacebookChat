@@ -5,8 +5,11 @@
 
 @interface ChatViewController : UIViewController <NSFetchedResultsControllerDelegate,
 UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDelegate> {
-
+    
+    NSString *facebookID; 
 }
+
+@property (nonatomic, retain) NSString *facebookID;
 
 @property (nonatomic, assign) SystemSoundID receiveMessageSound;
 

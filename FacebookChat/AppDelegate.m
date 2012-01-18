@@ -91,6 +91,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
+- (void)sendMessageToFacebook:(NSString*)textMessage {
+    if([textMessage length] > 0)
+    {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:textMessage];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        [message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
+        [message addChild:body];
+        
+        [xmppStream sendElement:message];
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Facebook Delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +217,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSLog(@"XMPP authenticated");
     
     //envoyer un message ICI !! :D    
-    NSString *messageStr = @"salut les coupains  !!!!!!";
+    NSString *messageStr = @"test status message!";
     
     if([messageStr length] > 0)
     {
@@ -234,7 +249,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message 
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:@"Hello World from notification!"];
+    NSString *body = [[message elementForName:@"body"] stringValue];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:body];
 }
 
 

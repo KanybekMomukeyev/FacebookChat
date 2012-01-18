@@ -7,7 +7,6 @@
 //
 
 #import "MasterViewController.h"
-#import "DetailViewController.h"
 #import "ChatViewController.h"
 
 @implementation MasterViewController
@@ -83,8 +82,8 @@
 }
 
 
-- (void)populateTextView:(NSString*)textMessage {
-    NSLog(@"message received!=%@",textMessage);
+- (void)populateTextView:(NSNotification*)textMessage {
+    //NSLog(@"message received!=%@",textMessage);
 }
 
 #pragma mark - Facebook API Calls
