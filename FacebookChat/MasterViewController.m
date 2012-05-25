@@ -27,6 +27,14 @@
 							
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"messageCome" 
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"facebookAuthorized" 
+                                                  object:nil];
+    
     [_detailViewController release];
     [__fetchedResultsController release];
     [__managedObjectContext release];
@@ -62,14 +70,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:@"messageCome" 
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:@"facebookAuthorized" 
-                                                  object:nil];
 }
 #pragma mark - Private Methods
 

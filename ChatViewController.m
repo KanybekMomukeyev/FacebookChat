@@ -72,13 +72,24 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [fetchedResultsController release];
     [managedObjectContext release];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillShowNotification 
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"messageCome" 
+                                                  object:nil];
     [super dealloc];
 }
 
 #pragma mark UIViewController
 
 - (void)viewDidUnload {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     self.chatContent = nil;
     self.facebookID = nil;
     self.chatBar = nil;
@@ -217,15 +228,14 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated]; // below: work around for [chatContent flashScrollIndicators]
-    NSLog(@"%s",__PRETTY_FUNCTION__);
     [chatContent performSelector:@selector(flashScrollIndicators) withObject:nil afterDelay:0.0];
     [self scrollToBottomAnimated:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-    [chatInput resignFirstResponder];
+    
     [super viewDidDisappear:animated];
+    [chatInput resignFirstResponder];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -233,7 +243,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     [super setEditing:(BOOL)editing animated:(BOOL)animated];
     [chatContent setEditing:(BOOL)editing animated:(BOOL)animated]; // forward method call
 //    chatContent.separatorStyle = editing ?
@@ -253,6 +263,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 //        [chatInput resignFirstResponder];
 //    }
 }
+
 #pragma mark - Private Methods
 
 
@@ -562,7 +573,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
 	switch (buttonIndex) {
 		case ClearConversationButtonIndex: {
             NSError *error;
@@ -839,8 +850,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     
     NSArray *indexPaths;
