@@ -5,5 +5,6 @@
 @dynamic sentDate;
 @dynamic read;
 @dynamic text;
+@dynamic messageStatus;
 
 @end

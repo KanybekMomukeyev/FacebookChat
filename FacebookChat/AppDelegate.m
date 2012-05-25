@@ -91,21 +91,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-- (void)sendMessageToFacebook:(NSString*)textMessage {
-    if([textMessage length] > 0)
-    {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:textMessage];
-        
-        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
-        [message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
-        [message addChild:body];
-        
-        [xmppStream sendElement:message];
-    }
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Facebook Delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +129,24 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark XMPPStream Delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
+
+    if([textMessage length] > 0) {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:textMessage];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        
+        
+        [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
+        //[message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
+        [message addChild:body];
+        
+        [xmppStream sendElement:message];
+    }
+}
 
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
@@ -216,7 +219,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.statusLabel.text = @"XMPP authenticated";
     NSLog(@"XMPP authenticated");
     
-    //envoyer un message ICI !! :D    
+    //sent a message ICI !! :D    
     NSString *messageStr = @"test status message!";
     
     if([messageStr length] > 0)

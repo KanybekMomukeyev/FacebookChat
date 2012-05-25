@@ -61,7 +61,7 @@
     self.navigationItem.rightBarButtonItem = addButton;
     */
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(populateTextView:) name:@"messageCome" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:) name:@"messageCome" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(apiGraphFriends) name:@"facebookAuthorized" object:nil];
 }
 
@@ -82,7 +82,7 @@
 }
 
 
-- (void)populateTextView:(NSNotification*)textMessage {
+- (void)messageReceived:(NSNotification*)textMessage {
     //NSLog(@"message received!=%@",textMessage);
 }
 
@@ -195,10 +195,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *facebookID = [[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"] copy];
     
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
     chatViewController.managedObjectContext = __managedObjectContext;
+    chatViewController.facebookID = facebookID;
     [self.navigationController pushViewController:chatViewController animated:YES];
+
+    [facebookID release];
     [chatViewController release];
     
     /*

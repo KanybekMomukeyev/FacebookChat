@@ -268,7 +268,6 @@
 				A8013EC614C5692800B557E0 /* MasterViewController.h */,
 				A8013EC714C5692800B557E0 /* MasterViewController.m */,
 				A8013ECC14C5692800B557E0 /* MasterViewController.xib */,
-				A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */,
 				A8013EB814C5692800B557E0 /* Supporting Files */,
 			);
 			path = FacebookChat;
@@ -522,6 +521,7 @@
 				A801401414C59C9400B557E0 /* Conversation.m */,
 				A801401514C59C9400B557E0 /* Message.h */,
 				A801401614C59C9400B557E0 /* Message.m */,
+				A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -777,7 +777,8 @@
 				A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */,
 			);
 			currentVersion = A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */;
-			path = AcaniChat.xcdatamodeld;
+			name = AcaniChat.xcdatamodeld;
+			path = ../FacebookChat/AcaniChat.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

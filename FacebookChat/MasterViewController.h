@@ -7,24 +7,19 @@
 //
 #import "AppDelegate.h"
 #import <UIKit/UIKit.h>
-
-
 #import "FBConnect.h"
-
-
-@class DetailViewController;
-
 #import <CoreData/CoreData.h>
 
+@class DetailViewController;
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, FBRequestDelegate,
  FBDialogDelegate>
 {    
     NSMutableArray *userFriends;
 }
 
-@property (strong, nonatomic) DetailViewController *detailViewController;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (retain, nonatomic) DetailViewController *detailViewController;
+@property (retain, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (retain, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end

@@ -241,7 +241,7 @@
  * 
  * -- Changes --
  * 
- * You are strongly discouraged from modifying this file.
+ * You are retainly discouraged from modifying this file.
  * If you do, you make it more difficult on yourself to merge future bug fixes and improvements from the project.
  * Instead, create your own MyLogging.h or ApplicationNameLogging.h or CompanyLogging.h
  * 

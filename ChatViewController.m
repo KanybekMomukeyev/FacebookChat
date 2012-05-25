@@ -83,6 +83,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:@"messageCome" 
                                                   object:nil];
+
     [super dealloc];
 }
 
@@ -101,8 +102,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.fetchedResultsController = nil;
 
     // Leave managedObjectContext since it's not recreated in viewDidLoad
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
 }
 
@@ -118,7 +117,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(populateTextView:)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:)
                                                  name:@"messageCome" object:nil];
     
     self.view.backgroundColor = CHAT_BACKGROUND_COLOR; // shown during rotation    
@@ -264,35 +263,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 //    }
 }
 
-#pragma mark - Private Methods
-
-
-- (void)populateTextView:(NSNotification*)textMessage {
-    NSLog(@"message received!");
-    
-    if(textMessage.object) {
-        Message *msg = (Message *)[NSEntityDescription
-                               insertNewObjectForEntityForName:@"Message"
-                               inManagedObjectContext:managedObjectContext];
-        msg.text = [NSString stringWithFormat:@"%@", textMessage.object];
-        NSDate *now = [[NSDate alloc] init]; 
-        msg.sentDate = now;
-        [now release];
-        
-        // here there are some delegate methods whichwill save and display message!
-        NSError *error;
-        if (![managedObjectContext save:&error]) { 
-            // TODO: Handle the error appropriately.
-            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
-        }
-    }
-}
-
-
 #pragma mark UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     CGFloat contentHeight = textView.contentSize.height - kMessageFontSize + 2.0f;
     NSString *rightTrimmedText = @"";
     
@@ -351,7 +325,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // Fix a scrolling quirk.
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
  replacementText:(NSString *)text {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     textView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
     return YES;
 }
@@ -359,7 +333,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark ChatViewController
 
 - (void)enableSendButton {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     if (sendButton.enabled == NO) {
         sendButton.enabled = YES;
         sendButton.titleLabel.alpha = 1.0f;
@@ -367,14 +341,14 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)disableSendButton {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     if (sendButton.enabled == YES) {
         [self resetSendButton];
     }
 }
 
 - (void)resetSendButton {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     sendButton.enabled = NO;
     sendButton.titleLabel.alpha = 0.5f; // Sam S. says 0.4f
 }
@@ -391,7 +365,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)resizeViewWithOptions:(NSDictionary *)options {  
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     NSTimeInterval animationDuration;
     UIViewAnimationCurve animationCurve;
     CGRect keyboardEndFrame;
@@ -428,7 +402,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     NSInteger bottomRow = [cellMap count] - 1;
     if (bottomRow >= 0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:bottomRow inSection:0];
@@ -439,8 +413,34 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 #pragma mark Message
 
+- (void)messageReceived:(NSNotification*)textMessage {
+    NSLog(@"message received!");
+    
+    if(textMessage.object) {
+        Message *msg = (Message *)[NSEntityDescription
+                                   insertNewObjectForEntityForName:@"Message"
+                                   inManagedObjectContext:managedObjectContext];
+        msg.text = [NSString stringWithFormat:@"%@", textMessage.object];
+        NSDate *now = [[NSDate alloc] init]; 
+        msg.sentDate = now;
+        
+        // message did come, this will be on left
+        msg.messageStatus = TRUE;
+        
+        [now release];
+        
+        // here there are some delegate methods whichwill save and display message!
+        NSError *error;
+        if (![managedObjectContext save:&error]) { 
+            // TODO: Handle the error appropriately.
+            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+        }
+    }
+}
+
+
 - (void)sendMessage {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     
     // TODO: Show progress indicator like iPhone Message app does. (Icebox)
     // [activityIndicator startAnimating];
@@ -460,6 +460,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     newMessage.text = rightTrimmedMessage;
     NSDate *now = [[NSDate alloc] init]; 
     newMessage.sentDate = now; 
+    
+    // message to sent, this will be on right
+    newMessage.messageStatus = FALSE;
     [now release];
 
     NSError *error;
@@ -470,7 +473,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     // will send to facebook!
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];   
-    [delegate sendMessageToFacebook:rightTrimmedMessage];
+    [delegate sendMessageToFacebook:rightTrimmedMessage withFriendFacebookID:self.facebookID];
     
     [self clearChatInput];
     [self scrollToBottomAnimated:YES]; // must come after RESET_CHAT_BAR_HEIGHT above
@@ -484,8 +487,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
 }
 
+
+
 - (void)clearChatInput {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     chatInput.text = @"";
     if (previousContentHeight > 22.0f) {
         RESET_CHAT_BAR_HEIGHT;
@@ -498,7 +503,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // Returns number of objects added to cellMap (1 or 2).
 - (NSUInteger)addMessage:(Message *)message 
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
     // Show sentDates at most every 15 minutes.
     NSDate *currentSentDate = message.sentDate;
     NSUInteger numberOfObjectsAdded = 1;
@@ -536,8 +540,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 // Returns number of objects removed from cellMap (1 or 2).
 - (NSUInteger)removeMessageAtIndex:(NSUInteger)index {
-    
-    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     // Remove message from cellMap.
     [cellMap removeObjectAtIndex:index];
@@ -703,9 +705,11 @@ static NSString *kMessageCell = @"MessageCell";
                                        constrainedToSize:CGSizeMake(kMessageTextWidth, CGFLOAT_MAX)
                                            lineBreakMode:UILineBreakModeWordWrap];
     
+    Message *message = (Message*)object;
+    
     UIImage *bubbleImage;
     // right bubble
-    if (!([indexPath row] % 3)) { 
+    if (message.messageStatus) { 
         CGFloat editWidth = tableView.editing ? 32.0f : 0.0f;
         msgBackground.frame = CGRectMake(tableView.frame.size.width-size.width-34.0f-editWidth,
                                          kMessageFontSize-13.0f, size.width+34.0f,
