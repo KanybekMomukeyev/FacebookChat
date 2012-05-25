@@ -107,8 +107,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     
     // Listen for keyboard.
@@ -184,31 +183,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [self.view addSubview:chatBar];
     [self.view sendSubviewToBack:chatBar];
-    
-    /*
-    // Test with lots of messages.
-    NSDate *before = [NSDate date];
-    for (NSUInteger i = 0; i < 500; i++) {
-        Message *msg = (Message *)[NSEntityDescription
-                                   insertNewObjectForEntityForName:@"Message"
-                                   inManagedObjectContext:managedObjectContext];
-        msg.text = [NSString stringWithFormat:@"This is message number %d", i];
-        NSDate *now = [[NSDate alloc] init]; 
-        msg.sentDate = now;
-        [now release];
-    }
-    
-    sleep(2);
-    NSLog(@"Creating messages in memory takes %f seconds", [before timeIntervalSinceNow]);
-    
-    NSError *error;
-    if (![managedObjectContext save:&error]) { 
-        // TODO: Handle the error appropriately.
-        NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
-    }
-    NSLog(@"Saving messages to disc takes %f seconds", [before timeIntervalSinceNow]);
-    */
-    ///////////////////////////////
     
     [self fetchResults];
     
@@ -811,7 +785,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark NSFetchedResultsController
 
 - (void)fetchResults {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     if (fetchedResultsController) return;
 
     // Create and configure a fetch request.

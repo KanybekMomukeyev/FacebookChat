@@ -22,7 +22,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
-@synthesize facebook;
+@synthesize facebook = _facebook;
 @synthesize statusLabel;
 
 - (void)dealloc
@@ -32,7 +32,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
     [_navigationController release];
-    //[facebook release];
+    [_facebook release];
     [super dealloc];
 }
 
@@ -56,13 +56,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	allowSelfSignedCertificates = NO;
 	allowSSLHostNameMismatch = NO;
 	
-	facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID andDelegate:self];
+	_facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID andDelegate:self];
 	
     self.statusLabel.text = @"Starting Facebook Authentication";
     
 	// Note: Be sure to invoke this AFTER the [self.window makeKeyAndVisible] method call above,
 	//       or nothing will happen.
-    [facebook authorize:[NSArray arrayWithObject:@"xmpp_login"]];
+    [_facebook authorize:[NSArray arrayWithObject:@"xmpp_login"]];
     return YES;
 }
 
@@ -98,14 +98,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-    return [facebook handleOpenURL:url]; 
+    return [_facebook handleOpenURL:url]; 
 }
 
 - (void)fbDidLogin
 {    
 	DDLogVerbose(@"%@: %@\nFacebook login successful!", THIS_FILE, THIS_METHOD);
-	DDLogVerbose(@"%@: facebook.accessToken: %@", THIS_FILE, facebook.accessToken);
-	DDLogVerbose(@"%@: facebook.expirationDate: %@", THIS_FILE, facebook.expirationDate);
+	DDLogVerbose(@"%@: facebook.accessToken: %@", THIS_FILE, _facebook.accessToken);
+	DDLogVerbose(@"%@: facebook.expirationDate: %@", THIS_FILE, _facebook.expirationDate);
 	
     self.statusLabel.text = @"XMPP connecting...";
     
@@ -165,7 +165,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     {
         self.statusLabel.text = @"XMPP X-FACEBOOK-PLATFORM SASL...";
         NSError *error = nil;
-        BOOL result = [xmppStream authenticateWithFacebookAccessToken:facebook.accessToken error:&error];
+        BOOL result = [xmppStream authenticateWithFacebookAccessToken:_facebook.accessToken error:&error];
         
         if (result == NO)
         {
@@ -214,22 +214,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     self.statusLabel.text = @"XMPP authenticated";
     NSLog(@"XMPP authenticated");
-    
-    //sent a message ICI !! :D    
-    NSString *messageStr = @"test status message!";
-    
-    if([messageStr length] > 0)
-    {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:messageStr];
-        
-        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
-        [message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
-        [message addChild:body];
-        
-        [xmppStream sendElement:message];
-    }
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error

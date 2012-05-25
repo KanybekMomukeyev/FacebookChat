@@ -11,7 +11,6 @@
 
 @class XMPPStream;
 @interface AppDelegate : UIResponder <UIApplicationDelegate,FBSessionDelegate> {
-    Facebook *facebook;
     XMPPStream *xmppStream;
     
     BOOL allowSelfSignedCertificates;

@@ -21,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Master", @"Master");
+        self.title = NSLocalizedString(@"Friends", @"Friends");
     }
     return self;
 }
@@ -151,7 +151,7 @@
 
     NSString *facebookName = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"name"];
     NSString *facebookID = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"];
-    cell.textLabel.text = [NSString stringWithFormat:@"name = %@   id = %@",facebookName, facebookID];
+    cell.textLabel.text = [NSString stringWithFormat:@"name = %@ id = %@",facebookName, facebookID];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
     
     EGOImageView *imageView = [[EGOImageView alloc] initWithPlaceholderImage:nil];
