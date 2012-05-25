@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "ChatViewController.h"
+#import "EGOImageView.h"
 
 @implementation MasterViewController
 
@@ -152,7 +153,19 @@
     NSString *facebookID = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"];
     cell.textLabel.text = [NSString stringWithFormat:@"name = %@   id = %@",facebookName, facebookID];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
-    cell.imageView.image = [self imageForObject:[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    
+    EGOImageView *imageView = [[EGOImageView alloc] initWithPlaceholderImage:nil];
+
+    NSString *url = [[NSString alloc] 
+                     initWithFormat:@"https://graph.facebook.com/%@/picture",[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    NSURL *imageUrl = [NSURL URLWithString:url];
+    [url release];
+    [imageView setImageURL:imageUrl];
+    
+    cell.imageView.image = imageView.image;
+    
+    [imageView release];
+    //cell.imageView.image = [self imageForObject:[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
     //[self configureCell:cell atIndexPath:indexPath];
     return cell;
 }

@@ -74,6 +74,10 @@
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
 		A81A4881156FF04300492E4C /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.txt */; };
 		A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */; };
+		A87EAA2515700211003163DD /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA1E15700211003163DD /* EGOCache.m */; };
+		A87EAA2615700211003163DD /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA2015700211003163DD /* EGOImageLoadConnection.m */; };
+		A87EAA2715700211003163DD /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA2215700211003163DD /* EGOImageLoader.m */; };
+		A87EAA2815700211003163DD /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA2415700211003163DD /* EGOImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -204,6 +208,14 @@
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A81A4880156FF04300492E4C /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
+		A87EAA1D15700211003163DD /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
+		A87EAA1E15700211003163DD /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
+		A87EAA1F15700211003163DD /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
+		A87EAA2015700211003163DD /* EGOImageLoadConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoadConnection.m; sourceTree = "<group>"; };
+		A87EAA2115700211003163DD /* EGOImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoader.h; sourceTree = "<group>"; };
+		A87EAA2215700211003163DD /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
+		A87EAA2315700211003163DD /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
+		A87EAA2415700211003163DD /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +240,7 @@
 		A8013EA014C5692800B557E0 = {
 			isa = PBXGroup;
 			children = (
+				A87EAA1C15700211003163DD /* EGOImageView */,
 				A81A4880156FF04300492E4C /* README.txt */,
 				A8013FF914C59C2100B557E0 /* Chat */,
 				A8013F4A14C56BE600B557E0 /* FacebookSDK */,
@@ -526,6 +539,21 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A87EAA1C15700211003163DD /* EGOImageView */ = {
+			isa = PBXGroup;
+			children = (
+				A87EAA1D15700211003163DD /* EGOCache.h */,
+				A87EAA1E15700211003163DD /* EGOCache.m */,
+				A87EAA1F15700211003163DD /* EGOImageLoadConnection.h */,
+				A87EAA2015700211003163DD /* EGOImageLoadConnection.m */,
+				A87EAA2115700211003163DD /* EGOImageLoader.h */,
+				A87EAA2215700211003163DD /* EGOImageLoader.m */,
+				A87EAA2315700211003163DD /* EGOImageView.h */,
+				A87EAA2415700211003163DD /* EGOImageView.m */,
+			);
+			path = EGOImageView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -645,6 +673,10 @@
 				A801401914C59C9400B557E0 /* Message.m in Sources */,
 				A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */,
 				A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */,
+				A87EAA2515700211003163DD /* EGOCache.m in Sources */,
+				A87EAA2615700211003163DD /* EGOImageLoadConnection.m in Sources */,
+				A87EAA2715700211003163DD /* EGOImageLoader.m in Sources */,
+				A87EAA2815700211003163DD /* EGOImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

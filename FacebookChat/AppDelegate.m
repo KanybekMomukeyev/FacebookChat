@@ -138,12 +138,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         
         NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
         [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
-        
-        
         [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
-        //[message addAttributeWithName:@"to" stringValue:@"-100003385025859@chat.facebook.com"];
         [message addChild:body];
-        
         [xmppStream sendElement:message];
     }
 }
