@@ -72,7 +72,7 @@
 		A801401914C59C9400B557E0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401614C59C9400B557E0 /* Message.m */; };
 		A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401B14C59CAE00B557E0 /* ChatViewController.m */; };
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
-		A81A4881156FF04300492E4C /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.txt */; };
+		A81A4881156FF04300492E4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.md */; };
 		A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */; };
 		A87EAA2515700211003163DD /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA1E15700211003163DD /* EGOCache.m */; };
 		A87EAA2615700211003163DD /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A87EAA2015700211003163DD /* EGOImageLoadConnection.m */; };
@@ -206,7 +206,7 @@
 		A801401A14C59CAE00B557E0 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		A801401B14C59CAE00B557E0 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		A81A4880156FF04300492E4C /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		A81A4880156FF04300492E4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
 		A87EAA1D15700211003163DD /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		A87EAA1E15700211003163DD /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		A8013EA014C5692800B557E0 = {
 			isa = PBXGroup;
 			children = (
-				A81A4880156FF04300492E4C /* README.txt */,
+				A81A4880156FF04300492E4C /* README.md */,
 				A87EAA1C15700211003163DD /* EGOImageView */,
 				A8013FF914C59C2100B557E0 /* Chat */,
 				A8013F4A14C56BE600B557E0 /* FacebookSDK */,
@@ -615,7 +615,7 @@
 				A801400D14C59C7900B557E0 /* ChatBubbleGreen@2x.png in Resources */,
 				A801400E14C59C7900B557E0 /* chatview-screenshot.png in Resources */,
 				A801400F14C59C7900B557E0 /* SendButton.png in Resources */,
-				A81A4881156FF04300492E4C /* README.txt in Resources */,
+				A81A4881156FF04300492E4C /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

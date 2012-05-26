@@ -138,6 +138,17 @@
     [self.tableView reloadData];
 }
 
+#pragma mark Private methods
+
+- (Conversation*)findConversationWithId:(NSString*)facebookId {
+    for(Conversation *conversation in [__fetchedResultsController fetchedObjects]) {
+        if([conversation.facebookId isEqualToString:facebookId]) {
+            return  conversation;
+        }
+    }
+    return nil;
+}
+
 
 #pragma mark UItableView Delegate
 
@@ -217,22 +228,12 @@
     return NO;
 }
 
-- (Conversation*)findConversationWithId:(NSString*)facebookId {
-    for(Conversation *conversation in [__fetchedResultsController fetchedObjects]) {
-        if([conversation.facebookId isEqualToString:facebookId]) {
-            return  conversation;
-        }
-    }
-    return nil;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *facebookID = [[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"] copy];
     Conversation *conv = [[self findConversationWithId:facebookID] retain];
     
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
-    //chatViewController.managedObjectContext = __managedObjectContext;
     chatViewController.conversation = conv;
     chatViewController.facebookID = facebookID;
     
