@@ -394,34 +394,37 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)messageReceived:(NSNotification*)textMessage {
     
     NSLog(@"message received!");
-    //XMPPMessage *message = textMessage.object;        
-    //NSString *str = [NSString stringWithFormat:@"%@",[[textMessage.object elementForName:@"body"] stringValue]];
+    XMPPMessage *message = textMessage.object;        
     
-    if(textMessage.object) {
+    NSString *adressString = [NSString stringWithFormat:@"%@",[message fromStr]];
+    NSString *newStr = [adressString substringWithRange:NSMakeRange(1, [adressString length]-1)];
+    NSString *facebookID = [NSString stringWithFormat:@"%@",[[newStr componentsSeparatedByString:@"@"] objectAtIndex:0]];
+    
+    // if message is not empty and sender is same with our _facebookID.
+    if([message isChatMessageWithBody]&&[facebookID isEqualToString:_facebookID]) {
+        
         Message *msg = (Message *)[NSEntityDescription
                                    insertNewObjectForEntityForName:@"Message"
                                    inManagedObjectContext:self.conversation.managedObjectContext];
         
-        //XMPPMessage *message = textMessage.object;        
-        //[NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
-        msg.text = [NSString stringWithFormat:@"%@",textMessage.object]; 
+        msg.text = [NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
         NSDate *now = [[NSDate alloc] init]; 
         msg.sentDate = now;
         
         // message did come, this will be on left
         msg.messageStatus = TRUE;
-        
         [now release];
         
-        // here there are some delegate methods whichwill save and display message!
-        NSError *error;
-        
         [_conversation addMessagesObject:msg];
+        
+        NSError *error;
         if (![self.conversation.managedObjectContext save:&error]) { 
             // TODO: Handle the error appropriately.
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
+        
         [self clearChatInput];
+        
         // to calculate our height and insert new message.
         NSUInteger cellCount = [cellMap count];
         NSArray *indexPaths;

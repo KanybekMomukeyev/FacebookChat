@@ -10,6 +10,8 @@
 #import "ChatViewController.h"
 #import "EGOImageView.h"
 #import "Conversation.h"
+#import "Message.h"
+#import "XMPP.h"
 
 @implementation MasterViewController
 
@@ -32,7 +34,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:@"facebookAuthorized" 
                                                   object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:@"messageCome" 
+                                                  object:nil];
     [_detailViewController release];
     [__fetchedResultsController release];
     [__managedObjectContext release];
@@ -52,6 +56,8 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(apiGraphFriends) name:@"facebookAuthorized" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:)
+                                                 name:@"messageCome" object:nil];
     
     NSError *error = nil;
 	if (![[self fetchedResultsController] performFetch:&error]) {
@@ -95,7 +101,6 @@
         NSLog(@"User has no friends");
     }
     
-    
     // ok, here one moment.
     // There are facebook friends, we should create conversation to them, if our conversation is empty.
     // if our conversation is not emty, then what ?
@@ -115,30 +120,54 @@
             [frienId release];
         }
         
-        
         NSError *error;
         if (![self.managedObjectContext save:&error]) { 
             // TODO: Handle the error appropriately.
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
 
-        
     }else if ([array count] == [userFriends count]) {
         // our local cached conversation same as facebook friends.
-        
-        
     }else if([array count] > [userFriends count]) {
         // our local cached conversation less than facebook friends.
-        
-        
     }else if([array count] < [userFriends count]) {
         // our local cached conversation greater than facebook friends.
-        
     }    
     [self.tableView reloadData];
 }
 
 #pragma mark Private methods
+
+- (void)messageReceived:(NSNotification*)textMessage {
+    
+    XMPPMessage *message = textMessage.object;        
+    if([message isChatMessageWithBody]) {
+        
+        NSLog(@"%@",[message fromStr]);
+        NSString *adressString = [NSString stringWithFormat:@"%@",[message fromStr]];
+        NSString *newStr = [adressString substringWithRange:NSMakeRange(1, [adressString length]-1)];
+        NSString *facebookID = [NSString stringWithFormat:@"%@",[[newStr componentsSeparatedByString:@"@"] objectAtIndex:0]];
+        
+        Conversation *conversation = [[self findConversationWithId:facebookID] retain];
+        
+        Message *msg = (Message *)[NSEntityDescription
+                                   insertNewObjectForEntityForName:@"Message"
+                                   inManagedObjectContext:conversation.managedObjectContext];
+        
+        msg.text = [NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
+        msg.sentDate = [NSDate date];
+        // message did come, this will be on left
+        msg.messageStatus = TRUE;
+        
+        [conversation addMessagesObject:msg];        
+        NSError *error;
+        if (![conversation.managedObjectContext save:&error]) { 
+            // TODO: Handle the error appropriately.
+            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+        }
+        [conversation release];
+    }
+}
 
 - (Conversation*)findConversationWithId:(NSString*)facebookId {
     for(Conversation *conversation in [__fetchedResultsController fetchedObjects]) {
