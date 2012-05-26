@@ -1,6 +1,8 @@
 
+UNDER MIT Lisense.
+
 Simple Facebook chat, client for Iphone, 
-uses Open Source project AcaniChat and XMPPFramework.
+used Open Source project AcaniChat and XMPPFramework.
 To downlaod image and cache them, used EGOImageView.
 
 (1) https://github.com/acani/AcaniChat
@@ -8,7 +10,20 @@ To downlaod image and cache them, used EGOImageView.
 (3) https://github.com/enormego/EGOImageLoading
 
 
-To cache message conversations uses Core Data.
+To cache messages, conversations used Core Data.
 
+--- TODO: -----
+
+(1) Implement Delete message in ChatViewController.
+(2) Facebook, local Database synchronization.
+
+(3) In new branch MagicalRecord we will use more easy way of Core Data,
+Magical Record:   https://github.com/magicalpanda/MagicalRecord
+
+Also
+Unit Tests: https://github.com/gabriel/gh-unit
+
+
+------
 This is project not finished yet.
 

@@ -1,6 +1,7 @@
 // Old
 #import "ChatViewController.h"
 #import "Message.h"
+#import "Conversation.h"
 #import "NSString+Additions.h"
 #import "AppDelegate.h"
 
@@ -16,11 +17,11 @@
 #define RESET_CHAT_BAR_HEIGHT    SET_CHAT_BAR_HEIGHT(kChatBarHeight1)
 #define EXPAND_CHAT_BAR_HEIGHT    SET_CHAT_BAR_HEIGHT(kChatBarHeight4)
 #define    SET_CHAT_BAR_HEIGHT(HEIGHT)\
-    CGRect chatContentFrame = chatContent.frame;\
+    CGRect chatContentFrame = _chatContent.frame;\
     chatContentFrame.size.height = VIEW_HEIGHT - HEIGHT;\
     [UIView beginAnimations:nil context:NULL];\
     [UIView setAnimationDuration:0.1f];\
-    chatContent.frame = chatContentFrame;\
+    _chatContent.frame = chatContentFrame;\
     chatBar.frame = CGRectMake(chatBar.frame.origin.x, chatContentFrame.size.height,\
             VIEW_WIDTH, HEIGHT);\
     [UIView commitAnimations]
@@ -43,9 +44,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @implementation ChatViewController
 
 @synthesize receiveMessageSound;
-@synthesize facebookID;
-@synthesize chatContent;
+@synthesize facebookID = _facebookID;
+@synthesize conversation = _conversation;
 
+@synthesize chatContent = _chatContent;
 @synthesize chatBar;
 @synthesize chatInput;
 @synthesize previousContentHeight;
@@ -53,24 +55,17 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 @synthesize cellMap;
 
-@synthesize fetchedResultsController;
-@synthesize managedObjectContext;
 
 #pragma mark NSObject
 
 - (void)dealloc {
     if (receiveMessageSound) AudioServicesDisposeSystemSoundID(receiveMessageSound);
     
-    [chatContent release];
-    
+    [_chatContent release];
     [chatBar release];
     [chatInput release];
     [sendButton release];
-    
     [cellMap release];
-    
-    [fetchedResultsController release];
-    [managedObjectContext release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:UIKeyboardWillShowNotification 
@@ -96,12 +91,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.chatBar = nil;
     self.chatInput = nil;
     self.sendButton = nil;
-    
     self.cellMap = nil;
-    
-    self.fetchedResultsController = nil;
 
-    // Leave managedObjectContext since it's not recreated in viewDidLoad
     [super viewDidUnload];
 }
 
@@ -122,18 +113,18 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.view.backgroundColor = CHAT_BACKGROUND_COLOR; // shown during rotation    
     
     // Create chatContent.
-    chatContent = [[UITableView alloc] initWithFrame:
+    _chatContent = [[UITableView alloc] initWithFrame:
                    CGRectMake(0.0f, 0.0f, self.view.frame.size.width,
                               self.view.frame.size.height-kChatBarHeight1)];
-    chatContent.clearsContextBeforeDrawing = NO;
-    chatContent.delegate = self;
-    chatContent.dataSource = self;
-    chatContent.contentInset = UIEdgeInsetsMake(7.0f, 0.0f, 0.0f, 0.0f);
-    chatContent.backgroundColor = CHAT_BACKGROUND_COLOR;
-    chatContent.separatorStyle = UITableViewCellSeparatorStyleNone;
-    chatContent.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    _chatContent.clearsContextBeforeDrawing = NO;
+    _chatContent.delegate = self;
+    _chatContent.dataSource = self;
+    _chatContent.contentInset = UIEdgeInsetsMake(7.0f, 0.0f, 0.0f, 0.0f);
+    _chatContent.backgroundColor = CHAT_BACKGROUND_COLOR;
+    _chatContent.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _chatContent.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:chatContent];
+    [self.view addSubview:_chatContent];
     
     // Create chatBar.
     chatBar = [[UIImageView alloc] initWithFrame:
@@ -183,17 +174,29 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [self.view addSubview:chatBar];
     [self.view sendSubviewToBack:chatBar];
-    
-    [self fetchResults];
+        
     
     // Construct cellMap from fetchedObjects.
+    NSInteger capacity = [[self.conversation.messages allObjects] count] * 2;
+
     cellMap = [[NSMutableArray alloc]
-               initWithCapacity:[[fetchedResultsController fetchedObjects] count]*2];
+               initWithCapacity:capacity];
     
-   
-    for (Message *message in [fetchedResultsController fetchedObjects]) {
+    //sort messages by date.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sentDate" ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+	
+	NSMutableArray *sortedMessages = [[NSMutableArray alloc] initWithArray:[_conversation.messages allObjects]];
+	[sortedMessages sortUsingDescriptors:sortDescriptors];
+	    
+	[sortDescriptor release];
+	[sortDescriptors release];
+	
+    
+    for (Message *message in sortedMessages) {
         [self addMessage:message];
     }
+    [sortedMessages release];
     
     // TODO: Implement check-box edit mode like iPhone Messages does. (Icebox)
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -201,7 +204,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated]; // below: work around for [chatContent flashScrollIndicators]
-    [chatContent performSelector:@selector(flashScrollIndicators) withObject:nil afterDelay:0.0];
+    [_chatContent performSelector:@selector(flashScrollIndicators) withObject:nil afterDelay:0.0];
     [self scrollToBottomAnimated:NO];
 }
 
@@ -218,7 +221,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
 
     [super setEditing:(BOOL)editing animated:(BOOL)animated];
-    [chatContent setEditing:(BOOL)editing animated:(BOOL)animated]; // forward method call
+    [_chatContent setEditing:(BOOL)editing animated:(BOOL)animated]; // forward method call
 //    chatContent.separatorStyle = editing ?
 //            UITableViewCellSeparatorStyleSingleLine : UITableViewCellSeparatorStyleNone;
     
@@ -380,7 +383,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSInteger bottomRow = [cellMap count] - 1;
     if (bottomRow >= 0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:bottomRow inSection:0];
-        [chatContent scrollToRowAtIndexPath:indexPath
+        [_chatContent scrollToRowAtIndexPath:indexPath
                            atScrollPosition:UITableViewScrollPositionBottom animated:animated];
     }
 }
@@ -393,7 +396,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     if(textMessage.object) {
         Message *msg = (Message *)[NSEntityDescription
                                    insertNewObjectForEntityForName:@"Message"
-                                   inManagedObjectContext:managedObjectContext];
+                                   inManagedObjectContext:self.conversation.managedObjectContext];
         msg.text = [NSString stringWithFormat:@"%@", textMessage.object];
         NSDate *now = [[NSDate alloc] init]; 
         msg.sentDate = now;
@@ -405,17 +408,46 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         
         // here there are some delegate methods whichwill save and display message!
         NSError *error;
-        if (![managedObjectContext save:&error]) { 
+        
+        [_conversation addMessagesObject:msg];
+        if (![self.conversation.managedObjectContext save:&error]) { 
             // TODO: Handle the error appropriately.
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
+        [self clearChatInput];
+        // to calculate our height and insert new message.
+        NSUInteger cellCount = [cellMap count];
+        NSArray *indexPaths;
+        NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:cellCount inSection:0];
+        
+        if ([self addMessage:msg] == 1) {
+            // NSLog(@"insert 1 row at index: %d", cellCount);
+            indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath, nil];
+        } else { // 2
+            // NSLog(@"insert 2 rows at index: %d", cellCount);
+            indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath,
+                          [NSIndexPath indexPathForRow:cellCount+1 inSection:0], nil];
+        }
+        
+        [_chatContent insertRowsAtIndexPaths:indexPaths
+                            withRowAnimation:UITableViewRowAnimationNone];
+        [indexPaths release];
+        
+        // must come after RESET_CHAT_BAR_HEIGHT above.
+        [self scrollToBottomAnimated:YES]; 
+        
+        // Play sound or buzz, depending on user settings.
+        NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
+        CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
+        AudioServicesCreateSystemSoundID(baseURL, &receiveMessageSound);
+        AudioServicesPlaySystemSound(receiveMessageSound);
+        AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
     }
 }
 
 
 - (void)sendMessage {
-
-    
     // TODO: Show progress indicator like iPhone Message app does. (Icebox)
     // [activityIndicator startAnimating];
     
@@ -430,7 +462,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // Create new message and save to Core Data and display by core data delegate methods.
     Message *newMessage = (Message *)[NSEntityDescription
                                       insertNewObjectForEntityForName:@"Message"
-                                      inManagedObjectContext:managedObjectContext];
+                                      inManagedObjectContext:self.conversation.managedObjectContext];
     newMessage.text = rightTrimmedMessage;
     NSDate *now = [[NSDate alloc] init]; 
     newMessage.sentDate = now; 
@@ -439,26 +471,50 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     newMessage.messageStatus = FALSE;
     [now release];
 
+    [_conversation addMessagesObject:newMessage];
+    
     NSError *error;
-    if (![managedObjectContext save:&error]) {
+    if (![self.conversation.managedObjectContext save:&error]) {
         // TODO: Handle the error appropriately.
         NSLog(@"sendMessage error %@, %@", error, [error userInfo]);
     }
+    
+
     
     // will send to facebook!
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];   
     [delegate sendMessageToFacebook:rightTrimmedMessage withFriendFacebookID:self.facebookID];
     
     [self clearChatInput];
-    [self scrollToBottomAnimated:YES]; // must come after RESET_CHAT_BAR_HEIGHT above
+
+    // to calculate our height and insert new message.
+    NSUInteger cellCount = [cellMap count];
+    NSArray *indexPaths;
+    NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:cellCount inSection:0];
+    
+    if ([self addMessage:newMessage] == 1) {
+        // NSLog(@"insert 1 row at index: %d", cellCount);
+        indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath, nil];
+    } else { // 2
+        // NSLog(@"insert 2 rows at index: %d", cellCount);
+        indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath,
+                      [NSIndexPath indexPathForRow:cellCount+1 inSection:0], nil];
+    }
+    
+    [_chatContent insertRowsAtIndexPaths:indexPaths
+                        withRowAnimation:UITableViewRowAnimationNone];
+    [indexPaths release];
+
+    // must come after RESET_CHAT_BAR_HEIGHT above.
+    [self scrollToBottomAnimated:YES]; 
     
     // Play sound or buzz, depending on user settings.
     NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
     CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
     AudioServicesCreateSystemSoundID(baseURL, &receiveMessageSound);
     AudioServicesPlaySystemSound(receiveMessageSound);
-    // AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
-    // AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
+    AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
 }
 
 
@@ -523,8 +579,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     BOOL isLastObject = index == cellMapCount;
     BOOL prevIsDate = [[cellMap objectAtIndex:prevIndex] isKindOfClass:[NSDate class]];
+      /*
+       if (isLastObject && prevIsDate || prevIsDate && ([[cellMap objectAtIndex:index] isKindOfClass:[NSDate class]])) {
+      */
     
-    if (isLastObject && prevIsDate || prevIsDate && ([[cellMap objectAtIndex:index] isKindOfClass:[NSDate class]])) {
+    if ((isLastObject && prevIsDate) || (prevIsDate && ([[cellMap objectAtIndex:index] isKindOfClass:[NSDate class]]))) {
         [cellMap removeObjectAtIndex:prevIndex];
         numberOfObjectsRemoved = 2;
     }
@@ -538,7 +597,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                               otherButtonTitles:nil];
 	
 	// use the same style as the nav bar
-	confirm.actionSheetStyle = self.navigationController.navigationBar.barStyle;
+	confirm.actionSheetStyle = (UIActionSheetStyle)self.navigationController.navigationBar.barStyle;
     
     [confirm showFromBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
 //    [confirm showInView:self.view];
@@ -553,22 +612,24 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	switch (buttonIndex) {
 		case ClearConversationButtonIndex: {
             NSError *error;
-            fetchedResultsController.delegate = nil;               // turn off delegate callbacks
-            for (Message *message in [fetchedResultsController fetchedObjects]) {
-                [managedObjectContext deleteObject:message];
+
+            for (Message *message in self.conversation.messages) {
+                [self.conversation.managedObjectContext deleteObject:message];
             }
-            if (![managedObjectContext save:&error]) {
+            if (![self.conversation.managedObjectContext save:&error]) {
                 // TODO: Handle the error appropriately.
                 NSLog(@"Delete message error %@, %@", error, [error userInfo]);
             }
-            fetchedResultsController.delegate = self;              // reconnect after mass delete
+
+            /*
             if (![fetchedResultsController performFetch:&error]) { // resync controller
                 // TODO: Handle the error appropriately.
                 NSLog(@"fetchResults error %@, %@", error, [error userInfo]);
             }
+            */
             
             [cellMap removeAllObjects];
-            [chatContent reloadData];
+            [_chatContent reloadData];
             
             [self setEditing:NO animated:NO];
             break;
@@ -594,7 +655,7 @@ static NSString *kMessageCell = @"MessageCell";
     UIImageView *msgBackground;
     UILabel *msgText;
     
-    NSObject *object = [cellMap objectAtIndex:[indexPath row]];
+    NSObject *object = (NSObject*)[cellMap objectAtIndex:[indexPath row]];
     UITableViewCell *cell;
     
     // Handle sentDate (NSDate).
@@ -718,7 +779,7 @@ static NSString *kMessageCell = @"MessageCell";
     if (![(Message *)object read]) { // not read, so save as read
         [(Message *)object setRead:[NSNumber numberWithBool:YES]];
         NSError *error;
-        if (![managedObjectContext save:&error]) {
+        if (![self.conversation.managedObjectContext save:&error]) {
             // TODO: Handle the error appropriately.
             NSLog(@"Save message as read error %@, %@", error, [error userInfo]);
         }
@@ -732,9 +793,9 @@ static NSString *kMessageCell = @"MessageCell";
 //    return [[tableView cellForRowAtIndexPath:indexPath] reuseIdentifier] == kMessageCell;
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView
-commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSObject *object = [cellMap objectAtIndex:[indexPath row]];
@@ -745,9 +806,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //        NSLog(@"Delete %@", object);
         
         // Remove message from managed object context by index path.
-        [managedObjectContext deleteObject:(Message *)object];
+        [self.conversation.managedObjectContext deleteObject:(Message *)object];
         NSError *error;
-        if (![managedObjectContext save:&error]) {
+        if (![self.conversation.managedObjectContext save:&error]) {
             // TODO: Handle the error appropriately.
             NSLog(@"Delete message error %@, %@", error, [error userInfo]);
         }
@@ -782,6 +843,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
 }
 
+/*
 #pragma mark NSFetchedResultsController
 
 - (void)fetchResults {
@@ -806,7 +868,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     fetchedResultsController = [[NSFetchedResultsController alloc]
                                 initWithFetchRequest:fetchRequest
                                 managedObjectContext:managedObjectContext
-                                sectionNameKeyPath:nil /* one section */ cacheName:@"Message"];
+                                sectionNameKeyPath:nil cacheName:@"Message"];
     [fetchRequest release];
     
     fetchedResultsController.delegate = self;
@@ -817,7 +879,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         NSLog(@"fetchResults error %@, %@", error, [error userInfo]);
     }
 }    
-
+*/
 #pragma mark NSFetchedResultsControllerDelegate
 
 // // beginUpdates & endUpdates cause the cells to get mixed up when scrolling aggressively.
@@ -846,7 +908,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                               [NSIndexPath indexPathForRow:cellCount+1 inSection:0], nil];
             }
             
-            [chatContent insertRowsAtIndexPaths:indexPaths
+            [_chatContent insertRowsAtIndexPaths:indexPaths
                                withRowAnimation:UITableViewRowAnimationNone];
             [indexPaths release];
             [self scrollToBottomAnimated:YES];
@@ -866,7 +928,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                               [NSIndexPath indexPathForRow:objectIndex-1 inSection:0], nil];
             }
             
-            [chatContent deleteRowsAtIndexPaths:indexPaths
+            [_chatContent deleteRowsAtIndexPaths:indexPaths
                                withRowAnimation:UITableViewRowAnimationNone];
             [indexPaths release];
             break;

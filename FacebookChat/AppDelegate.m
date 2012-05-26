@@ -91,9 +91,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Facebook Delegate
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -126,9 +124,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.statusLabel.text = @"Facebook login failed";
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark XMPPStream Delegate
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma mark send message to Facebook.
 
 - (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
 
@@ -144,6 +141,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
+
+#pragma mark XMPPStream Delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);

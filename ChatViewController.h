@@ -2,15 +2,15 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @class Message;
+@class Conversation;
 
-@interface ChatViewController : UIViewController <NSFetchedResultsControllerDelegate,
+@interface ChatViewController : UIViewController <
 UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDelegate> {
-    
-    NSString *facebookID; 
+    NSMutableArray *messages; 
 }
 
 @property (nonatomic, retain) NSString *facebookID;
-
+@property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, assign) SystemSoundID receiveMessageSound;
 
 @property (nonatomic, retain) UITableView *chatContent;
@@ -22,8 +22,6 @@ UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDel
 
 @property (nonatomic, copy) NSMutableArray *cellMap;
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 - (void)enableSendButton;
 - (void)disableSendButton;
@@ -39,7 +37,5 @@ UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDel
 - (NSUInteger)addMessage:(Message *)message;
 - (NSUInteger)removeMessageAtIndex:(NSUInteger)index;
 - (void)clearAll;
-
-- (void)fetchResults;
 
 @end

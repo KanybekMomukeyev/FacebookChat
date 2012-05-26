@@ -11,6 +11,8 @@
 #import <CoreData/CoreData.h>
 
 @class DetailViewController;
+@class Conversation;
+
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, FBRequestDelegate,
  FBDialogDelegate>
 {    
@@ -22,4 +24,5 @@
 @property (retain, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (Conversation*)findConversationWithId:(NSString*)facebookId;
 @end

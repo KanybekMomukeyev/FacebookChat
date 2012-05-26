@@ -5,6 +5,7 @@
 
 @dynamic lastMessage;
 @dynamic messages;
+@dynamic facebookId;
 
 - (void)addMessagesObject:(Message *)value {    
     NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];

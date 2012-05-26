@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "ChatViewController.h"
 #import "EGOImageView.h"
+#import "Conversation.h"
 
 @implementation MasterViewController
 
@@ -28,10 +29,6 @@
 							
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:@"messageCome" 
-                                                  object:nil];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:@"facebookAuthorized" 
                                                   object:nil];
@@ -53,45 +50,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    // Set up the edit and add buttons.
-    /*
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(apiGraphFriends)] autorelease];
-    self.navigationItem.rightBarButtonItem = addButton;
-    */
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:) name:@"messageCome" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(apiGraphFriends) name:@"facebookAuthorized" object:nil];
+    
+    NSError *error = nil;
+	if (![[self fetchedResultsController] performFetch:&error]) {
+		
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}	
 }
-
 
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
 }
-#pragma mark - Private Methods
 
-- (UIImage *)imageForObject:(NSString *)objectID {
-    // Get the object image
-    NSString *url = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture",objectID];
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
-    [url release];
-    return image;
-}
-
-
-- (void)messageReceived:(NSNotification*)textMessage {
-    //NSLog(@"message received!=%@",textMessage);
-}
 
 #pragma mark - Facebook API Calls
 
 - (void)apiGraphFriends {
-
-    // Do not set current API as this is commonly called by other methods
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [[delegate facebook] requestWithGraphPath:@"me/friends" andDelegate:self];
 }
@@ -101,6 +80,7 @@
 
 - (void)request:(FBRequest *)request didLoad:(id)result {
     
+
     if ([result isKindOfClass:[NSArray class]] && ([result count] > 0)) {
         result = [result objectAtIndex:0];
     }
@@ -109,15 +89,52 @@
     NSArray *resultData = [result objectForKey:@"data"];
     
     if ([resultData count] > 0) {
-        for (NSUInteger i=0; i<[resultData count]; i++) {
-            [userFriends addObject:[resultData objectAtIndex:i]];
-        }
+        [userFriends addObjectsFromArray:resultData];
     } 
     else {
         NSLog(@"User has no friends");
     }
     
-    NSLog(@"%@",userFriends);
+    
+    // ok, here one moment.
+    // There are facebook friends, we should create conversation to them, if our conversation is empty.
+    // if our conversation is not emty, then what ?
+
+    
+    NSArray *array = [__fetchedResultsController fetchedObjects];
+    
+    if([array count] == 0) {
+        // our local cached conversation is empty.
+        for (NSDictionary *facebookId in userFriends) {
+            
+            NSString *frienId = [[facebookId objectForKey:@"id"] copy];
+            Conversation *conversation = (Conversation *)[NSEntityDescription
+                                                          insertNewObjectForEntityForName:@"Conversation"
+                                                          inManagedObjectContext:self.managedObjectContext];
+            conversation.facebookId = frienId;
+            [frienId release];
+        }
+        
+        
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) { 
+            // TODO: Handle the error appropriately.
+            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+        }
+
+        
+    }else if ([array count] == [userFriends count]) {
+        // our local cached conversation same as facebook friends.
+        
+        
+    }else if([array count] > [userFriends count]) {
+        // our local cached conversation less than facebook friends.
+        
+        
+    }else if([array count] < [userFriends count]) {
+        // our local cached conversation greater than facebook friends.
+        
+    }    
     [self.tableView reloadData];
 }
 
@@ -126,16 +143,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
-    //return [[self.fetchedResultsController sections] count];
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [userFriends count];
-    
-    //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    //return [sectionInfo numberOfObjects];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 // Customize the appearance of table view cells.
@@ -155,17 +169,14 @@
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
     
     EGOImageView *imageView = [[EGOImageView alloc] initWithPlaceholderImage:nil];
-
     NSString *url = [[NSString alloc] 
                      initWithFormat:@"https://graph.facebook.com/%@/picture",[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
     NSURL *imageUrl = [NSURL URLWithString:url];
     [url release];
     [imageView setImageURL:imageUrl];
-    
     cell.imageView.image = imageView.image;
-    
     [imageView release];
-    //cell.imageView.image = [self imageForObject:[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
+
     //[self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -206,26 +217,30 @@
     return NO;
 }
 
+- (Conversation*)findConversationWithId:(NSString*)facebookId {
+    for(Conversation *conversation in [__fetchedResultsController fetchedObjects]) {
+        if([conversation.facebookId isEqualToString:facebookId]) {
+            return  conversation;
+        }
+    }
+    return nil;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *facebookID = [[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"] copy];
+    Conversation *conv = [[self findConversationWithId:facebookID] retain];
     
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
-    chatViewController.managedObjectContext = __managedObjectContext;
+    //chatViewController.managedObjectContext = __managedObjectContext;
+    chatViewController.conversation = conv;
     chatViewController.facebookID = facebookID;
-    [self.navigationController pushViewController:chatViewController animated:YES];
-
-    [facebookID release];
-    [chatViewController release];
     
-    /*
-    if (!self.detailViewController) {
-        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil] autorelease];
-    }
-    NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    self.detailViewController.detailItem = selectedObject;    
-    [self.navigationController pushViewController:self.detailViewController animated:YES];
-     */
+    [self.navigationController pushViewController:chatViewController animated:YES];
+    
+    [facebookID release];
+    [conv release];
+    [chatViewController release];
 }
 
 
@@ -241,14 +256,14 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Conversation" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO] autorelease];
+    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"lastMessage" ascending:NO] autorelease];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -332,35 +347,36 @@
     [self.tableView reloadData];
 }
  */
-
+/*
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
+    //NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    //cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
 }
-
+*/
+/*
 - (void)insertNewObject
 {
     // Create a new instance of the entity managed by the fetched results controller.
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Conversation" inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
     
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
-        /*
+        
          Replace this implementation with code to handle the error appropriately.
          
          abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-         */
+ 
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
 }
-
+*/
 @end
