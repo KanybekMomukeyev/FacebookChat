@@ -5,6 +5,7 @@
 
 @dynamic lastMessage;
 @dynamic messages;
+@dynamic facebookName;
 @dynamic facebookId;
 @dynamic badgeNumber;
 

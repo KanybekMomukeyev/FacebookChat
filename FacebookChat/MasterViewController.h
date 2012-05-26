@@ -14,8 +14,7 @@
 @class Conversation;
 
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, FBRequestDelegate,
- FBDialogDelegate>
-{}
+ FBDialogDelegate>{}
 
 @property (retain, nonatomic) DetailViewController *detailViewController;
 @property (retain, nonatomic) NSFetchedResultsController *fetchedResultsController;

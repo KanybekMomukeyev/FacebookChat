@@ -117,14 +117,20 @@
     
     if([array count] == 0) {
         // our local cached conversation is empty.
-        for (NSDictionary *facebookId in resultData) {
+        for (NSDictionary *facebookData in resultData) {
             
-            NSString *frienId = [[facebookId objectForKey:@"id"] copy];
+            NSString *name = [[facebookData objectForKey:@"name"] copy];
+            NSString *frienId = [[facebookData objectForKey:@"id"] copy];
+            
             Conversation *conversation = (Conversation *)[NSEntityDescription
                                                           insertNewObjectForEntityForName:@"Conversation"
                                                           inManagedObjectContext:self.managedObjectContext];
             conversation.facebookId = frienId;
+            conversation.facebookName = name;
+            
             conversation.badgeNumber = [NSNumber numberWithInt:0];
+            
+            [name release];
             [frienId release];
         }
         
@@ -219,7 +225,7 @@
     }
     
     Conversation *conv = (Conversation *)[__fetchedResultsController objectAtIndexPath:indexPath];    
-    cell.textLabel.text = [NSString stringWithFormat:@"id = %@",conv.facebookId];
+    cell.textLabel.text = [NSString stringWithFormat:@" %@",conv.facebookName];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
     
     // for badges

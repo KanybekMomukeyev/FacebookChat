@@ -6,6 +6,7 @@
 
 @property (nonatomic, retain) id lastMessage;
 @property (nonatomic, retain) NSSet *messages;
+@property (nonatomic, retain) NSString *facebookName;
 @property (nonatomic, retain) NSString *facebookId;
 @property (nonatomic, retain) NSNumber *badgeNumber;
 
