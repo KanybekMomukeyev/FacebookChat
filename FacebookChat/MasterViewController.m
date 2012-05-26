@@ -347,13 +347,13 @@
     [self.tableView reloadData];
 }
  */
-/*
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     //NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
 }
-*/
+
 /*
 - (void)insertNewObject
 {
