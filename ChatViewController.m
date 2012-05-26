@@ -45,7 +45,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @implementation ChatViewController
 
 @synthesize receiveMessageSound;
-@synthesize facebookID = _facebookID;
 @synthesize conversation = _conversation;
 
 @synthesize chatContent = _chatContent;
@@ -88,7 +87,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)viewDidUnload {
 
     self.chatContent = nil;
-    self.facebookID = nil;
     self.chatBar = nil;
     self.chatInput = nil;
     self.sendButton = nil;
@@ -101,6 +99,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [super viewDidLoad];
     
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    
+    // empty our badge number.
+    _conversation.badgeNumber = [NSNumber numberWithInt:0];
+    NSError *error;
+    if (![_conversation.managedObjectContext save:&error]) { 
+        NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+    }
     
     // Listen for keyboard.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
@@ -401,7 +406,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSString *facebookID = [NSString stringWithFormat:@"%@",[[newStr componentsSeparatedByString:@"@"] objectAtIndex:0]];
     
     // if message is not empty and sender is same with our _facebookID.
-    if([message isChatMessageWithBody]&&[facebookID isEqualToString:_facebookID]) {
+    if([message isChatMessageWithBody]&&([facebookID isEqualToString:_conversation.facebookId])) {
         
         Message *msg = (Message *)[NSEntityDescription
                                    insertNewObjectForEntityForName:@"Message"
@@ -493,7 +498,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     // will send to facebook!
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];   
-    [delegate sendMessageToFacebook:rightTrimmedMessage withFriendFacebookID:self.facebookID];
+    [delegate sendMessageToFacebook:rightTrimmedMessage withFriendFacebookID:_conversation.facebookId];
     
     [self clearChatInput];
 

@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "ChatViewController.h"
 #import "EGOImageView.h"
+#import "TDBadgedCell.h"
 #import "Conversation.h"
 #import "Message.h"
 #import "XMPP.h"
@@ -46,10 +47,23 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    /*
+    NSError *error = nil;
+	if (![[self fetchedResultsController] performFetch:&error]) {
+		
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}	
+    [self.tableView reloadData];
+     */
+}
 
 - (void)viewDidLoad
 {
@@ -91,15 +105,8 @@
         result = [result objectAtIndex:0];
     }
     
-    userFriends = [[NSMutableArray alloc] init];
+
     NSArray *resultData = [result objectForKey:@"data"];
-    
-    if ([resultData count] > 0) {
-        [userFriends addObjectsFromArray:resultData];
-    } 
-    else {
-        NSLog(@"User has no friends");
-    }
     
     // ok, here one moment.
     // There are facebook friends, we should create conversation to them, if our conversation is empty.
@@ -110,13 +117,14 @@
     
     if([array count] == 0) {
         // our local cached conversation is empty.
-        for (NSDictionary *facebookId in userFriends) {
+        for (NSDictionary *facebookId in resultData) {
             
             NSString *frienId = [[facebookId objectForKey:@"id"] copy];
             Conversation *conversation = (Conversation *)[NSEntityDescription
                                                           insertNewObjectForEntityForName:@"Conversation"
                                                           inManagedObjectContext:self.managedObjectContext];
             conversation.facebookId = frienId;
+            conversation.badgeNumber = [NSNumber numberWithInt:0];
             [frienId release];
         }
         
@@ -126,11 +134,11 @@
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
 
-    }else if ([array count] == [userFriends count]) {
+    }else if ([array count] == [resultData count]) {
         // our local cached conversation same as facebook friends.
-    }else if([array count] > [userFriends count]) {
+    }else if([array count] > [resultData count]) {
         // our local cached conversation less than facebook friends.
-    }else if([array count] < [userFriends count]) {
+    }else if([array count] < [resultData count]) {
         // our local cached conversation greater than facebook friends.
     }    
     [self.tableView reloadData];
@@ -143,10 +151,11 @@
     XMPPMessage *message = textMessage.object;        
     if([message isChatMessageWithBody]) {
         
-        NSLog(@"%@",[message fromStr]);
         NSString *adressString = [NSString stringWithFormat:@"%@",[message fromStr]];
         NSString *newStr = [adressString substringWithRange:NSMakeRange(1, [adressString length]-1)];
         NSString *facebookID = [NSString stringWithFormat:@"%@",[[newStr componentsSeparatedByString:@"@"] objectAtIndex:0]];
+       
+        NSLog(@"FACEBOOK_ID:%@",facebookID);
         
         Conversation *conversation = [[self findConversationWithId:facebookID] retain];
         
@@ -159,13 +168,19 @@
         // message did come, this will be on left
         msg.messageStatus = TRUE;
         
+        int badgeNumber = [conversation.badgeNumber intValue];
+        badgeNumber++;
+        conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];
+        
         [conversation addMessagesObject:msg];        
         NSError *error;
         if (![conversation.managedObjectContext save:&error]) { 
             // TODO: Handle the error appropriately.
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
+        
         [conversation release];
+        [self.tableView reloadData];
     }
 }
 
@@ -197,20 +212,26 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-
-    NSString *facebookName = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"name"];
-    NSString *facebookID = [[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"];
-    cell.textLabel.text = [NSString stringWithFormat:@"name = %@ id = %@",facebookName, facebookID];
+    
+    Conversation *conv = (Conversation *)[__fetchedResultsController objectAtIndexPath:indexPath];    
+    cell.textLabel.text = [NSString stringWithFormat:@"id = %@",conv.facebookId];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
+    
+    // for badges
+    if([conv.badgeNumber intValue] != 0) {
+        cell.badgeString = [NSString stringWithFormat:@"%d", [conv.badgeNumber intValue]];
+        cell.badgeColor = [UIColor colorWithRed:0.197 green:0.592 blue:0.219 alpha:1.000];
+        cell.badge.radius = 9;
+    }
     
     EGOImageView *imageView = [[EGOImageView alloc] initWithPlaceholderImage:nil];
     NSString *url = [[NSString alloc] 
-                     initWithFormat:@"https://graph.facebook.com/%@/picture",[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"]];
+                     initWithFormat:@"https://graph.facebook.com/%@/picture",conv.facebookId];
     NSURL *imageUrl = [NSURL URLWithString:url];
     [url release];
     [imageView setImageURL:imageUrl];
@@ -258,17 +279,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *facebookID = [[[userFriends objectAtIndex:indexPath.row] objectForKey:@"id"] copy];
-    Conversation *conv = [[self findConversationWithId:facebookID] retain];
-    
+{    
+    Conversation *conv = (Conversation *)[__fetchedResultsController objectAtIndexPath:indexPath];    
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
     chatViewController.conversation = conv;
-    chatViewController.facebookID = facebookID;
-    
+
     [self.navigationController pushViewController:chatViewController animated:YES];
-    
-    [facebookID release];
     [conv release];
     [chatViewController release];
 }

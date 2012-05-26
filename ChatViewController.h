@@ -9,7 +9,6 @@ UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDel
     NSMutableArray *messages; 
 }
 
-@property (nonatomic, retain) NSString *facebookID;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, assign) SystemSoundID receiveMessageSound;
 
