@@ -125,23 +125,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 
-#pragma mark send message to Facebook.
-
-- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
-
-    if([textMessage length] > 0) {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:textMessage];
-        
-        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
-        [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
-        [message addChild:body];
-        [xmppStream sendElement:message];
-    }
-}
-
-
 #pragma mark XMPPStream Delegate
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
@@ -231,10 +214,30 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message 
 {
-    NSString *body = [[message elementForName:@"body"] stringValue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:body];
+    
+    // ok, one moment here:  
+    // we recived message, our all conversation data stores in Core Data. 
+    // what we have :  
+    //              (1) Facebook ID of sender, so we will use it.
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:message];
 }
 
+#pragma mark send message to Facebook.
+
+- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
+    
+    if([textMessage length] > 0) {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:textMessage];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
+        [message addChild:body];
+        [xmppStream sendElement:message];
+    }
+}
 
 #pragma mark - Core Data stack
 
