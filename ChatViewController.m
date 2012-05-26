@@ -458,6 +458,14 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         AudioServicesPlaySystemSound(receiveMessageSound);
         AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
+        
+
+        // empty our badge number.
+        _conversation.badgeNumber = [NSNumber numberWithInt:0];
+        NSError *errorSave;
+        if (![_conversation.managedObjectContext save:&errorSave]) { 
+            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
+        }
     }
 }
 

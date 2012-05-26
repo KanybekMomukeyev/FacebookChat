@@ -54,7 +54,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    /*
     NSError *error = nil;
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		
@@ -62,7 +61,6 @@
 		abort();
 	}	
     [self.tableView reloadData];
-     */
 }
 
 - (void)viewDidLoad
@@ -217,13 +215,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    
-    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
+    TDBadgedCell *cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
     Conversation *conv = (Conversation *)[__fetchedResultsController objectAtIndexPath:indexPath];    
     cell.textLabel.text = [NSString stringWithFormat:@" %@",conv.facebookName];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0];
@@ -291,7 +285,6 @@
     chatViewController.conversation = conv;
 
     [self.navigationController pushViewController:chatViewController animated:YES];
-    [conv release];
     [chatViewController release];
 }
 
