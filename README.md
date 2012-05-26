@@ -29,5 +29,6 @@ Unit Tests: https://github.com/gabriel/gh-unit
 
 
 ------
-This is project not finished yet.
+This project is under development.
+
 
