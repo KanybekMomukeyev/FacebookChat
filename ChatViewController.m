@@ -4,6 +4,7 @@
 #import "Conversation.h"
 #import "NSString+Additions.h"
 #import "AppDelegate.h"
+#import "XMPP.h"
 
 // Exact same color as native iPhone Messages app.
 // Achieved by taking a screen shot of the iPhone by pressing Home & Sleep buttons together.
@@ -391,13 +392,19 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark Message
 
 - (void)messageReceived:(NSNotification*)textMessage {
+    
     NSLog(@"message received!");
+    //XMPPMessage *message = textMessage.object;        
+    //NSString *str = [NSString stringWithFormat:@"%@",[[textMessage.object elementForName:@"body"] stringValue]];
     
     if(textMessage.object) {
         Message *msg = (Message *)[NSEntityDescription
                                    insertNewObjectForEntityForName:@"Message"
                                    inManagedObjectContext:self.conversation.managedObjectContext];
-        msg.text = [NSString stringWithFormat:@"%@", textMessage.object];
+        
+        //XMPPMessage *message = textMessage.object;        
+        //[NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
+        msg.text = [NSString stringWithFormat:@"%@",textMessage.object]; 
         NSDate *now = [[NSDate alloc] init]; 
         msg.sentDate = now;
         
