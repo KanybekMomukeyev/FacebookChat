@@ -15,13 +15,13 @@ To cache messages, conversations used Core Data.
 
 --- TODO: -----
 
-(1) Implement Delete message in ChatViewController.
-(2) Facebook, local Database synchronization.
-(3) Show green dot, if our friends online.
-(4) Sync with MasterViewController and ChatViewController, there are double messages when.
-(5) 
+(1) Facebook, local Database synchronization.
+(2) Show green dot, if our friends online.
+(3) Sync with MasterViewController and ChatViewController, there are double messages when.
+(4) When comming message, firstResponder change to UIView, so you can not able to write message to the end.
 
-(6) In new branch MagicalRecord we will use more easy way of Core Data,
+
+(5) In new branch MagicalRecord we will use more easy way of Core Data,
 Magical Record:   https://github.com/magicalpanda/MagicalRecord
 
 Also

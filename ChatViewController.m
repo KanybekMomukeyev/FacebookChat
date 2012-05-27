@@ -813,21 +813,35 @@ static NSString *kMessageCell = @"MessageCell";
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return [[cellMap objectAtIndex:[indexPath row]] isKindOfClass:[Message class]];
-//    return [[tableView cellForRowAtIndexPath:indexPath] reuseIdentifier] == kMessageCell;
+    // return [[tableView cellForRowAtIndexPath:indexPath] reuseIdentifier] == kMessageCell;
 }
 
 
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        
+        NSArray *indexPaths;    
+        if ([self removeMessageAtIndex:indexPath.row] == 1) {
+            // NSLog(@"delete 1 row");
+            indexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
+        } else { 
+            // 2
+            // NSLog(@"delete 2 rows");
+            indexPaths = [[NSArray alloc] initWithObjects:indexPath,
+                          [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:0], nil];
+        }
+        
+        [_chatContent deleteRowsAtIndexPaths:indexPaths
+                            withRowAnimation:UITableViewRowAnimationNone];
+        [indexPaths release];
         NSObject *object = [cellMap objectAtIndex:[indexPath row]];
         if ([object isKindOfClass:[NSDate class]]) {
             return;
         }
-        
-//        NSLog(@"Delete %@", object);
-        
         // Remove message from managed object context by index path.
         [self.conversation.managedObjectContext deleteObject:(Message *)object];
         NSError *error;
