@@ -66,7 +66,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(apiGraphFriends) name:@"facebookAuthorized" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:)
                                                  name:@"messageCome" object:nil];
@@ -110,7 +109,6 @@
     // There are facebook friends, we should create conversation to them, if our conversation is empty.
     // if our conversation is not emty, then what ?
 
-    
     NSArray *array = [__fetchedResultsController fetchedObjects];
     
     if([array count] == 0) {
@@ -142,9 +140,23 @@
         // our local cached conversation same as facebook friends.
     }else if([array count] > [resultData count]) {
         // our local cached conversation less than facebook friends.
+        // here unwanted facebook friend removed, so we should
+        // delete him, from our local cache.
+        
+        // algorithm:
+        // (1) find, which facebook friend is removed.
+        // (2) delete him, and save cache.
+        
     }else if([array count] < [resultData count]) {
         // our local cached conversation greater than facebook friends.
+        // here new facebook friend added, so we should add him,
+        // to our local cache.
+        
+        // algorithm:
+        // (1) find, which facebook friend is added.
+        // (2) add him, and save cache.
     }    
+    
     [self.tableView reloadData];
 }
 
@@ -172,6 +184,7 @@
         // message did come, this will be on left
         msg.messageStatus = TRUE;
         
+        // increase badge number.
         int badgeNumber = [conversation.badgeNumber intValue];
         badgeNumber++;
         conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];

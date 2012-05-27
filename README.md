@@ -17,8 +17,8 @@ To cache messages, conversations used Core Data.
 
 (1) Facebook, local Database synchronization.
 (2) Show green dot, if our friends online.
-(3) Sync with MasterViewController and ChatViewController, there are double messages when.
-(4) When comming message, firstResponder change to UIView, so you can not able to write message to the end.
+(3) Sync with MasterViewController and ChatViewController, there are double messages written to cache when.
+(4) When comming message, firstResponder changes to UIView, so you can not able to write message to the end.
 
 
 (5) In new branch MagicalRecord we will use more easy way of Core Data,

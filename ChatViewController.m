@@ -23,7 +23,7 @@
     [UIView beginAnimations:nil context:NULL];\
     [UIView setAnimationDuration:0.1f];\
     _chatContent.frame = chatContentFrame;\
-    chatBar.frame = CGRectMake(chatBar.frame.origin.x, chatContentFrame.size.height,\
+    _chatBar.frame = CGRectMake(_chatBar.frame.origin.x, chatContentFrame.size.height,\
             VIEW_WIDTH, HEIGHT);\
     [UIView commitAnimations]
 
@@ -44,14 +44,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 @implementation ChatViewController
 
-@synthesize receiveMessageSound;
+@synthesize receiveMessageSound = _receiveMessageSound;
 @synthesize conversation = _conversation;
-
 @synthesize chatContent = _chatContent;
-@synthesize chatBar;
-@synthesize chatInput;
-@synthesize previousContentHeight;
-@synthesize sendButton;
+@synthesize chatBar = _chatBar;
+@synthesize chatInput = _chatInput;
+@synthesize previousContentHeight = _previousContentHeight;
+@synthesize sendButton = _sendButton;
 
 @synthesize cellMap;
 
@@ -59,12 +58,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark NSObject
 
 - (void)dealloc {
-    if (receiveMessageSound) AudioServicesDisposeSystemSoundID(receiveMessageSound);
+    if (_receiveMessageSound) AudioServicesDisposeSystemSoundID(_receiveMessageSound);
     
     [_chatContent release];
-    [chatBar release];
-    [chatInput release];
-    [sendButton release];
+    [_chatBar release];
+    [_chatInput release];
+    [_sendButton release];
     [cellMap release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self 
@@ -133,53 +132,53 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [self.view addSubview:_chatContent];
     
     // Create chatBar.
-    chatBar = [[UIImageView alloc] initWithFrame:
+    _chatBar = [[UIImageView alloc] initWithFrame:
                CGRectMake(0.0f, self.view.frame.size.height-kChatBarHeight1,
                           self.view.frame.size.width, kChatBarHeight1)];
-    chatBar.clearsContextBeforeDrawing = NO;
-    chatBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin |
+    _chatBar.clearsContextBeforeDrawing = NO;
+    _chatBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin |
     UIViewAutoresizingFlexibleWidth;
-    chatBar.image = [[UIImage imageNamed:@"ChatBar.png"]
+    _chatBar.image = [[UIImage imageNamed:@"ChatBar.png"]
                      stretchableImageWithLeftCapWidth:18 topCapHeight:20];
-    chatBar.userInteractionEnabled = YES;
+    _chatBar.userInteractionEnabled = YES;
     
     // Create chatInput.
-    chatInput = [[UITextView alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 234.0f, 22.0f)];
-    chatInput.contentSize = CGSizeMake(234.0f, 22.0f);
-    chatInput.delegate = self;
-    chatInput.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    chatInput.scrollEnabled = NO; // not initially
-    chatInput.scrollIndicatorInsets = UIEdgeInsetsMake(5.0f, 0.0f, 4.0f, -2.0f);
-    chatInput.clearsContextBeforeDrawing = NO;
-    chatInput.font = [UIFont systemFontOfSize:kMessageFontSize];
-    chatInput.dataDetectorTypes = UIDataDetectorTypeAll;
-    chatInput.backgroundColor = [UIColor clearColor];
-    previousContentHeight = chatInput.contentSize.height;
-    [chatBar addSubview:chatInput];
+    _chatInput = [[UITextView alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 234.0f, 22.0f)];
+    _chatInput.contentSize = CGSizeMake(234.0f, 22.0f);
+    _chatInput.delegate = self;
+    _chatInput.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _chatInput.scrollEnabled = NO; // not initially
+    _chatInput.scrollIndicatorInsets = UIEdgeInsetsMake(5.0f, 0.0f, 4.0f, -2.0f);
+    _chatInput.clearsContextBeforeDrawing = NO;
+    _chatInput.font = [UIFont systemFontOfSize:kMessageFontSize];
+    _chatInput.dataDetectorTypes = UIDataDetectorTypeAll;
+    _chatInput.backgroundColor = [UIColor clearColor];
+    _previousContentHeight = _chatInput.contentSize.height;
+    [_chatBar addSubview:_chatInput];
     
     // Create sendButton.
-    sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-    sendButton.clearsContextBeforeDrawing = NO;
-    sendButton.frame = CGRectMake(chatBar.frame.size.width - 70.0f, 8.0f, 64.0f, 26.0f);
-    sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | // multi-line input
+    _sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _sendButton.clearsContextBeforeDrawing = NO;
+    _sendButton.frame = CGRectMake(_chatBar.frame.size.width - 70.0f, 8.0f, 64.0f, 26.0f);
+    _sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | // multi-line input
     UIViewAutoresizingFlexibleLeftMargin;                       // landscape
     UIImage *sendButtonBackground = [UIImage imageNamed:@"SendButton.png"];
-    [sendButton setBackgroundImage:sendButtonBackground forState:UIControlStateNormal];
-    [sendButton setBackgroundImage:sendButtonBackground forState:UIControlStateDisabled];
-    sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
-    sendButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
-    [sendButton setTitle:@"Send" forState:UIControlStateNormal];
+    [_sendButton setBackgroundImage:sendButtonBackground forState:UIControlStateNormal];
+    [_sendButton setBackgroundImage:sendButtonBackground forState:UIControlStateDisabled];
+    _sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+    _sendButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+    [_sendButton setTitle:@"Send" forState:UIControlStateNormal];
     UIColor *shadowColor = [[UIColor alloc] initWithRed:0.325f green:0.463f blue:0.675f alpha:1.0f];
-    [sendButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
+    [_sendButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
     [shadowColor release];
-    [sendButton addTarget:self action:@selector(sendMessage)
+    [_sendButton addTarget:self action:@selector(sendMessage)
          forControlEvents:UIControlEventTouchUpInside];
     
     [self resetSendButton]; // disable initially
-    [chatBar addSubview:sendButton];
+    [_chatBar addSubview:_sendButton];
     
-    [self.view addSubview:chatBar];
-    [self.view sendSubviewToBack:chatBar];
+    [self.view addSubview:_chatBar];
+    [self.view sendSubviewToBack:_chatBar];
         
     
     // Construct cellMap from fetchedObjects.
@@ -217,7 +216,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)viewDidDisappear:(BOOL)animated {
     
     [super viewDidDisappear:animated];
-    [chatInput resignFirstResponder];
+    [_chatInput resignFirstResponder];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -267,28 +266,28 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         //        }
         
         // Resize textView to contentHeight
-        if (contentHeight != previousContentHeight) {
+        if (contentHeight != _previousContentHeight) {
             if (contentHeight <= kContentHeightMax) { // limit chatInputHeight <= 4 lines
                 CGFloat chatBarHeight = contentHeight + 18.0f;
                 SET_CHAT_BAR_HEIGHT(chatBarHeight);
-                if (previousContentHeight > kContentHeightMax) {
+                if (_previousContentHeight > kContentHeightMax) {
                     textView.scrollEnabled = NO;
                 }
                 textView.contentOffset = CGPointMake(0.0f, 6.0f); // fix quirk
                 [self scrollToBottomAnimated:YES];
-           } else if (previousContentHeight <= kContentHeightMax) { // grow
+           } else if (_previousContentHeight <= kContentHeightMax) { // grow
                 textView.scrollEnabled = YES;
                 textView.contentOffset = CGPointMake(0.0f, contentHeight-68.0f); // shift to bottom
-                if (previousContentHeight < kContentHeightMax) {
+                if (_previousContentHeight < kContentHeightMax) {
                     EXPAND_CHAT_BAR_HEIGHT;
                     [self scrollToBottomAnimated:YES];
                 }
             }
         }
     } else { // textView is empty
-        if (previousContentHeight > 22.0f) {
+        if (_previousContentHeight > 22.0f) {
             RESET_CHAT_BAR_HEIGHT;
-            if (previousContentHeight > kContentHeightMax) {
+            if (_previousContentHeight > kContentHeightMax) {
                 textView.scrollEnabled = NO;
             }
         }
@@ -301,8 +300,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     } else {
         [self disableSendButton];
     }
-    
-    previousContentHeight = contentHeight;
+    _previousContentHeight = contentHeight;
 }
 
 // Fix a scrolling quirk.
@@ -317,23 +315,23 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)enableSendButton {
 
-    if (sendButton.enabled == NO) {
-        sendButton.enabled = YES;
-        sendButton.titleLabel.alpha = 1.0f;
+    if (_sendButton.enabled == NO) {
+        _sendButton.enabled = YES;
+        _sendButton.titleLabel.alpha = 1.0f;
     }
 }
 
 - (void)disableSendButton {
 
-    if (sendButton.enabled == YES) {
+    if (_sendButton.enabled == YES) {
         [self resetSendButton];
     }
 }
 
 - (void)resetSendButton {
 
-    sendButton.enabled = NO;
-    sendButton.titleLabel.alpha = 0.5f; // Sam S. says 0.4f
+    _sendButton.enabled = NO;
+    _sendButton.titleLabel.alpha = 0.5f; // Sam S. says 0.4f
 }
 
 
@@ -380,8 +378,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [self scrollToBottomAnimated:YES];
     
-    chatInput.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
-    chatInput.contentOffset = CGPointMake(0.0f, 6.0f); // fix quirk
+    _chatInput.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
+    _chatInput.contentOffset = CGPointMake(0.0f, 6.0f); // fix quirk
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
@@ -454,9 +452,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         // Play sound or buzz, depending on user settings.
         NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
         CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
-        AudioServicesCreateSystemSoundID(baseURL, &receiveMessageSound);
-        AudioServicesPlaySystemSound(receiveMessageSound);
-        AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
+        AudioServicesCreateSystemSoundID(baseURL, &_receiveMessageSound);
+        AudioServicesPlaySystemSound(_receiveMessageSound);
+        AudioServicesPlayAlertSound(_receiveMessageSound);     // use for receiveMessage (sound & vibrate)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
         
 
@@ -474,7 +472,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // TODO: Show progress indicator like iPhone Message app does. (Icebox)
     // [activityIndicator startAnimating];
     
-    NSString *rightTrimmedMessage =[chatInput.text stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
+    NSString *rightTrimmedMessage =[_chatInput.text stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
     
     // Don't send blank messages.
     if (rightTrimmedMessage.length == 0) {
@@ -534,9 +532,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // Play sound or buzz, depending on user settings.
     NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
     CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
-    AudioServicesCreateSystemSoundID(baseURL, &receiveMessageSound);
-    AudioServicesPlaySystemSound(receiveMessageSound);
-    AudioServicesPlayAlertSound(receiveMessageSound);     // use for receiveMessage (sound & vibrate)
+    AudioServicesCreateSystemSoundID(baseURL, &_receiveMessageSound);
+    AudioServicesPlaySystemSound(_receiveMessageSound);
+    AudioServicesPlayAlertSound(_receiveMessageSound);     // use for receiveMessage (sound & vibrate)
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate); // explicit vibrate
 }
 
@@ -544,11 +542,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)clearChatInput {
 
-    chatInput.text = @"";
-    if (previousContentHeight > 22.0f) {
+    _chatInput.text = @"";
+    if (_previousContentHeight > 22.0f) {
         RESET_CHAT_BAR_HEIGHT;
-        chatInput.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
-        chatInput.contentOffset = CGPointMake(0.0f, 6.0f); // fix quirk
+        _chatInput.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f);
+        _chatInput.contentOffset = CGPointMake(0.0f, 6.0f); // fix quirk
         [self scrollToBottomAnimated:YES];       
     }
 }
@@ -816,6 +814,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         
+        NSObject *object = [cellMap objectAtIndex:indexPath.row];
+        if ([object isKindOfClass:[NSDate class]]) {
+            return;
+        }
+        // Remove message from managed object context by index path.
+        [self.conversation.managedObjectContext deleteObject:(Message *)object];
+        NSError *error;
+        if (![self.conversation.managedObjectContext save:&error]) {
+            // TODO: Handle the error appropriately.
+            NSLog(@"Delete message error %@, %@", error, [error userInfo]);
+        }
         
         NSArray *indexPaths;    
         if ([self removeMessageAtIndex:indexPath.row] == 1) {
@@ -831,17 +840,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [_chatContent deleteRowsAtIndexPaths:indexPaths
                             withRowAnimation:UITableViewRowAnimationNone];
         [indexPaths release];
-        NSObject *object = [cellMap objectAtIndex:[indexPath row]];
-        if ([object isKindOfClass:[NSDate class]]) {
-            return;
-        }
-        // Remove message from managed object context by index path.
-        [self.conversation.managedObjectContext deleteObject:(Message *)object];
-        NSError *error;
-        if (![self.conversation.managedObjectContext save:&error]) {
-            // TODO: Handle the error appropriately.
-            NSLog(@"Delete message error %@, %@", error, [error userInfo]);
-        }
     }
 }
 
