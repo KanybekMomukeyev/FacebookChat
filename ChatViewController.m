@@ -643,13 +643,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                 // TODO: Handle the error appropriately.
                 NSLog(@"Delete message error %@, %@", error, [error userInfo]);
             }
-
-            /*
-            if (![fetchedResultsController performFetch:&error]) { // resync controller
-                // TODO: Handle the error appropriately.
-                NSLog(@"fetchResults error %@, %@", error, [error userInfo]);
-            }
-            */
             
             [cellMap removeAllObjects];
             [_chatContent reloadData];
@@ -879,103 +872,5 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     return UITableViewCellEditingStyleNone;
 }
-
-/*
-#pragma mark NSFetchedResultsController
-
-- (void)fetchResults {
-
-    if (fetchedResultsController) return;
-
-    // Create and configure a fetch request.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Message"
-                                              inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Create the sort descriptors array.
-    NSSortDescriptor *tsDesc = [[NSSortDescriptor alloc] initWithKey:@"sentDate" ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:tsDesc, nil];
-    [tsDesc release];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    
-    // Create and initialize the fetchedResultsController.
-    fetchedResultsController = [[NSFetchedResultsController alloc]
-                                initWithFetchRequest:fetchRequest
-                                managedObjectContext:managedObjectContext
-                                sectionNameKeyPath:nil cacheName:@"Message"];
-    [fetchRequest release];
-    
-    fetchedResultsController.delegate = self;
-    
-    NSError *error;
-    if (![fetchedResultsController performFetch:&error]) {
-        // TODO: Handle the error appropriately.
-        NSLog(@"fetchResults error %@, %@", error, [error userInfo]);
-    }
-}    
-*/
-#pragma mark NSFetchedResultsControllerDelegate
-
-// // beginUpdates & endUpdates cause the cells to get mixed up when scrolling aggressively.
-//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-//    [chatContent beginUpdates];
-//}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-
-    
-    NSArray *indexPaths;
-    switch(type) {
-        case NSFetchedResultsChangeInsert: {
-            NSUInteger cellCount = [cellMap count];
-            
-            NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:cellCount inSection:0];
-            
-            if ([self addMessage:anObject] == 1) {
-                // NSLog(@"insert 1 row at index: %d", cellCount);
-                indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath, nil];
-            } else { // 2
-                // NSLog(@"insert 2 rows at index: %d", cellCount);
-                indexPaths = [[NSArray alloc] initWithObjects:firstIndexPath,
-                              [NSIndexPath indexPathForRow:cellCount+1 inSection:0], nil];
-            }
-            
-            [_chatContent insertRowsAtIndexPaths:indexPaths
-                               withRowAnimation:UITableViewRowAnimationNone];
-            [indexPaths release];
-            [self scrollToBottomAnimated:YES];
-            break;
-        }
-        case NSFetchedResultsChangeDelete: {
-            NSUInteger objectIndex = [cellMap indexOfObjectIdenticalTo:anObject];
-            NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:objectIndex inSection:0];
-            
-            if ([self removeMessageAtIndex:objectIndex] == 1) {
-                // NSLog(@"delete 1 row");
-                indexPaths = [[NSArray alloc] initWithObjects:objectIndexPath, nil];
-            } else { 
-                // 2
-                // NSLog(@"delete 2 rows");
-                indexPaths = [[NSArray alloc] initWithObjects:objectIndexPath,
-                              [NSIndexPath indexPathForRow:objectIndex-1 inSection:0], nil];
-            }
-            
-            [_chatContent deleteRowsAtIndexPaths:indexPaths
-                               withRowAnimation:UITableViewRowAnimationNone];
-            [indexPaths release];
-            break;
-        }
-    }
-}
-
-// // beginUpdates & endUpdates cause the cells to get mixed up when scrolling aggressively.
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-//    [chatContent endUpdates];
-//}
 
 @end
