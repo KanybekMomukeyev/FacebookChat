@@ -255,14 +255,13 @@
     return cell;
 }
 
-/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
-*/
+
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -321,7 +320,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"lastMessage" ascending:NO] autorelease];
+    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"facebookName" ascending:NO] autorelease];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
