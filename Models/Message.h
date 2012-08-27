@@ -1,5 +1,5 @@
 @interface Message : NSManagedObject {
-
+    BOOL messageStatus;
 }
 
 @property (nonatomic, retain) NSDate *sentDate;
