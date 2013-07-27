@@ -66,17 +66,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [_sendButton release];
     [cellMap release];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:UIKeyboardWillShowNotification 
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                    name:@"messageCome" 
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [super dealloc];
 }
@@ -84,14 +74,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #pragma mark UIViewController
 
 - (void)viewDidUnload {
-
+    [super viewDidUnload];
+    
     self.chatContent = nil;
     self.chatBar = nil;
     self.chatInput = nil;
     self.sendButton = nil;
     self.cellMap = nil;
-
-    [super viewDidUnload];
 }
 
 - (void)viewDidLoad {
@@ -127,8 +116,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     _chatContent.contentInset = UIEdgeInsetsMake(7.0f, 0.0f, 0.0f, 0.0f);
     _chatContent.backgroundColor = CHAT_BACKGROUND_COLOR;
     _chatContent.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _chatContent.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-    UIViewAutoresizingFlexibleHeight;
+    _chatContent.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_chatContent];
     
     // Create chatBar.
