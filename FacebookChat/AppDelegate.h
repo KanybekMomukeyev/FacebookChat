@@ -7,28 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FBConnect.h"
 
-@class XMPPStream;
-@interface AppDelegate : UIResponder <UIApplicationDelegate,FBSessionDelegate> {
-    XMPPStream *xmppStream;
-    
-    BOOL allowSelfSignedCertificates;
-	BOOL allowSSLHostNameMismatch;
-    
-    UILabel *statusLabel;
-}
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {}
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID;
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
-
 @property (strong, nonatomic) UINavigationController *navigationController;
-@property (nonatomic, strong) Facebook *facebook;
+
 @end

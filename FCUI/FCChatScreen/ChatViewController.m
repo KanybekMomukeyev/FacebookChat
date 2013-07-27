@@ -6,6 +6,10 @@
 #import "AppDelegate.h"
 #import "XMPP.h"
 
+
+#import "FCBaseChatRequestManager.h"
+#import "FCAPIController.h"
+
 // Exact same color as native iPhone Messages app.
 // Achieved by taking a screen shot of the iPhone by pressing Home & Sleep buttons together.
 // Then, emailed the image to myself and used Mac's native DigitalColor Meter app.
@@ -476,9 +480,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
 
     
-    // will send to facebook!
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];   
-    [delegate sendMessageToFacebook:rightTrimmedMessage withFriendFacebookID:_conversation.facebookId];
+    // will send to facebook!    
+    [[[FCAPIController sharedInstance] chatRequestManager] sendMessageToFacebook:rightTrimmedMessage
+                                                            withFriendFacebookID:_conversation.facebookId];
     
     [self clearChatInput];
 

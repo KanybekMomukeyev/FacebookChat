@@ -24,6 +24,9 @@ To cache messages, conversations used Core Data.
 
 (2) Show green dot, if our friends online.
 
+
+BUGS:
+
 (3) Sync with MasterViewController and ChatViewController, there are double messages written to cache when.
 
 (4) When comming message, firstResponder changes to UIView, so you can not able to write message to the end.

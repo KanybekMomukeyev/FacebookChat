@@ -23,8 +23,6 @@
 		A85ABB4717A4462900BEF168 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4517A4462900BEF168 /* MasterViewController.m */; };
 		A85ABB4817A4462900BEF168 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A85ABB4617A4462900BEF168 /* MasterViewController.xib */; };
 		A85ABB4C17A448E500BEF168 /* FCAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4B17A448E500BEF168 /* FCAPIController.m */; };
-		A85ABB4F17A4495800BEF168 /* FCBaseDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4E17A4495800BEF168 /* FCBaseDataStoreManager.m */; };
-		A85ABB5217A4497D00BEF168 /* FCBaseChatRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB5117A4497D00BEF168 /* FCBaseChatRequestManager.m */; };
 		A85ABBD517A44B1F00BEF168 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB5617A44B1F00BEF168 /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A85ABBD617A44B1F00BEF168 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB5817A44B1F00BEF168 /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A85ABBD717A44B1F00BEF168 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB5A17A44B1F00BEF168 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -71,6 +69,10 @@
 		A85ABC0017A44B1F00BEF168 /* XMPPIDTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABBCF17A44B1F00BEF168 /* XMPPIDTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A85ABC0117A44B1F00BEF168 /* XMPPSRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABBD217A44B1F00BEF168 /* XMPPSRVResolver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A85ABC0217A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABBD417A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A85ABC0B17A4506400BEF168 /* FCBaseChatRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC0717A4506400BEF168 /* FCBaseChatRequestManager.m */; };
+		A85ABC0C17A4506400BEF168 /* FCBaseDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC0A17A4506400BEF168 /* FCBaseDataStoreManager.m */; };
+		A85ABC0F17A4513B00BEF168 /* FCChatDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC0E17A4513B00BEF168 /* FCChatDataStoreManager.m */; };
+		A85ABC1317A4558500BEF168 /* FCFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC1217A4558500BEF168 /* FCFacebookManager.m */; };
 		A8A1786817A4322B00EA2C23 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785D17A4322B00EA2C23 /* basicsound.wav */; };
 		A8A1786917A4322B00EA2C23 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785E17A4322B00EA2C23 /* ChatBar.png */; };
 		A8A1786A17A4322B00EA2C23 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */; };
@@ -108,10 +110,6 @@
 		A85ABB4617A4462900BEF168 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
 		A85ABB4A17A448E500BEF168 /* FCAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCAPIController.h; sourceTree = "<group>"; };
 		A85ABB4B17A448E500BEF168 /* FCAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCAPIController.m; sourceTree = "<group>"; };
-		A85ABB4D17A4495800BEF168 /* FCBaseDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseDataStoreManager.h; sourceTree = "<group>"; };
-		A85ABB4E17A4495800BEF168 /* FCBaseDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseDataStoreManager.m; sourceTree = "<group>"; };
-		A85ABB5017A4497D00BEF168 /* FCBaseChatRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseChatRequestManager.h; sourceTree = "<group>"; };
-		A85ABB5117A4497D00BEF168 /* FCBaseChatRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseChatRequestManager.m; sourceTree = "<group>"; };
 		A85ABB5517A44B1F00BEF168 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		A85ABB5617A44B1F00BEF168 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		A85ABB5717A44B1F00BEF168 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
@@ -214,6 +212,16 @@
 		A85ABBD217A44B1F00BEF168 /* XMPPSRVResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPSRVResolver.m; sourceTree = "<group>"; };
 		A85ABBD317A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPXFacebookPlatformAuthentication.h; sourceTree = "<group>"; };
 		A85ABBD417A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPXFacebookPlatformAuthentication.m; sourceTree = "<group>"; };
+		A85ABC0317A44F5100BEF168 /* BlocksTypedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocksTypedefs.h; sourceTree = "<group>"; };
+		A85ABC0417A44F5100BEF168 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		A85ABC0617A4506400BEF168 /* FCBaseChatRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseChatRequestManager.h; sourceTree = "<group>"; };
+		A85ABC0717A4506400BEF168 /* FCBaseChatRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseChatRequestManager.m; sourceTree = "<group>"; };
+		A85ABC0917A4506400BEF168 /* FCBaseDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseDataStoreManager.h; sourceTree = "<group>"; };
+		A85ABC0A17A4506400BEF168 /* FCBaseDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseDataStoreManager.m; sourceTree = "<group>"; };
+		A85ABC0D17A4513B00BEF168 /* FCChatDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCChatDataStoreManager.h; sourceTree = "<group>"; };
+		A85ABC0E17A4513B00BEF168 /* FCChatDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCChatDataStoreManager.m; sourceTree = "<group>"; };
+		A85ABC1117A4558500BEF168 /* FCFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFacebookManager.h; sourceTree = "<group>"; };
+		A85ABC1217A4558500BEF168 /* FCFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFacebookManager.m; sourceTree = "<group>"; };
 		A8A1785D17A4322B00EA2C23 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
 		A8A1785E17A4322B00EA2C23 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
 		A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
@@ -327,10 +335,9 @@
 			children = (
 				A85ABB4A17A448E500BEF168 /* FCAPIController.h */,
 				A85ABB4B17A448E500BEF168 /* FCAPIController.m */,
-				A85ABB4D17A4495800BEF168 /* FCBaseDataStoreManager.h */,
-				A85ABB4E17A4495800BEF168 /* FCBaseDataStoreManager.m */,
-				A85ABB5017A4497D00BEF168 /* FCBaseChatRequestManager.h */,
-				A85ABB5117A4497D00BEF168 /* FCBaseChatRequestManager.m */,
+				A85ABC1017A4556D00BEF168 /* FCFacebookManager */,
+				A85ABC0517A4506400BEF168 /* FCChatRequestManager */,
+				A85ABC0817A4506400BEF168 /* FCDatabaseManager */,
 			);
 			path = FCNetworking;
 			sourceTree = SOURCE_ROOT;
@@ -588,6 +595,35 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		A85ABC0517A4506400BEF168 /* FCChatRequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				A85ABC0617A4506400BEF168 /* FCBaseChatRequestManager.h */,
+				A85ABC0717A4506400BEF168 /* FCBaseChatRequestManager.m */,
+			);
+			path = FCChatRequestManager;
+			sourceTree = "<group>";
+		};
+		A85ABC0817A4506400BEF168 /* FCDatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				A85ABC0917A4506400BEF168 /* FCBaseDataStoreManager.h */,
+				A85ABC0A17A4506400BEF168 /* FCBaseDataStoreManager.m */,
+				A85ABC0D17A4513B00BEF168 /* FCChatDataStoreManager.h */,
+				A85ABC0E17A4513B00BEF168 /* FCChatDataStoreManager.m */,
+			);
+			path = FCDatabaseManager;
+			sourceTree = "<group>";
+		};
+		A85ABC1017A4556D00BEF168 /* FCFacebookManager */ = {
+			isa = PBXGroup;
+			children = (
+				A85ABC1117A4558500BEF168 /* FCFacebookManager.h */,
+				A85ABC1217A4558500BEF168 /* FCFacebookManager.m */,
+			);
+			path = FCFacebookManager;
+			sourceTree = "<group>";
+		};
 		A8A1785817A4322B00EA2C23 /* FCUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +670,8 @@
 		A8A1786517A4322B00EA2C23 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A85ABC0317A44F5100BEF168 /* BlocksTypedefs.h */,
+				A85ABC0417A44F5100BEF168 /* Singleton.h */,
 				A8A1786617A4322B00EA2C23 /* NSString+Additions.h */,
 				A8A1786717A4322B00EA2C23 /* NSString+Additions.m */,
 			);
@@ -735,8 +773,6 @@
 				A85ABB4217A43AB200BEF168 /* FCModel.xcdatamodeld in Sources */,
 				A85ABB4717A4462900BEF168 /* MasterViewController.m in Sources */,
 				A85ABB4C17A448E500BEF168 /* FCAPIController.m in Sources */,
-				A85ABB4F17A4495800BEF168 /* FCBaseDataStoreManager.m in Sources */,
-				A85ABB5217A4497D00BEF168 /* FCBaseChatRequestManager.m in Sources */,
 				A85ABBD517A44B1F00BEF168 /* EGOCache.m in Sources */,
 				A85ABBD617A44B1F00BEF168 /* EGOImageLoadConnection.m in Sources */,
 				A85ABBD717A44B1F00BEF168 /* EGOImageLoader.m in Sources */,
@@ -781,6 +817,10 @@
 				A85ABC0017A44B1F00BEF168 /* XMPPIDTracker.m in Sources */,
 				A85ABC0117A44B1F00BEF168 /* XMPPSRVResolver.m in Sources */,
 				A85ABC0217A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
+				A85ABC0B17A4506400BEF168 /* FCBaseChatRequestManager.m in Sources */,
+				A85ABC0C17A4506400BEF168 /* FCBaseDataStoreManager.m in Sources */,
+				A85ABC0F17A4513B00BEF168 /* FCChatDataStoreManager.m in Sources */,
+				A85ABC1317A4558500BEF168 /* FCFacebookManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

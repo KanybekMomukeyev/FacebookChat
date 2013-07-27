@@ -13,12 +13,14 @@
 #import "Conversation.h"
 #import "Message.h"
 #import "XMPP.h"
+#import "FCAPIController.h"
+#import "FCFacebookManager.h"
 
 @implementation MasterViewController
 
 @synthesize detailViewController = _detailViewController;
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize managedObjectContext = __managedObjectContext;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,9 +80,10 @@
 
 #pragma mark - Facebook API Calls
 
-- (void)apiGraphFriends {
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[delegate facebook] requestWithGraphPath:@"me/friends" andDelegate:self];
+- (void)apiGraphFriends
+{
+    [[[FCAPIController sharedInstance] facebookManager].facebook requestWithGraphPath:@"me/friends"
+                                                                          andDelegate:self];
 }
 
 
