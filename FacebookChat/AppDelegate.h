@@ -31,5 +31,5 @@
 
 @property (retain, nonatomic) UINavigationController *navigationController;
 @property (nonatomic, retain) Facebook *facebook;
-@property (nonatomic,retain) UILabel *statusLabel;
+@property (nonatomic, retain) UILabel *statusLabel;
 @end
