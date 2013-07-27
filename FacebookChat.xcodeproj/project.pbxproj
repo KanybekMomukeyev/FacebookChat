@@ -18,13 +18,9 @@
 		A8013ECE14C5692800B557E0 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8013ECC14C5692800B557E0 /* MasterViewController.xib */; };
 		A8013EED14C569BF00B557E0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013EEC14C569BF00B557E0 /* CFNetwork.framework */; };
 		A8013F4514C56B0C00B557E0 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A8013F4414C56B0C00B557E0 /* libresolv.dylib */; };
-		A801401814C59C9400B557E0 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401414C59C9400B557E0 /* Conversation.m */; };
-		A801401914C59C9400B557E0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401614C59C9400B557E0 /* Message.m */; };
-		A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A801401B14C59CAE00B557E0 /* ChatViewController.m */; };
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
 		A81A4881156FF04300492E4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.md */; };
 		A83714C3157153C500838DFD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83714C2157153C500838DFD /* QuartzCore.framework */; };
-		A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */; };
 		A8A1786817A4322B00EA2C23 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785D17A4322B00EA2C23 /* basicsound.wav */; };
 		A8A1786917A4322B00EA2C23 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785E17A4322B00EA2C23 /* ChatBar.png */; };
 		A8A1786A17A4322B00EA2C23 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */; };
@@ -80,6 +76,10 @@
 		A8A1791D17A4324200EA2C23 /* XMPPIDTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178EC17A4324200EA2C23 /* XMPPIDTracker.m */; };
 		A8A1791E17A4324200EA2C23 /* XMPPSRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178EF17A4324200EA2C23 /* XMPPSRVResolver.m */; };
 		A8A1791F17A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178F117A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m */; };
+		A8A1792617A4349600EA2C23 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */; };
+		A8A1792717A4349600EA2C23 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792317A4349600EA2C23 /* Conversation.m */; };
+		A8A1792817A4349600EA2C23 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792517A4349600EA2C23 /* Message.m */; };
+		A8A1792C17A4357100EA2C23 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792B17A4357100EA2C23 /* ChatViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,16 +99,9 @@
 		A8013ECD14C5692800B557E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
 		A8013EEC14C569BF00B557E0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		A8013F4414C56B0C00B557E0 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
-		A801401314C59C9400B557E0 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		A801401414C59C9400B557E0 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
-		A801401514C59C9400B557E0 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		A801401614C59C9400B557E0 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		A801401A14C59CAE00B557E0 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		A801401B14C59CAE00B557E0 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A81A4880156FF04300492E4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A83714C2157153C500838DFD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AcaniChat.xcdatamodel; sourceTree = "<group>"; };
 		A8A1785D17A4322B00EA2C23 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
 		A8A1785E17A4322B00EA2C23 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
 		A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
@@ -221,6 +214,12 @@
 		A8A178EF17A4324200EA2C23 /* XMPPSRVResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPSRVResolver.m; sourceTree = "<group>"; };
 		A8A178F017A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPXFacebookPlatformAuthentication.h; sourceTree = "<group>"; };
 		A8A178F117A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPXFacebookPlatformAuthentication.m; sourceTree = "<group>"; };
+		A8A1792217A4349600EA2C23 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		A8A1792317A4349600EA2C23 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		A8A1792417A4349600EA2C23 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		A8A1792517A4349600EA2C23 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		A8A1792A17A4357100EA2C23 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		A8A1792B17A4357100EA2C23 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,11 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				A8A1785617A42EDE00EA2C23 /* 3RD_Library */,
-				A8A1785717A4322B00EA2C23 /* FCNetworking */,
-				A8A1785817A4322B00EA2C23 /* FCUI */,
-				A8A1785B17A4322B00EA2C23 /* Images */,
-				A8A1786517A4322B00EA2C23 /* Utils */,
-				A8013FF914C59C2100B557E0 /* ChatMessage */,
 				A8013EB714C5692800B557E0 /* FacebookChat */,
 				A8013EAE14C5692800B557E0 /* Frameworks */,
 				A8013EAC14C5692800B557E0 /* Products */,
@@ -284,6 +278,11 @@
 		A8013EB714C5692800B557E0 /* FacebookChat */ = {
 			isa = PBXGroup;
 			children = (
+				A8A1792017A4349600EA2C23 /* Models */,
+				A8A1785717A4322B00EA2C23 /* FCNetworking */,
+				A8A1785817A4322B00EA2C23 /* FCUI */,
+				A8A1785B17A4322B00EA2C23 /* Images */,
+				A8A1786517A4322B00EA2C23 /* Utils */,
 				A8013EC014C5692800B557E0 /* AppDelegate.h */,
 				A8013EC114C5692800B557E0 /* AppDelegate.m */,
 				A8013EC614C5692800B557E0 /* MasterViewController.h */,
@@ -306,28 +305,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A8013FF914C59C2100B557E0 /* ChatMessage */ = {
-			isa = PBXGroup;
-			children = (
-				A801401A14C59CAE00B557E0 /* ChatViewController.h */,
-				A801401B14C59CAE00B557E0 /* ChatViewController.m */,
-				A801401014C59C9400B557E0 /* Models */,
-			);
-			name = ChatMessage;
-			sourceTree = "<group>";
-		};
-		A801401014C59C9400B557E0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A801401314C59C9400B557E0 /* Conversation.h */,
-				A801401414C59C9400B557E0 /* Conversation.m */,
-				A801401514C59C9400B557E0 /* Message.h */,
-				A801401614C59C9400B557E0 /* Message.m */,
-				A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		A8A1785617A42EDE00EA2C23 /* 3RD_Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,7 +321,8 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = FCNetworking;
+			name = FCNetworking;
+			path = ../FCNetworking;
 			sourceTree = "<group>";
 		};
 		A8A1785817A4322B00EA2C23 /* FCUI */ = {
@@ -353,12 +331,15 @@
 				A8A1785917A4322B00EA2C23 /* FCChatScreen */,
 				A8A1785A17A4322B00EA2C23 /* FCMainScreen */,
 			);
-			path = FCUI;
+			name = FCUI;
+			path = ../FCUI;
 			sourceTree = "<group>";
 		};
 		A8A1785917A4322B00EA2C23 /* FCChatScreen */ = {
 			isa = PBXGroup;
 			children = (
+				A8A1792A17A4357100EA2C23 /* ChatViewController.h */,
+				A8A1792B17A4357100EA2C23 /* ChatViewController.m */,
 			);
 			path = FCChatScreen;
 			sourceTree = "<group>";
@@ -375,7 +356,8 @@
 			children = (
 				A8A1785C17A4322B00EA2C23 /* Resources */,
 			);
-			path = Images;
+			name = Images;
+			path = ../Images;
 			sourceTree = "<group>";
 		};
 		A8A1785C17A4322B00EA2C23 /* Resources */ = {
@@ -399,7 +381,8 @@
 				A8A1786617A4322B00EA2C23 /* NSString+Additions.h */,
 				A8A1786717A4322B00EA2C23 /* NSString+Additions.m */,
 			);
-			path = Utils;
+			name = Utils;
+			path = ../Utils;
 			sourceTree = "<group>";
 		};
 		A8A1787117A4324200EA2C23 /* EGOImageView */ = {
@@ -643,6 +626,19 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		A8A1792017A4349600EA2C23 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */,
+				A8A1792217A4349600EA2C23 /* Conversation.h */,
+				A8A1792317A4349600EA2C23 /* Conversation.m */,
+				A8A1792417A4349600EA2C23 /* Message.h */,
+				A8A1792517A4349600EA2C23 /* Message.m */,
+			);
+			name = Models;
+			path = ../Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -718,10 +714,6 @@
 				A8013EBE14C5692800B557E0 /* main.m in Sources */,
 				A8013EC214C5692800B557E0 /* AppDelegate.m in Sources */,
 				A8013EC814C5692800B557E0 /* MasterViewController.m in Sources */,
-				A801401814C59C9400B557E0 /* Conversation.m in Sources */,
-				A801401914C59C9400B557E0 /* Message.m in Sources */,
-				A801401C14C59CAE00B557E0 /* ChatViewController.m in Sources */,
-				A83EEBB114C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld in Sources */,
 				A8A1787017A4322B00EA2C23 /* NSString+Additions.m in Sources */,
 				A8A178F217A4324200EA2C23 /* EGOCache.m in Sources */,
 				A8A178F317A4324200EA2C23 /* EGOImageLoadConnection.m in Sources */,
@@ -767,6 +759,10 @@
 				A8A1791D17A4324200EA2C23 /* XMPPIDTracker.m in Sources */,
 				A8A1791E17A4324200EA2C23 /* XMPPSRVResolver.m in Sources */,
 				A8A1791F17A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
+				A8A1792617A4349600EA2C23 /* AcaniChat.xcdatamodeld in Sources */,
+				A8A1792717A4349600EA2C23 /* Conversation.m in Sources */,
+				A8A1792817A4349600EA2C23 /* Message.m in Sources */,
+				A8A1792C17A4357100EA2C23 /* ChatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,14 +891,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A83EEBAF14C6DA2700A2DEE7 /* AcaniChat.xcdatamodeld */ = {
+		A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */,
 			);
-			currentVersion = A83EEBB014C6DA2700A2DEE7 /* AcaniChat.xcdatamodel */;
-			name = AcaniChat.xcdatamodeld;
-			path = ../FacebookChat/AcaniChat.xcdatamodeld;
+			path = AcaniChat.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
