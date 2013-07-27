@@ -271,7 +271,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"AcaniChat" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"FCModel" withExtension:@"momd"]; //AcaniChat
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }

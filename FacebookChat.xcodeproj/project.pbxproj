@@ -21,6 +21,7 @@
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
 		A81A4881156FF04300492E4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.md */; };
 		A83714C3157153C500838DFD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83714C2157153C500838DFD /* QuartzCore.framework */; };
+		A85ABB4217A43AB200BEF168 /* FCModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4017A43AB200BEF168 /* FCModel.xcdatamodeld */; };
 		A8A1786817A4322B00EA2C23 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785D17A4322B00EA2C23 /* basicsound.wav */; };
 		A8A1786917A4322B00EA2C23 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785E17A4322B00EA2C23 /* ChatBar.png */; };
 		A8A1786A17A4322B00EA2C23 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */; };
@@ -101,6 +102,7 @@
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A81A4880156FF04300492E4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A83714C2157153C500838DFD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A85ABB4117A43AB200BEF168 /* FCModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FCModel.xcdatamodel; sourceTree = "<group>"; };
 		A8A1785D17A4322B00EA2C23 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
 		A8A1785E17A4322B00EA2C23 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
 		A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				A8A1792317A4349600EA2C23 /* Conversation.m */,
 				A8A1792417A4349600EA2C23 /* Message.h */,
 				A8A1792517A4349600EA2C23 /* Message.m */,
+				A85ABB4017A43AB200BEF168 /* FCModel.xcdatamodeld */,
 			);
 			name = Models;
 			path = ../Models;
@@ -760,6 +763,7 @@
 				A8A1792717A4349600EA2C23 /* Conversation.m in Sources */,
 				A8A1792817A4349600EA2C23 /* Message.m in Sources */,
 				A8A1792C17A4357100EA2C23 /* ChatViewController.m in Sources */,
+				A85ABB4217A43AB200BEF168 /* FCModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +890,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A85ABB4017A43AB200BEF168 /* FCModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A85ABB4117A43AB200BEF168 /* FCModel.xcdatamodel */,
+			);
+			currentVersion = A85ABB4117A43AB200BEF168 /* FCModel.xcdatamodel */;
+			path = FCModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A8013EA214C5692800B557E0 /* Project object */;
 }
