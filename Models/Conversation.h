@@ -4,11 +4,11 @@
 
 }
 
-@property (nonatomic, retain) id lastMessage;
-@property (nonatomic, retain) NSSet *messages;
-@property (nonatomic, retain) NSString *facebookName;
-@property (nonatomic, retain) NSString *facebookId;
-@property (nonatomic, retain) NSNumber *badgeNumber;
+@property (nonatomic, strong) id lastMessage;
+@property (nonatomic, strong) NSSet *messages;
+@property (nonatomic, strong) NSString *facebookName;
+@property (nonatomic, strong) NSString *facebookId;
+@property (nonatomic, strong) NSNumber *badgeNumber;
 
 - (void)addMessagesObject:(Message *)value;
 - (void)removeMessagesObject:(Message *)value;

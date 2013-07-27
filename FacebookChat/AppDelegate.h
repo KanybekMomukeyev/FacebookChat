@@ -19,17 +19,16 @@
     UILabel *statusLabel;
 }
 
-@property (retain, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow *window;
 
-@property (readonly, retain, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, retain, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, retain, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
-@property (retain, nonatomic) UINavigationController *navigationController;
-@property (nonatomic, retain) Facebook *facebook;
-@property (nonatomic, retain) UILabel *statusLabel;
+@property (strong, nonatomic) UINavigationController *navigationController;
+@property (nonatomic, strong) Facebook *facebook;
 @end

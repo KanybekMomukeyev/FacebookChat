@@ -60,15 +60,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)dealloc {
     if (_receiveMessageSound) AudioServicesDisposeSystemSoundID(_receiveMessageSound);
     
-    [_chatContent release];
-    [_chatBar release];
-    [_chatInput release];
-    [_sendButton release];
-    [cellMap release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [super dealloc];
 }
 
 #pragma mark UIViewController
@@ -145,7 +139,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [_chatBar addSubview:_chatInput];
     
     // Create sendButton.
-    _sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _sendButton.clearsContextBeforeDrawing = NO;
     _sendButton.frame = CGRectMake(_chatBar.frame.size.width - 70.0f, 8.0f, 64.0f, 26.0f);
     _sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | // multi-line input
@@ -158,7 +152,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [_sendButton setTitle:@"Send" forState:UIControlStateNormal];
     UIColor *shadowColor = [[UIColor alloc] initWithRed:0.325f green:0.463f blue:0.675f alpha:1.0f];
     [_sendButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
-    [shadowColor release];
     [_sendButton addTarget:self action:@selector(sendMessage)
          forControlEvents:UIControlEventTouchUpInside];
     
@@ -182,14 +175,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	NSMutableArray *sortedMessages = [[NSMutableArray alloc] initWithArray:[_conversation.messages allObjects]];
 	[sortedMessages sortUsingDescriptors:sortDescriptors];
 	    
-	[sortDescriptor release];
-	[sortDescriptors release];
 	
     
     for (Message *message in sortedMessages) {
         [self addMessage:message];
     }
-    [sortedMessages release];
     
     // TODO: Implement check-box edit mode like iPhone Messages does. (Icebox)
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -222,7 +212,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         UIBarButtonItem *clearAllButton = BAR_BUTTON(NSLocalizedString(@"Clear All", nil),
                                                      @selector(clearAll));
         self.navigationItem.leftBarButtonItem = clearAllButton;
-        [clearAllButton release];
     } else {
         self.navigationItem.leftBarButtonItem = nil;
     }
@@ -403,8 +392,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         msg.sentDate = now;
         
         // message did come, this will be on left
-        msg.messageStatus = TRUE;
-        [now release];
+        msg.messageStatus = @(TRUE);
         
         [_conversation addMessagesObject:msg];
         
@@ -432,14 +420,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         
         [_chatContent insertRowsAtIndexPaths:indexPaths
                             withRowAnimation:UITableViewRowAnimationNone];
-        [indexPaths release];
         
         // must come after RESET_CHAT_BAR_HEIGHT above.
         [self scrollToBottomAnimated:YES]; 
         
         // Play sound or buzz, depending on user settings.
         NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
-        CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
+        CFURLRef baseURL = (__bridge CFURLRef)[NSURL fileURLWithPath:sendPath];
         AudioServicesCreateSystemSoundID(baseURL, &_receiveMessageSound);
         AudioServicesPlaySystemSound(_receiveMessageSound);
         AudioServicesPlayAlertSound(_receiveMessageSound);     // use for receiveMessage (sound & vibrate)
@@ -478,7 +465,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     // message to sent, this will be on right
     newMessage.messageStatus = FALSE;
-    [now release];
 
     [_conversation addMessagesObject:newMessage];
     
@@ -512,14 +498,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [_chatContent insertRowsAtIndexPaths:indexPaths
                         withRowAnimation:UITableViewRowAnimationNone];
-    [indexPaths release];
 
     // must come after RESET_CHAT_BAR_HEIGHT above.
     [self scrollToBottomAnimated:YES]; 
     
     // Play sound or buzz, depending on user settings.
     NSString *sendPath = [[NSBundle mainBundle] pathForResource:@"basicsound" ofType:@"wav"];
-    CFURLRef baseURL = (CFURLRef)[NSURL fileURLWithPath:sendPath];
+    CFURLRef baseURL = (__bridge CFURLRef)[NSURL fileURLWithPath:sendPath];
     AudioServicesCreateSystemSoundID(baseURL, &_receiveMessageSound);
     AudioServicesPlaySystemSound(_receiveMessageSound);
     AudioServicesPlayAlertSound(_receiveMessageSound);     // use for receiveMessage (sound & vibrate)
@@ -610,7 +595,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [confirm showFromBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
 //    [confirm showInView:self.view];
-	[confirm release];
     
 }
 
@@ -665,8 +649,8 @@ static NSString *kMessageCell = @"MessageCell";
         static NSString *kSentDateCellId = @"SentDateCell";
         cell = [tableView dequeueReusableCellWithIdentifier:kSentDateCellId];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                           reuseIdentifier:kSentDateCellId] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                           reuseIdentifier:kSentDateCellId];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             // Create message sentDate lable
@@ -682,7 +666,6 @@ static NSString *kMessageCell = @"MessageCell";
             msgSentDate.backgroundColor = CHAT_BACKGROUND_COLOR; // clearColor slows performance
             msgSentDate.textColor = [UIColor grayColor];
             [cell addSubview:msgSentDate];
-            [msgSentDate release];
 //            // Uncomment for view layout debugging.
 //            cell.contentView.backgroundColor = [UIColor orangeColor];
 //            msgSentDate.backgroundColor = [UIColor orangeColor];
@@ -699,7 +682,6 @@ static NSString *kMessageCell = @"MessageCell";
             // TODO: Get locale from iPhone system prefs. Then, move this to viewDidAppear.
             NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
             [dateFormatter setLocale:usLocale];
-            [usLocale release];
         }
         
         msgSentDate.text = [dateFormatter stringFromDate:(NSDate *)object];
@@ -710,8 +692,8 @@ static NSString *kMessageCell = @"MessageCell";
     // Handle Message object.
     cell = [tableView dequeueReusableCellWithIdentifier:kMessageCell];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:kMessageCell] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                       reuseIdentifier:kMessageCell];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         // Create message background image view
@@ -720,7 +702,6 @@ static NSString *kMessageCell = @"MessageCell";
         msgBackground.tag = BACKGROUND_TAG;
         msgBackground.backgroundColor = CHAT_BACKGROUND_COLOR; // clearColor slows performance
         [cell.contentView addSubview:msgBackground];
-        [msgBackground release];
         
         // Create message text label
         msgText = [[UILabel alloc] init];
@@ -731,7 +712,6 @@ static NSString *kMessageCell = @"MessageCell";
         msgText.lineBreakMode = UILineBreakModeWordWrap;
         msgText.font = [UIFont systemFontOfSize:kMessageFontSize];
         [cell.contentView addSubview:msgText];
-        [msgText release];
     } else {
         msgBackground = (UIImageView *)[cell.contentView viewWithTag:BACKGROUND_TAG];
         msgText = (UILabel *)[cell.contentView viewWithTag:TEXT_TAG];
@@ -827,7 +807,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         [_chatContent deleteRowsAtIndexPaths:indexPaths
                             withRowAnimation:UITableViewRowAnimationNone];
-        [indexPaths release];
     }
 }
 

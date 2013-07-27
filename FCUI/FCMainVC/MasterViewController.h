@@ -16,9 +16,9 @@
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, FBRequestDelegate,
  FBDialogDelegate>{}
 
-@property (retain, nonatomic) DetailViewController *detailViewController;
-@property (retain, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (retain, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) DetailViewController *detailViewController;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (Conversation*)findConversationWithId:(NSString*)facebookId;

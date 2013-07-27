@@ -9,15 +9,15 @@ UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIActionSheetDel
     NSMutableArray *messages; 
 }
 
-@property (nonatomic, retain) Conversation *conversation;
+@property (nonatomic, strong) Conversation *conversation;
 @property (nonatomic, assign) SystemSoundID receiveMessageSound;
 
-@property (nonatomic, retain) UITableView *chatContent;
+@property (nonatomic, strong) UITableView *chatContent;
 
-@property (nonatomic, retain) UIImageView *chatBar;
-@property (nonatomic, retain) UITextView *chatInput;
+@property (nonatomic, strong) UIImageView *chatBar;
+@property (nonatomic, strong) UITextView *chatInput;
 @property (nonatomic, assign) CGFloat previousContentHeight;
-@property (nonatomic, retain) UIButton *sendButton;
+@property (nonatomic, strong) UIButton *sendButton;
 
 @property (nonatomic, copy) NSMutableArray *cellMap;
 

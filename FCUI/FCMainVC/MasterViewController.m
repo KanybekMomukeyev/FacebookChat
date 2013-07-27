@@ -33,12 +33,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-  
-    [_detailViewController release];
-    [__fetchedResultsController release];
-    [__managedObjectContext release];
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,8 +117,6 @@
             
             conversation.badgeNumber = [NSNumber numberWithInt:0];
             
-            [name release];
-            [frienId release];
         }
         
         NSError *error;
@@ -170,7 +162,7 @@
        
         NSLog(@"FACEBOOK_ID:%@",facebookID);
         
-        Conversation *conversation = [[self findConversationWithId:facebookID] retain];
+        Conversation *conversation = [self findConversationWithId:facebookID];
         
         Message *msg = (Message *)[NSEntityDescription
                                    insertNewObjectForEntityForName:@"Message"
@@ -179,7 +171,7 @@
         msg.text = [NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
         msg.sentDate = [NSDate date];
         // message did come, this will be on left
-        msg.messageStatus = TRUE;
+        msg.messageStatus = @(TRUE);
         
         // increase badge number.
         int badgeNumber = [conversation.badgeNumber intValue];
@@ -193,7 +185,6 @@
             NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
         }
         
-        [conversation release];
         [self.tableView reloadData];
     }
 }
@@ -225,7 +216,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    TDBadgedCell *cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    TDBadgedCell *cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     Conversation *conv = (Conversation *)[__fetchedResultsController objectAtIndexPath:indexPath];    
@@ -243,10 +234,8 @@
     NSString *url = [[NSString alloc] 
                      initWithFormat:@"https://graph.facebook.com/%@/picture",conv.facebookId];
     NSURL *imageUrl = [NSURL URLWithString:url];
-    [url release];
     [imageView setImageURL:imageUrl];
     cell.imageView.image = imageView.image;
-    [imageView release];
 
     //[self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -294,7 +283,6 @@
     chatViewController.conversation = conv;
 
     [self.navigationController pushViewController:chatViewController animated:YES];
-    [chatViewController release];
 }
 
 
@@ -308,7 +296,7 @@
     
     // Set up the fetched results controller.
     // Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Conversation" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -317,14 +305,14 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"facebookName" ascending:NO] autorelease];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"facebookName" ascending:NO];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"] autorelease];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

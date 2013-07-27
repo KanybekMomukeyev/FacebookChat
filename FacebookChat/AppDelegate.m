@@ -23,28 +23,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
 @synthesize facebook = _facebook;
-@synthesize statusLabel;
 
-- (void)dealloc
-{
-    [_window release];
-    [__managedObjectContext release];
-    [__managedObjectModel release];
-    [__persistentStoreCoordinator release];
-    [_navigationController release];
-    [_facebook release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
         
-    MasterViewController *masterViewController = [[[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] autorelease];
-    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
+    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
@@ -58,8 +47,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	_facebook = [[Facebook alloc] initWithAppId:FACEBOOK_APP_ID andDelegate:self];
 	
-    self.statusLabel.text = @"Starting Facebook Authentication";
-    
+    NSLog(@"Starting Facebook Authentication");
 	// Note: Be sure to invoke this AFTER the [self.window makeKeyAndVisible] method call above,
 	//       or nothing will happen.
     [_facebook authorize:[NSArray arrayWithObject:@"xmpp_login"]];
@@ -105,13 +93,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	DDLogVerbose(@"%@: facebook.accessToken: %@", THIS_FILE, _facebook.accessToken);
 	DDLogVerbose(@"%@: facebook.expirationDate: %@", THIS_FILE, _facebook.expirationDate);
 	
-    self.statusLabel.text = @"XMPP connecting...";
-    
+    NSLog(@"XMPP connecting...");
 	NSError *error = nil;
 	if (![xmppStream connect:&error])
 	{
 		DDLogError(@"%@: Error in xmpp connection: %@", THIS_FILE, error);
-        self.statusLabel.text = @"XMPP connect failed";
+        NSLog(@"XMPP connect failed");
 	}
     
     // update the friends in MasterViewController
@@ -121,7 +108,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)fbDidNotLogin:(BOOL)cancelled
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-    self.statusLabel.text = @"Facebook login failed";
+    NSLog(@"Facebook login failed");
 }
 
 
@@ -132,27 +119,25 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
     if (![xmppStream isSecure])
     {
-        self.statusLabel.text = @"XMPP STARTTLS...";
+        NSLog(@"XMPP STARTTLS...");
         NSError *error = nil;
         BOOL result = [xmppStream secureConnection:&error];
         
         if (result == NO)
         {
             DDLogError(@"%@: Error in xmpp STARTTLS: %@", THIS_FILE, error);
-            self.statusLabel.text = @"XMPP STARTTLS failed";
             NSLog(@"XMPP STARTTLS failed");
         }
     } 
     else 
     {
-        self.statusLabel.text = @"XMPP X-FACEBOOK-PLATFORM SASL...";
+        NSLog(@"XMPP X-FACEBOOK-PLATFORM SASL...");
         NSError *error = nil;
         BOOL result = [xmppStream authenticateWithFacebookAccessToken:_facebook.accessToken error:&error];
         
         if (result == NO)
         {
-            DDLogError(@"%@: Error in xmpp auth: %@", THIS_FILE, error);
-            self.statusLabel.text = @"XMPP authentication failed";
+            DDLogError(@"%@: Error in xmpp auth: %@", THIS_FILE, error);            
             NSLog(@"XMPP authentication failed");
         }
     }
@@ -186,7 +171,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)xmppStreamDidSecure:(XMPPStream *)sender
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-    self.statusLabel.text = @"XMPP STARTTLS...";
     NSLog(@"XMPP STARTTLS...");
     
 }
@@ -194,21 +178,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-    self.statusLabel.text = @"XMPP authenticated";
     NSLog(@"XMPP authenticated");
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
 	DDLogVerbose(@"%@: %@ - error: %@", THIS_FILE, THIS_METHOD, error);
-    self.statusLabel.text = @"XMPP authentication failed";
     NSLog(@"XMPP authentication failed");
 }
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-    self.statusLabel.text = @"XMPP disconnected";
     NSLog(@"XMPP disconnected");
 }
 

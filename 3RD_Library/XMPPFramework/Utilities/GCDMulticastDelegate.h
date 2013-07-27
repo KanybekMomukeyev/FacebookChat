@@ -3,7 +3,7 @@
 @class GCDMulticastDelegateEnumerator;
 
 struct GCDMulticastDelegateListNode {
-	id delegate;
+	__unsafe_unretained id delegate;
 	dispatch_queue_t delegateQueue;
 	struct GCDMulticastDelegateListNode * prev;
     struct GCDMulticastDelegateListNode * next;
