@@ -76,7 +76,6 @@
 		A8A1791D17A4324200EA2C23 /* XMPPIDTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178EC17A4324200EA2C23 /* XMPPIDTracker.m */; };
 		A8A1791E17A4324200EA2C23 /* XMPPSRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178EF17A4324200EA2C23 /* XMPPSRVResolver.m */; };
 		A8A1791F17A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A178F117A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m */; };
-		A8A1792617A4349600EA2C23 /* AcaniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */; };
 		A8A1792717A4349600EA2C23 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792317A4349600EA2C23 /* Conversation.m */; };
 		A8A1792817A4349600EA2C23 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792517A4349600EA2C23 /* Message.m */; };
 		A8A1792C17A4357100EA2C23 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A1792B17A4357100EA2C23 /* ChatViewController.m */; };
@@ -629,7 +628,6 @@
 		A8A1792017A4349600EA2C23 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */,
 				A8A1792217A4349600EA2C23 /* Conversation.h */,
 				A8A1792317A4349600EA2C23 /* Conversation.m */,
 				A8A1792417A4349600EA2C23 /* Message.h */,
@@ -759,7 +757,6 @@
 				A8A1791D17A4324200EA2C23 /* XMPPIDTracker.m in Sources */,
 				A8A1791E17A4324200EA2C23 /* XMPPSRVResolver.m in Sources */,
 				A8A1791F17A4324200EA2C23 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
-				A8A1792617A4349600EA2C23 /* AcaniChat.xcdatamodeld in Sources */,
 				A8A1792717A4349600EA2C23 /* Conversation.m in Sources */,
 				A8A1792817A4349600EA2C23 /* Message.m in Sources */,
 				A8A1792C17A4357100EA2C23 /* ChatViewController.m in Sources */,
@@ -889,17 +886,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		A8A1792117A4349600EA2C23 /* AcaniChat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-			);
-			path = AcaniChat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A8013EA214C5692800B557E0 /* Project object */;
 }
