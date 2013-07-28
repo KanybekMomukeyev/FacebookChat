@@ -11,5 +11,8 @@
 
 @interface FCBaseChatRequestManager : NSObject
 @property (readonly, nonatomic, strong) XMPPStream *xmppStream;
-- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID;
+@property (nonatomic, copy) InfoBlock messageHandler;
+
+- (void)sendMessageToFacebook:(NSString*)textMessage
+         withFriendFacebookID:(NSString*)friendID;
 @end

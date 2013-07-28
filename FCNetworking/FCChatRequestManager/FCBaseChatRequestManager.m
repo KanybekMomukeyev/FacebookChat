@@ -24,7 +24,7 @@
 }
 
 
-#pragma mark XMPPStream Delegate
+#pragma mark XMPPStream Delegate methods
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
@@ -108,11 +108,13 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    
     // ok, one moment here:
     // we recived message, our all conversation data stores in Core Data.
     // what we have :
-    //              (1) Facebook ID of sender, so we will use it.
+    // (1) Facebook ID of sender, so we will use it.
+    if (self.messageHandler) {
+        self.messageHandler(message);
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:message];
 }

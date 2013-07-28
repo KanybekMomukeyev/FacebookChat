@@ -10,5 +10,6 @@
 #import "FCBaseDataStoreManager.h"
 
 @interface FCChatDataStoreManager : FCBaseDataStoreManager
-
+- (void)differenceOfFriendsIdWithNewConversation:(NSArray *)friendsArray
+                                  withCompletion:(CompletionBlock)completion;
 @end

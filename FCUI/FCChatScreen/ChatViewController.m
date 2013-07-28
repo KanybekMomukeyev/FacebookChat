@@ -84,8 +84,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-    
+    //self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    self.title = self.conversation.facebookName;
     // empty our badge number.
     _conversation.badgeNumber = [NSNumber numberWithInt:0];
     NSError *error;

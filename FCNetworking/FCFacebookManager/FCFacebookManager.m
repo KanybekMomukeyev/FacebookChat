@@ -10,7 +10,7 @@
 #import "FCAPIController.h"
 #import "FCBaseChatRequestManager.h"
 
-@interface FCFacebookManager() <FBSessionDelegate>
+@interface FCFacebookManager() <FBSessionDelegate, FBRequestDelegate, FBDialogDelegate>
 @end
 
 
@@ -46,10 +46,10 @@
 	{
 		DDLogError(@"%@: Error in xmpp connection: %@", THIS_FILE, error);
         NSLog(@"XMPP connect failed");
+        return;
 	}
     
-    // update the friends in MasterViewController
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"facebookAuthorized" object:nil];
+    [self.facebook requestWithGraphPath:@"me/friends" andDelegate:self];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled
@@ -58,7 +58,35 @@
     NSLog(@"Facebook login failed");
 }
 
-- (void)fbDidLogout{}
-- (void)fbSessionInvalidated{}
+- (void)fbDidLogout {
+}
+
+- (void)fbSessionInvalidated {
+}
+
+
+#pragma mark - FBRequestDelegate Methods
+- (void)request:(FBRequest *)request didLoad:(id)result
+{
+    if ([result isKindOfClass:[NSArray class]] && ([result count] > 0)) {
+        result = [result objectAtIndex:0];
+    }
+    
+    NSArray *resultData = [result objectForKey:@"data"];
+    NSLog(@"%@", resultData);
+    
+    if (self.friendsResponseHandler) {
+        self.friendsResponseHandler(resultData, nil);
+    }
+}
+
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error
+{
+    if (self.friendsResponseHandler) {
+        self.friendsResponseHandler(nil, error);
+    }
+}
+
+
 
 @end

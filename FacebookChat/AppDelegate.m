@@ -7,29 +7,27 @@
 //
 
 #import "AppDelegate.h"
-#import "MasterViewController.h"
 #import "XMPP.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 #import "FCAPIController.h"
 #import "FCChatDataStoreManager.h"
 #import "FCFacebookManager.h"
+#import "FCLoginVC.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyDatabase.sqlite"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
-    masterViewController.managedObjectContext = [[FCAPIController sharedInstance] chatDataStoreManager].managedObjectContext;
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    FCLoginVC *loginVC = [[FCLoginVC alloc] initWithNibName:@"FCLoginVC" bundle:nil];
+    //masterViewController.managedObjectContext = [[FCAPIController sharedInstance] chatDataStoreManager].managedObjectContext;
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    
-    
-    [[[FCAPIController sharedInstance] facebookManager] authorize];
     return YES;
 }
 

@@ -13,3 +13,6 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
 #endif
+
+#import "CoreData+MagicalRecord.h"
+#import "BlocksTypedefs.h"
