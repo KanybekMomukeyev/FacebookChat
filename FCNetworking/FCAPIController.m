@@ -22,7 +22,7 @@
 SINGLETON_GCD(FCAPIController);
 
 
-- (FCBaseDataStoreManager *)chatDataStoreManager {
+- (FCChatDataStoreManager *)chatDataStoreManager {
     if (!_chatDataStoreManager) {
         _chatDataStoreManager = [FCChatDataStoreManager new];
     }

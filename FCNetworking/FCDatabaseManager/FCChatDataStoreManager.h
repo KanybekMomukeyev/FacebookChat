@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FCBaseDataStoreManager.h"
 
-@interface FCChatDataStoreManager : FCBaseDataStoreManager
+@interface FCChatDataStoreManager : NSObject
 - (void)differenceOfFriendsIdWithNewConversation:(NSArray *)friendsArray
                                   withCompletion:(CompletionBlock)completion;
+- (void)saveContext;
 @end

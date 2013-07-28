@@ -72,4 +72,18 @@
     }];
 }
 
+- (void)saveContext
+{
+    NSManagedObjectContext *localContext    = [NSManagedObjectContext MR_contextForCurrentThread];
+    [localContext MR_saveToPersistentStoreWithCompletion:^(BOOL sucess, NSError *error){
+        if (sucess) {
+            NSLog(@"GOOD");
+        }else {
+            NSLog(@"ERROR");
+        }
+    }];
+    
+}
+
+
 @end

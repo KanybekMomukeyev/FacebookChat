@@ -11,10 +11,12 @@
 #import "FCConversationModel.h"
 #import "UIImageView+WebCache.h"
 #import "TDBadgedCell.h"
-#import "ChatViewController.h"
 #import "XMPP.h"
 #import "Message.h"
 #import "NSString+Additions.h"
+#import "FCChatDataStoreManager.h"
+#import "FCAPIController.h"
+#import "FCMessageVC.h"
 
 @interface FCFriendsTVC ()
 @property (nonatomic, strong) NSArray *conversations;
@@ -67,15 +69,12 @@
         
         NSLog(@"FACEBOOK_ID:%@",facebookID);
         
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];   // Build the predicate to find the person sought
+        // Build the predicate to find the person sought
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookId = %@", facebookID];
         Conversation *conversation = [Conversation MR_findFirstWithPredicate:predicate inContext:localContext];
-
-                
-        Message *msg = (Message *)[NSEntityDescription
-                                   insertNewObjectForEntityForName:@"Message"
-                                   inManagedObjectContext:conversation.managedObjectContext];
         
+        Message *msg = [Message MR_createInContext:localContext];
         msg.text = [NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
         msg.sentDate = [NSDate date];
         
@@ -86,14 +85,9 @@
         int badgeNumber = [conversation.badgeNumber intValue];
         badgeNumber++;
         conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];
-        
         [conversation addMessagesObject:msg];
-        NSError *error;
-        if (![conversation.managedObjectContext save:&error]) {
-            // TODO: Handle the error appropriately.
-            NSLog(@"Mass message creation error %@, %@", error, [error userInfo]);
-        }
         
+        [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
         [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
                               withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -140,9 +134,9 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ChatViewController *chatViewController = [[ChatViewController alloc] init];
-    chatViewController.conversation = [self.conversations objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:chatViewController animated:YES];
+    FCMessageVC *messageVC = [[FCMessageVC alloc] initWithNibName:@"FCMessageVC" bundle:nil];
+    messageVC.conversation = [self.conversations objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 
 @end

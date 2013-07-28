@@ -112,10 +112,6 @@
     // we recived message, our all conversation data stores in Core Data.
     // what we have :
     // (1) Facebook ID of sender, so we will use it.
-    if (self.messageHandler) {
-        self.messageHandler(message);
-    }
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:message];
 }
 
