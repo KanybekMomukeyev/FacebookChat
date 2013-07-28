@@ -38,19 +38,7 @@
                 if (!error) {
                     FCUser *currentUser = [[FCUser alloc] initWithDict:response];
                     [[FCAPIController sharedInstance] setCurrentUser:currentUser];
-                }
-            }];
-            
-            [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
-                if (!error) {
-                    [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
-                                                                                                       withCompletion:^(NSNumber *sucess, NSError *eror){
-                                                                                                           if (sucess) {
-                                                                                                               FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
-                                                                                                               [self_.navigationController pushViewController:friendsTVC
-                                                                                                                                                     animated:YES];
-                                                                                                           }
-                                                                                                       }];
+                    [self_ getFriends];
                 }
             }];
         }
@@ -64,6 +52,23 @@
 
 - (IBAction)loginButtonDidPressed:(id)sender {
     [[[FCAPIController sharedInstance] authFacebookManager] authorize];
+}
+
+- (void)getFriends
+{
+    __weak FCLoginVC *self_ = self;
+    [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
+        if (!error) {
+            [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
+                                                                                               withCompletion:^(NSNumber *sucess, NSError *eror){
+                                                                                                   if (sucess) {
+                                                                                                       FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
+                                                                                                       [self_.navigationController pushViewController:friendsTVC
+                                                                                                                                             animated:YES];
+                                                                                                   }
+                                                                                               }];
+        }
+    }];
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "FCChatDataStoreManager.h"
 #import "FCAPIController.h"
 #import "FCMessageVC.h"
+#import "FCUser.h"
 
 @interface FCFriendsTVC ()
 @property (nonatomic, strong) NSArray *conversations;
@@ -28,7 +29,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Friends", @"Friends");
     }
     return self;
 }
@@ -37,6 +37,7 @@
 {
     [super viewDidLoad];
     self.conversations = [Conversation MR_findAll];
+    self.title = [NSString stringWithFormat:@"Friends of %@",[FCAPIController sharedInstance].currentUser.name];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -60,6 +61,7 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark Message Notification Recived
 - (void)messageReceived:(NSNotification*)textMessage {
     
     XMPPMessage *message = textMessage.object;
@@ -122,7 +124,8 @@
         cell.badgeColor = [UIColor colorWithRed:0.197 green:0.592 blue:0.219 alpha:1.000];
         cell.badge.radius = 9;
     }else {
-        cell.badgeString = @"0";
+        cell.badgeString = @"";
+        cell.badgeColor = [UIColor clearColor];
         cell.badge.radius = 0;
     }
     

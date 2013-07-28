@@ -158,6 +158,7 @@
     [self.messages addObject:msg];
     
     [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
+    
     /* */
     [[[FCAPIController sharedInstance] chatRequestManager] sendMessageToFacebook:text
                                                             withFriendFacebookID:self.conversation.facebookId];
@@ -213,12 +214,10 @@
 - (UIImage *)avatarImageForIncomingMessage
 {
     return self.senderImage;
-    //return [UIImage imageNamed:@"demo-avatar-woz"];
 }
 
 - (UIImage *)avatarImageForOutgoingMessage
 {
     return self.reciverImage;
-    //return [UIImage imageNamed:@"demo-avatar-jobs"];
 }
 @end
