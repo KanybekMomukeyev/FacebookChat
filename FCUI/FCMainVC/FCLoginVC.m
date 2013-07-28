@@ -8,7 +8,9 @@
 
 #import "FCLoginVC.h"
 #import "FCAPIController.h"
-#import "FCFacebookManager.h"
+#import "FCAuthFacebookManager.h"
+#import "FCRequestFacebookManager.h"
+#import "FCUser.h"
 #import "FCFriendsTVC.h"
 #import "FCChatDataStoreManager.h"
 @interface FCLoginVC ()
@@ -29,14 +31,27 @@
 {
     [super viewDidLoad];
     __weak FCLoginVC *self_ = self;
-    [[FCAPIController sharedInstance] facebookManager].friendsResponseHandler = ^(NSArray *responseArray, NSError *error){
+    [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
         if (!error) {
-            [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
-                                                                                               withCompletion:^(NSNumber *sucess, NSError *eror){
-               if (sucess) {
-                   FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
-                   [self_.navigationController pushViewController:friendsTVC animated:YES];
-               }
+            
+            [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
+                if (!error) {
+                    FCUser *currentUser = [[FCUser alloc] initWithDict:response];
+                    [[FCAPIController sharedInstance] setCurrentUser:currentUser];
+                }
+            }];
+            
+            [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
+                if (!error) {
+                    [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
+                                                                                                       withCompletion:^(NSNumber *sucess, NSError *eror){
+                                                                                                           if (sucess) {
+                                                                                                               FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
+                                                                                                               [self_.navigationController pushViewController:friendsTVC
+                                                                                                                                                     animated:YES];
+                                                                                                           }
+                                                                                                       }];
+                }
             }];
         }
     };
@@ -48,7 +63,7 @@
 }
 
 - (IBAction)loginButtonDidPressed:(id)sender {
-    [[[FCAPIController sharedInstance] facebookManager] authorize];
+    [[[FCAPIController sharedInstance] authFacebookManager] authorize];
 }
 
 @end

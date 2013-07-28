@@ -1,5 +1,5 @@
 //
-//  FCFacebookManager.h
+//  FCAuthFacebookManager.h
 //  FacebookChat
 //
 //  Created by Kanybek Momukeev on 7/28/13.
@@ -16,9 +16,10 @@
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #define FACEBOOK_APP_ID @"124242144347927"
 
-@interface FCFacebookManager : NSObject
+@interface FCAuthFacebookManager : NSObject
+
 @property (readonly, nonatomic, strong) Facebook *facebook;
-@property (readwrite, nonatomic, copy) CompletionBlock friendsResponseHandler;
+@property (readwrite, nonatomic, copy) CompletionBlock facebookAuthHandler;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 - (void)authorize;

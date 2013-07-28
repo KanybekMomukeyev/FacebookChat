@@ -14,6 +14,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "XMPP.h"
 #import "SDWebImageDownloader.h"
+#import "FCUser.h"
 
 @interface FCMessageVC ()
 @property (nonatomic, strong) NSMutableArray *messages;
@@ -33,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = self.conversation.facebookName;
+    
     __weak FCMessageVC *self_ = self;
     NSString *url = [[NSString alloc]
                      initWithFormat:@"https://graph.facebook.com/%@/picture",self.conversation.facebookId];
@@ -46,7 +49,7 @@
                                                         }];
     
     NSString *urlMine = [[NSString alloc]
-                     initWithFormat:@"https://graph.facebook.com/me/picture"];
+                     initWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
     [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
                                                           options:0
                                                          progress:nil
@@ -56,14 +59,15 @@
                                                             }
                                                         }];
     
-    self.title = self.conversation.facebookName;
-    self.messages = [NSMutableArray arrayWithArray:[Message MR_findAll]];
+    self.messages = [NSMutableArray arrayWithArray:[[[FCAPIController sharedInstance] chatDataStoreManager] fetchAllMessagesInConversation:self.conversation]];
     self.delegate = self;
     self.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.conversation.badgeNumber = @(0);
+    [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
     
     /* */
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -89,7 +93,7 @@
 }
 
 
-#pragma mark Message
+#pragma mark Message Notification Recived
 - (void)messageReceived:(NSNotification*)textMessage
 {
     NSLog(@"message received!");
@@ -99,7 +103,7 @@
     NSString *facebookID = [NSString stringWithFormat:@"%@",[[newStr componentsSeparatedByString:@"@"] objectAtIndex:0]];
     
     // if message is not empty and sender is same with our _facebookID.
-    if([message isChatMessageWithBody]&&([facebookID isEqualToString:self.conversation.facebookId]))
+    if([message isChatMessageWithBody] && ([facebookID isEqualToString:self.conversation.facebookId]))
     {
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         Message *msg = [Message MR_createInContext:localContext];
@@ -114,6 +118,28 @@
         
         [self finishSend];
         [JSMessageSoundEffect playMessageReceivedSound];
+    }
+    else if([message isChatMessageWithBody] &&(![facebookID isEqualToString:self.conversation.facebookId]))
+    {
+        // here message come fome another friend
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookId = %@", facebookID];
+        Conversation *conversation = [Conversation MR_findFirstWithPredicate:predicate inContext:localContext];
+        
+        Message *msg = [Message MR_createInContext:localContext];
+        msg.text = [NSString stringWithFormat:@"%@",[[message elementForName:@"body"] stringValue]];
+        msg.sentDate = [NSDate date];
+        
+        // message did come, this will be on left
+        msg.messageStatus = @(YES);
+        
+        // increase badge number.
+        int badgeNumber = [conversation.badgeNumber intValue];
+        badgeNumber ++;
+        conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];
+        [conversation addMessagesObject:msg];
+        
+        [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
     }
 }
 
@@ -170,13 +196,6 @@
     return JSAvatarStyleSquare;
 }
 
-//  Optional delegate method
-//  Required if using `JSMessagesViewTimestampPolicyCustom`
-//
-//  - (BOOL)hasTimestampForRowAtIndexPath:(NSIndexPath *)indexPath
-//
-
-
 
 #pragma mark - Messages view data source
 - (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,17 +212,13 @@
 
 - (UIImage *)avatarImageForIncomingMessage
 {
-    return self.reciverImage;
+    return self.senderImage;
     //return [UIImage imageNamed:@"demo-avatar-woz"];
 }
 
 - (UIImage *)avatarImageForOutgoingMessage
 {
-    return self.senderImage;
+    return self.reciverImage;
     //return [UIImage imageNamed:@"demo-avatar-jobs"];
 }
-
-
-
-
 @end

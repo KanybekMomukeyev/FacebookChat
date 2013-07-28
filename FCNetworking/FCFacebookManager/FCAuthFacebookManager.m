@@ -1,20 +1,19 @@
 //
-//  FCFacebookManager.m
+//  FCAuthFacebookManager.m
 //  FacebookChat
 //
 //  Created by Kanybek Momukeev on 7/28/13.
 //
 //
 
-#import "FCFacebookManager.h"
+#import "FCAuthFacebookManager.h"
 #import "FCAPIController.h"
 #import "FCBaseChatRequestManager.h"
 
-@interface FCFacebookManager() <FBSessionDelegate, FBRequestDelegate, FBDialogDelegate>
+@interface FCAuthFacebookManager()<FBSessionDelegate>
 @end
 
-
-@implementation FCFacebookManager
+@implementation FCAuthFacebookManager
 
 - (id)init {
     if (self = [super init]) {
@@ -29,7 +28,7 @@
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-   return [self.facebook handleOpenURL:url];
+    return [self.facebook handleOpenURL:url];
 }
 
 
@@ -46,10 +45,14 @@
 	{
 		DDLogError(@"%@: Error in xmpp connection: %@", THIS_FILE, error);
         NSLog(@"XMPP connect failed");
-        return;
+        if (self.facebookAuthHandler) {
+            self.facebookAuthHandler(nil, error);
+        }
 	}
     
-    [self.facebook requestWithGraphPath:@"me/friends" andDelegate:self];
+    if (self.facebookAuthHandler) {
+        self.facebookAuthHandler(@(YES), nil);
+    }
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled
@@ -63,30 +66,4 @@
 
 - (void)fbSessionInvalidated {
 }
-
-
-#pragma mark - FBRequestDelegate Methods
-- (void)request:(FBRequest *)request didLoad:(id)result
-{
-    if ([result isKindOfClass:[NSArray class]] && ([result count] > 0)) {
-        result = [result objectAtIndex:0];
-    }
-    
-    NSArray *resultData = [result objectForKey:@"data"];
-    NSLog(@"%@", resultData);
-    
-    if (self.friendsResponseHandler) {
-        self.friendsResponseHandler(resultData, nil);
-    }
-}
-
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error
-{
-    if (self.friendsResponseHandler) {
-        self.friendsResponseHandler(nil, error);
-    }
-}
-
-
-
 @end

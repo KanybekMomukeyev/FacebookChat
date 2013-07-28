@@ -12,8 +12,8 @@
 #import "DDTTYLogger.h"
 #import "FCAPIController.h"
 #import "FCChatDataStoreManager.h"
-#import "FCFacebookManager.h"
 #import "FCLoginVC.h"
+#import "FCAuthFacebookManager.h"
 
 @implementation AppDelegate
 
@@ -24,7 +24,6 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     FCLoginVC *loginVC = [[FCLoginVC alloc] initWithNibName:@"FCLoginVC" bundle:nil];
-    //masterViewController.managedObjectContext = [[FCAPIController sharedInstance] chatDataStoreManager].managedObjectContext;
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
@@ -38,7 +37,7 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [[[FCAPIController sharedInstance] facebookManager] handleOpenURL:url];
+    return [[[FCAPIController sharedInstance] authFacebookManager] handleOpenURL:url];
 }
 
 @end

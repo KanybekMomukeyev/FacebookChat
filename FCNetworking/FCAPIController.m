@@ -10,17 +10,34 @@
 #import "Singleton.h"
 #import "FCChatDataStoreManager.h"
 #import "FCBaseChatRequestManager.h"
-#import "FCFacebookManager.h"
+
+#import "FCAuthFacebookManager.h"
+#import "FCFacebookManager/FCRequestFacebookManager.h"
+
 @interface FCAPIController()
 @property (nonatomic, strong) FCChatDataStoreManager *chatDataStoreManager;
 @property (nonatomic, strong) FCBaseChatRequestManager *chatRequestManager;
-@property (nonatomic, strong) FCFacebookManager *facebookManager;
+@property (nonatomic, strong) FCAuthFacebookManager *authFacebookManager;
+@property (nonatomic, strong) FCRequestFacebookManager *requestFacebookManager;
 @end
 
 
 @implementation FCAPIController
 SINGLETON_GCD(FCAPIController);
 
+- (FCAuthFacebookManager *)authFacebookManager {
+    if (!_authFacebookManager) {
+        _authFacebookManager = [FCAuthFacebookManager new];
+    }
+    return _authFacebookManager;
+}
+
+- (FCRequestFacebookManager *)requestFacebookManager {
+    if (!_requestFacebookManager) {
+        _requestFacebookManager = [FCRequestFacebookManager new];
+    }
+    return _requestFacebookManager;
+}
 
 - (FCChatDataStoreManager *)chatDataStoreManager {
     if (!_chatDataStoreManager) {
@@ -35,13 +52,6 @@ SINGLETON_GCD(FCAPIController);
         _chatRequestManager = [FCBaseChatRequestManager new];
     }
     return _chatRequestManager;
-}
-
-- (FCFacebookManager *)facebookManager {
-    if (!_facebookManager) {
-        _facebookManager = [FCFacebookManager new];
-    }
-    return _facebookManager;
 }
 
 @end

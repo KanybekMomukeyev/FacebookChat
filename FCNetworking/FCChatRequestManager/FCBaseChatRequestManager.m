@@ -7,9 +7,8 @@
 //
 
 #import "FCBaseChatRequestManager.h"
-#import "FCFacebookManager.h"
 #import "FCAPIController.h"
-#import "FCFacebookManager.h"
+#import "FCAuthFacebookManager.h"
 
 @interface FCBaseChatRequestManager ()
 @end
@@ -47,7 +46,7 @@
     {
         NSLog(@"XMPP X-FACEBOOK-PLATFORM SASL...");
         NSError *error = nil;
-        BOOL result = [self.xmppStream authenticateWithFacebookAccessToken:[[FCAPIController sharedInstance] facebookManager].facebook.accessToken
+        BOOL result = [self.xmppStream authenticateWithFacebookAccessToken:[[FCAPIController sharedInstance] authFacebookManager].facebook.accessToken
                                                                      error:&error];
         
         if (result == NO)

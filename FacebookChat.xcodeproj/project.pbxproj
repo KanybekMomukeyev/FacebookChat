@@ -65,7 +65,6 @@
 		A85ABC0217A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABBD417A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A85ABC0B17A4506400BEF168 /* FCBaseChatRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC0717A4506400BEF168 /* FCBaseChatRequestManager.m */; };
 		A85ABC0F17A4513B00BEF168 /* FCChatDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC0E17A4513B00BEF168 /* FCChatDataStoreManager.m */; };
-		A85ABC1317A4558500BEF168 /* FCFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC1217A4558500BEF168 /* FCFacebookManager.m */; };
 		A85ABC1717A469C400BEF168 /* FCFriendsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC1517A469C400BEF168 /* FCFriendsTVC.m */; };
 		A85ABC1817A469C400BEF168 /* FCFriendsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A85ABC1617A469C400BEF168 /* FCFriendsTVC.xib */; };
 		A85ABC1C17A47E9D00BEF168 /* FCLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABC1A17A47E9D00BEF168 /* FCLoginVC.m */; };
@@ -166,6 +165,19 @@
 		A8BCC1BA17A5064E00C8E158 /* UIView+AnimationOptionsForCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC18F17A5064E00C8E158 /* UIView+AnimationOptionsForCurve.m */; };
 		A8BCC1C317A507D000C8E158 /* FCMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1C117A507D000C8E158 /* FCMessageVC.m */; };
 		A8BCC1C417A507D000C8E158 /* FCMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8BCC1C217A507D000C8E158 /* FCMessageVC.xib */; };
+		A8BCC1C717A5261B00C8E158 /* FCAuthFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1C617A5261B00C8E158 /* FCAuthFacebookManager.m */; };
+		A8BCC1DC17A5263100C8E158 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1CA17A5263100C8E158 /* AFHTTPClient.m */; };
+		A8BCC1DD17A5263100C8E158 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1CC17A5263100C8E158 /* AFHTTPRequestOperation.m */; };
+		A8BCC1DE17A5263100C8E158 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1CE17A5263100C8E158 /* AFImageRequestOperation.m */; };
+		A8BCC1DF17A5263100C8E158 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1D017A5263100C8E158 /* AFJSONRequestOperation.m */; };
+		A8BCC1E017A5263100C8E158 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1D217A5263100C8E158 /* AFNetworkActivityIndicatorManager.m */; };
+		A8BCC1E117A5263100C8E158 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1D517A5263100C8E158 /* AFPropertyListRequestOperation.m */; };
+		A8BCC1E217A5263100C8E158 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1D717A5263100C8E158 /* AFURLConnectionOperation.m */; };
+		A8BCC1E317A5263100C8E158 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1D917A5263100C8E158 /* AFXMLRequestOperation.m */; };
+		A8BCC1E417A5263100C8E158 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1DB17A5263100C8E158 /* UIImageView+AFNetworking.m */; };
+		A8BCC1E717A5270000C8E158 /* FCRequestFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1E617A5270000C8E158 /* FCRequestFacebookManager.m */; };
+		A8BCC1EB17A553BA00C8E158 /* IQSocialRequestBaseClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1EA17A553BA00C8E158 /* IQSocialRequestBaseClient.m */; };
+		A8BCC1EE17A5561B00C8E158 /* FCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BCC1ED17A5561B00C8E158 /* FCUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -288,8 +300,6 @@
 		A85ABC0717A4506400BEF168 /* FCBaseChatRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseChatRequestManager.m; sourceTree = "<group>"; };
 		A85ABC0D17A4513B00BEF168 /* FCChatDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCChatDataStoreManager.h; sourceTree = "<group>"; };
 		A85ABC0E17A4513B00BEF168 /* FCChatDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCChatDataStoreManager.m; sourceTree = "<group>"; };
-		A85ABC1117A4558500BEF168 /* FCFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFacebookManager.h; sourceTree = "<group>"; };
-		A85ABC1217A4558500BEF168 /* FCFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFacebookManager.m; sourceTree = "<group>"; };
 		A85ABC1417A469C400BEF168 /* FCFriendsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFriendsTVC.h; sourceTree = "<group>"; };
 		A85ABC1517A469C400BEF168 /* FCFriendsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFriendsTVC.m; sourceTree = "<group>"; };
 		A85ABC1617A469C400BEF168 /* FCFriendsTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FCFriendsTVC.xib; sourceTree = "<group>"; };
@@ -449,6 +459,33 @@
 		A8BCC1C017A507CF00C8E158 /* FCMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCMessageVC.h; sourceTree = "<group>"; };
 		A8BCC1C117A507D000C8E158 /* FCMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCMessageVC.m; sourceTree = "<group>"; };
 		A8BCC1C217A507D000C8E158 /* FCMessageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FCMessageVC.xib; sourceTree = "<group>"; };
+		A8BCC1C517A5261B00C8E158 /* FCAuthFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCAuthFacebookManager.h; sourceTree = "<group>"; };
+		A8BCC1C617A5261B00C8E158 /* FCAuthFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCAuthFacebookManager.m; sourceTree = "<group>"; };
+		A8BCC1C917A5263100C8E158 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
+		A8BCC1CA17A5263100C8E158 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
+		A8BCC1CB17A5263100C8E158 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		A8BCC1CC17A5263100C8E158 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		A8BCC1CD17A5263100C8E158 /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
+		A8BCC1CE17A5263100C8E158 /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
+		A8BCC1CF17A5263100C8E158 /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
+		A8BCC1D017A5263100C8E158 /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
+		A8BCC1D117A5263100C8E158 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		A8BCC1D217A5263100C8E158 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		A8BCC1D317A5263100C8E158 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		A8BCC1D417A5263100C8E158 /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
+		A8BCC1D517A5263100C8E158 /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
+		A8BCC1D617A5263100C8E158 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		A8BCC1D717A5263100C8E158 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		A8BCC1D817A5263100C8E158 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
+		A8BCC1D917A5263100C8E158 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
+		A8BCC1DA17A5263100C8E158 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		A8BCC1DB17A5263100C8E158 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		A8BCC1E517A5270000C8E158 /* FCRequestFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCRequestFacebookManager.h; sourceTree = "<group>"; };
+		A8BCC1E617A5270000C8E158 /* FCRequestFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCRequestFacebookManager.m; sourceTree = "<group>"; };
+		A8BCC1E917A553BA00C8E158 /* IQSocialRequestBaseClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQSocialRequestBaseClient.h; sourceTree = "<group>"; };
+		A8BCC1EA17A553BA00C8E158 /* IQSocialRequestBaseClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQSocialRequestBaseClient.m; sourceTree = "<group>"; };
+		A8BCC1EC17A5561B00C8E158 /* FCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCUser.h; sourceTree = "<group>"; };
+		A8BCC1ED17A5561B00C8E158 /* FCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +598,7 @@
 		A85ABB5317A44B1F00BEF168 /* 3RD_Library */ = {
 			isa = PBXGroup;
 			children = (
+				A8BCC1C817A5263100C8E158 /* AFNetworking */,
 				A8BCC15617A5064E00C8E158 /* JSMessagesTableViewController */,
 				A85ABC7217A484C800BEF168 /* MagicalRecord */,
 				A85ABC4717A4817E00BEF168 /* SDWebImage */,
@@ -819,8 +857,12 @@
 		A85ABC1017A4556D00BEF168 /* FCFacebookManager */ = {
 			isa = PBXGroup;
 			children = (
-				A85ABC1117A4558500BEF168 /* FCFacebookManager.h */,
-				A85ABC1217A4558500BEF168 /* FCFacebookManager.m */,
+				A8BCC1E917A553BA00C8E158 /* IQSocialRequestBaseClient.h */,
+				A8BCC1EA17A553BA00C8E158 /* IQSocialRequestBaseClient.m */,
+				A8BCC1C517A5261B00C8E158 /* FCAuthFacebookManager.h */,
+				A8BCC1C617A5261B00C8E158 /* FCAuthFacebookManager.m */,
+				A8BCC1E517A5270000C8E158 /* FCRequestFacebookManager.h */,
+				A8BCC1E617A5270000C8E158 /* FCRequestFacebookManager.m */,
 			);
 			path = FCFacebookManager;
 			sourceTree = "<group>";
@@ -1017,6 +1059,8 @@
 		A8A1792017A4349600EA2C23 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A8BCC1EC17A5561B00C8E158 /* FCUser.h */,
+				A8BCC1ED17A5561B00C8E158 /* FCUser.m */,
 				A85ABCC817A4894100BEF168 /* FCConversationModel.h */,
 				A85ABCC917A4894100BEF168 /* FCConversationModel.m */,
 				A8A1792217A4349600EA2C23 /* Conversation.h */,
@@ -1112,6 +1156,32 @@
 				A8BCC18717A5064E00C8E158 /* messageSent.aiff */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		A8BCC1C817A5263100C8E158 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				A8BCC1C917A5263100C8E158 /* AFHTTPClient.h */,
+				A8BCC1CA17A5263100C8E158 /* AFHTTPClient.m */,
+				A8BCC1CB17A5263100C8E158 /* AFHTTPRequestOperation.h */,
+				A8BCC1CC17A5263100C8E158 /* AFHTTPRequestOperation.m */,
+				A8BCC1CD17A5263100C8E158 /* AFImageRequestOperation.h */,
+				A8BCC1CE17A5263100C8E158 /* AFImageRequestOperation.m */,
+				A8BCC1CF17A5263100C8E158 /* AFJSONRequestOperation.h */,
+				A8BCC1D017A5263100C8E158 /* AFJSONRequestOperation.m */,
+				A8BCC1D117A5263100C8E158 /* AFNetworkActivityIndicatorManager.h */,
+				A8BCC1D217A5263100C8E158 /* AFNetworkActivityIndicatorManager.m */,
+				A8BCC1D317A5263100C8E158 /* AFNetworking.h */,
+				A8BCC1D417A5263100C8E158 /* AFPropertyListRequestOperation.h */,
+				A8BCC1D517A5263100C8E158 /* AFPropertyListRequestOperation.m */,
+				A8BCC1D617A5263100C8E158 /* AFURLConnectionOperation.h */,
+				A8BCC1D717A5263100C8E158 /* AFURLConnectionOperation.m */,
+				A8BCC1D817A5263100C8E158 /* AFXMLRequestOperation.h */,
+				A8BCC1D917A5263100C8E158 /* AFXMLRequestOperation.m */,
+				A8BCC1DA17A5263100C8E158 /* UIImageView+AFNetworking.h */,
+				A8BCC1DB17A5263100C8E158 /* UIImageView+AFNetworking.m */,
+			);
+			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1269,7 +1339,6 @@
 				A85ABC0217A44B1F00BEF168 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				A85ABC0B17A4506400BEF168 /* FCBaseChatRequestManager.m in Sources */,
 				A85ABC0F17A4513B00BEF168 /* FCChatDataStoreManager.m in Sources */,
-				A85ABC1317A4558500BEF168 /* FCFacebookManager.m in Sources */,
 				A85ABC1717A469C400BEF168 /* FCFriendsTVC.m in Sources */,
 				A85ABC1C17A47E9D00BEF168 /* FCLoginVC.m in Sources */,
 				A85ABC6417A4817E00BEF168 /* NSData+GIF.m in Sources */,
@@ -1323,6 +1392,19 @@
 				A8BCC1B917A5064E00C8E158 /* UIImage+JSMessagesView.m in Sources */,
 				A8BCC1BA17A5064E00C8E158 /* UIView+AnimationOptionsForCurve.m in Sources */,
 				A8BCC1C317A507D000C8E158 /* FCMessageVC.m in Sources */,
+				A8BCC1C717A5261B00C8E158 /* FCAuthFacebookManager.m in Sources */,
+				A8BCC1DC17A5263100C8E158 /* AFHTTPClient.m in Sources */,
+				A8BCC1DD17A5263100C8E158 /* AFHTTPRequestOperation.m in Sources */,
+				A8BCC1DE17A5263100C8E158 /* AFImageRequestOperation.m in Sources */,
+				A8BCC1DF17A5263100C8E158 /* AFJSONRequestOperation.m in Sources */,
+				A8BCC1E017A5263100C8E158 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				A8BCC1E117A5263100C8E158 /* AFPropertyListRequestOperation.m in Sources */,
+				A8BCC1E217A5263100C8E158 /* AFURLConnectionOperation.m in Sources */,
+				A8BCC1E317A5263100C8E158 /* AFXMLRequestOperation.m in Sources */,
+				A8BCC1E417A5263100C8E158 /* UIImageView+AFNetworking.m in Sources */,
+				A8BCC1E717A5270000C8E158 /* FCRequestFacebookManager.m in Sources */,
+				A8BCC1EB17A553BA00C8E158 /* IQSocialRequestBaseClient.m in Sources */,
+				A8BCC1EE17A5561B00C8E158 /* FCUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

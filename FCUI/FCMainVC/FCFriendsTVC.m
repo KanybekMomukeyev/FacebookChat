@@ -42,6 +42,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES animated:YES];
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+                          withRowAnimation:UITableViewRowAnimationNone];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageReceived:)
                                                  name:kFCMessageDidComeNotification
@@ -116,9 +118,12 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     Conversation *conversation = [self.conversations objectAtIndex:indexPath.row];
     if([conversation.badgeNumber intValue] != 0) {
-        cell.badgeString = [NSString stringWithFormat:@"%d", [conversation.badgeNumber intValue]];
+        cell.badgeString = [NSString stringWithFormat:@"%@", conversation.badgeNumber];
         cell.badgeColor = [UIColor colorWithRed:0.197 green:0.592 blue:0.219 alpha:1.000];
         cell.badge.radius = 9;
+    }else {
+        cell.badgeString = @"0";
+        cell.badge.radius = 0;
     }
     
     NSString *url = [[NSString alloc]
