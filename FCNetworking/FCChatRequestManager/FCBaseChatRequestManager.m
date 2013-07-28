@@ -10,12 +10,14 @@
 #import "FCFacebookManager.h"
 #import "FCAPIController.h"
 #import "FCFacebookManager.h"
+
 @interface FCBaseChatRequestManager ()
 @end
 
 @implementation FCBaseChatRequestManager
 
-- (id)init {
+- (id)init
+{
     if (self = [super init]) {
         _xmppStream = [[XMPPStream alloc] initWithFacebookAppId:FACEBOOK_APP_ID];
         [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -108,18 +110,14 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    // ok, one moment here:
-    // we recived message, our all conversation data stores in Core Data.
-    // what we have :
-    // (1) Facebook ID of sender, so we will use it.
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageCome" object:message];
+    // we recived message
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFCMessageDidComeNotification
+                                                        object:message];
 }
 
-
-
 #pragma mark send message to Facebook.
-- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
-    
+- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID
+{    
     if([textMessage length] > 0) {
         NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
         [body setStringValue:textMessage];

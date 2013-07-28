@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#define kFCMessageDidComeNotification @"kFCMessageDidComeNotification"
+
 @class FCChatDataStoreManager;
 @class FCBaseChatRequestManager;
 @class FCFacebookManager;

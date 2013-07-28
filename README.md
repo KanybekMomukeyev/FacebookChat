@@ -2,37 +2,33 @@
 <b>UNDER MIT Lisense.</b>
 
 Simple Facebook chat, client for Iphone, 
-used Open Source project AcaniChat and XMPPFramework.
-To downlaod image and cache them, used EGOImageView.
-Badge on UITableViewCell
+used Open Source project XMPPFramework.
 
 
-(1) <https://github.com/acani/AcaniChat>
+USED OPEN SOURCE LIBRARIES:
 
-(2) <https://github.com/robbiehanson/XMPPFramework>
+XMPPFramework used for networking over web sockets,
+to recive, send messages with facebook api.
+(1) <https://github.com/robbiehanson/XMPPFramework>
 
-(3) <https://github.com/enormego/EGOImageLoading>
+MessagesTableViewController for chat view controller.
+(2) <https://github.com/jessesquires/MessagesTableViewController.git>
 
+To download, cache images.
+(3) <https://github.com/rs/SDWebImage.git>
+
+Badge on UITableViewCell.
 (4) <https://github.com/tmdvs/TDBadgedCell>
 
+Facebook SDK for IOS
+(5) <https://github.com/facebook/facebook-ios-sdk>
 
-To cache messages, conversations used Core Data.
+MagicalRecord is ActiveRecord on Core Data,
+helper classes, to make life easy.
+(6) <https://github.com/magicalpanda/MagicalRecord>
 
---- TODO: -----
-
-(1) Facebook, local Database synchronization.
-
-(2) Show green dot, if our friends online.
-
-
-BUGS:
-
-(3) Sync with MasterViewController and ChatViewController, there are double messages written to cache when.
-
-(4) When comming message, firstResponder changes to UIView, so you can not able to write message to the end.
-
-
-
+Parse, Read XML files.
+(7) <https://github.com/robbiehanson/KissXML>
 
 ------
 This project is under development.

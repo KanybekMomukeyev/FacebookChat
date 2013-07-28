@@ -44,7 +44,7 @@
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageReceived:)
-                                                 name:@"messageCome"
+                                                 name:kFCMessageDidComeNotification
                                                object:nil];
 }
 

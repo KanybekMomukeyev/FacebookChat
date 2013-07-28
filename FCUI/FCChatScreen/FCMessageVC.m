@@ -13,9 +13,12 @@
 #import "FCAPIController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "XMPP.h"
+#import "SDWebImageDownloader.h"
 
 @interface FCMessageVC ()
 @property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) UIImage *senderImage;
+@property (nonatomic, strong) UIImage *reciverImage;
 @end
 
 @implementation FCMessageVC
@@ -30,6 +33,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    __weak FCMessageVC *self_ = self;
+    NSString *url = [[NSString alloc]
+                     initWithFormat:@"https://graph.facebook.com/%@/picture",self.conversation.facebookId];
+    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:url]
+                                                          options:0
+                                                         progress:nil
+                                                        completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                            if (!error) {
+                                                                self_.senderImage = image;
+                                                            }
+                                                        }];
+    
+    NSString *urlMine = [[NSString alloc]
+                     initWithFormat:@"https://graph.facebook.com/me/picture"];
+    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
+                                                          options:0
+                                                         progress:nil
+                                                        completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                            if (!error) {
+                                                                self_.reciverImage = image;
+                                                            }
+                                                        }];
+    
     self.title = self.conversation.facebookName;
     self.messages = [NSMutableArray arrayWithArray:[Message MR_findAll]];
     self.delegate = self;
@@ -42,7 +68,7 @@
     /* */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageReceived:)
-                                                 name:@"messageCome"
+                                                 name:kFCMessageDidComeNotification
                                                object:nil];
 }
 
@@ -64,7 +90,6 @@
 
 
 #pragma mark Message
-
 - (void)messageReceived:(NSNotification*)textMessage
 {
     NSLog(@"message received!");
@@ -168,12 +193,14 @@
 
 - (UIImage *)avatarImageForIncomingMessage
 {
-    return [UIImage imageNamed:@"demo-avatar-woz"];
+    return self.reciverImage;
+    //return [UIImage imageNamed:@"demo-avatar-woz"];
 }
 
 - (UIImage *)avatarImageForOutgoingMessage
 {
-    return [UIImage imageNamed:@"demo-avatar-jobs"];
+    return self.senderImage;
+    //return [UIImage imageNamed:@"demo-avatar-jobs"];
 }
 
 
