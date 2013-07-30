@@ -21,7 +21,7 @@
 
 - (void)requestGraphMeWithCompletion:(CompletionBlock)completion
 {
-    [[IQSocialRequestBaseClient sharedClient] getPath:@"https://graph.facebook.com/me"
+    [[IQSocialRequestBaseClient sharedClient] getPath:@"me"
                                            parameters:[self createParamsForCurrentSession]
                                               success:^(AFHTTPRequestOperation *opertaion, id response){
                                                   NSLog(@"%@",response);
@@ -39,7 +39,7 @@
 
 - (void)requestGraphFriendsWithCompletion:(CompletionBlock)completion
 {
-    [[IQSocialRequestBaseClient sharedClient] getPath:@"https://graph.facebook.com/me/friends"
+    [[IQSocialRequestBaseClient sharedClient] getPath:@"me/friends"
                                            parameters:[self createParamsForCurrentSession]
                                               success:^(AFHTTPRequestOperation *opertaion, id response){
                                                   NSLog(@"%@",response);

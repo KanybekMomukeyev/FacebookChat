@@ -114,7 +114,7 @@
         msg.messageStatus = @(YES);
         [self.conversation addMessagesObject:msg];
         [self.messages addObject:msg];
-        [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
+        [localContext MR_saveToPersistentStoreAndWait];
         
         [self finishSend];
         [JSMessageSoundEffect playMessageReceivedSound];
@@ -138,8 +138,9 @@
         badgeNumber ++;
         conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];
         [conversation addMessagesObject:msg];
+        [localContext MR_saveToPersistentStoreAndWait];
         
-        [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
+
     }
 }
 
@@ -156,8 +157,7 @@
     msg.messageStatus = @(NO);
     [self.conversation addMessagesObject:msg];
     [self.messages addObject:msg];
-    
-    [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
+    [localContext MR_saveToPersistentStoreAndWait];
     
     /* */
     [[[FCAPIController sharedInstance] chatRequestManager] sendMessageToFacebook:text

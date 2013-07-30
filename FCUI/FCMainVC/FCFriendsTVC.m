@@ -90,8 +90,8 @@
         badgeNumber++;
         conversation.badgeNumber = [NSNumber numberWithInt:badgeNumber];
         [conversation addMessagesObject:msg];
+        [localContext MR_saveOnlySelfAndWait];
         
-        [[[FCAPIController sharedInstance] chatDataStoreManager] saveContext];
         [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
                               withRowAnimation:UITableViewRowAnimationNone];
     }

@@ -10,7 +10,7 @@
 #import "AFJSONRequestOperation.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
-static NSString * const kAPIBaseURLString = @"";
+static NSString * const kAPIBaseURLString = @"https://graph.facebook.com";
 
 @implementation IQSocialRequestBaseClient
 + (IQSocialRequestBaseClient *)sharedClient {

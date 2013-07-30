@@ -11,9 +11,6 @@
 
 @implementation FCUser
 
-//id = 100003385025859;
-//name = "Koke Momuke";
-
 - (id)initWithDict:(NSDictionary *)dict {
     if (self = [super init]) {
         _userId = [dict objectForKey:@"id"];
