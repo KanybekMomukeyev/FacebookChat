@@ -34,20 +34,17 @@
     [super viewDidLoad];
 
     __weak FCLoginVC *self_ = self;
+    
     [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
         
-        [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
+        [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
             if (!error) {
-                [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
-                    if (!error) {
-                        FCUser *currentUser = [[FCUser alloc] initWithDict:response];
-                        [[FCAPIController sharedInstance] setCurrentUser:currentUser];
-                        NSLog(@"This is the first step");
-                        completion(nil);
-                    }
-                }];
+                FCUser *currentUser = [[FCUser alloc] initWithDict:response];
+                [[FCAPIController sharedInstance] setCurrentUser:currentUser];
+                NSLog(@"This is the first step");
+                completion(nil);
             }
-        };
+        }];
     }];
     
     [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
@@ -71,9 +68,6 @@
         NSLog(@"This is last step");
         completion(nil);
     }];
-    
-    [[Sequencer sharedInstance] run];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,6 +77,11 @@
 
 - (IBAction)loginButtonDidPressed:(id)sender {
     [[[FCAPIController sharedInstance] authFacebookManager] authorize];
+    [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
+        if (!error) {
+            [[Sequencer sharedInstance] run];
+        }
+    };
 }
 
 @end
