@@ -15,6 +15,7 @@
 #import "XMPP.h"
 #import "SDWebImageDownloader.h"
 #import "FCUser.h"
+#import "Sequencer.h"
 
 @interface FCMessageVC ()
 @property (nonatomic, strong) NSMutableArray *messages;
@@ -35,33 +36,7 @@
 {
     [super viewDidLoad];
     self.title = self.conversation.facebookName;
-    
-    __weak FCMessageVC *self_ = self;
-    NSString *url = [[NSString alloc]
-                     initWithFormat:@"https://graph.facebook.com/%@/picture",self.conversation.facebookId];
-    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:url]
-                                                          options:0
-                                                         progress:nil
-                                                        completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                            if (!error) {
-                                                                self_.senderImage = image;
-                                                            }
-                                                        }];
-    
-    NSString *urlMine = [[NSString alloc]
-                     initWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
-    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
-                                                          options:0
-                                                         progress:nil
-                                                        completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                                            if (!error) {
-                                                                self_.reciverImage = image;
-                                                            }
-                                                        }];
-    
-    self.messages = [NSMutableArray arrayWithArray:[[[FCAPIController sharedInstance] chatDataStoreManager] fetchAllMessagesInConversation:self.conversation]];
-    self.delegate = self;
-    self.dataSource = self;
+    [self setUpSequencer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,6 +60,47 @@
     [super didReceiveMemoryWarning];
 }
 
+
+- (void)setUpSequencer
+{
+    __weak FCMessageVC *self_ = self;
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        NSString *url = [[NSString alloc]
+                         initWithFormat:@"https://graph.facebook.com/%@/picture",self_.conversation.facebookId];
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:url]
+                                                              options:0
+                                                             progress:nil
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                                if (!error) {
+                                                                    self_.senderImage = image;
+                                                                }
+                                                                completion(nil);
+                                                            }];
+    }];
+    
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        NSString *urlMine = [[NSString alloc]
+                             initWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
+                                                              options:0
+                                                             progress:nil
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                                if (!error) {
+                                                                    self_.reciverImage = image;
+                                                                }
+                                                                completion(nil);
+                                                            }];
+    }];
+    
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        self_.messages = [NSMutableArray arrayWithArray:[[[FCAPIController sharedInstance] chatDataStoreManager] fetchAllMessagesInConversation:self_.conversation]];
+        self_.delegate = self_;
+        self_.dataSource = self_;
+        [self_.tableView reloadData];
+    }];
+    
+    [[Sequencer sharedInstance] run];
+}
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

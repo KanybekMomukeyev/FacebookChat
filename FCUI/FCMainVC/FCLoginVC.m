@@ -13,6 +13,8 @@
 #import "FCUser.h"
 #import "FCFriendsTVC.h"
 #import "FCChatDataStoreManager.h"
+#import "Sequencer.h"
+
 @interface FCLoginVC ()
 
 @end
@@ -30,19 +32,48 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     __weak FCLoginVC *self_ = self;
-    [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
-        if (!error) {
-            
-            [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
-                if (!error) {
-                    FCUser *currentUser = [[FCUser alloc] initWithDict:response];
-                    [[FCAPIController sharedInstance] setCurrentUser:currentUser];
-                    [self_ getFriends];
-                }
-            }];
-        }
-    };
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        
+        [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
+            if (!error) {
+                [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
+                    if (!error) {
+                        FCUser *currentUser = [[FCUser alloc] initWithDict:response];
+                        [[FCAPIController sharedInstance] setCurrentUser:currentUser];
+                        NSLog(@"This is the first step");
+                        completion(nil);
+                    }
+                }];
+            }
+        };
+    }];
+    
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        
+        [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
+            if (!error) {
+                [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
+                                                                                                   withCompletion:^(NSNumber *sucess, NSError *eror){
+                                                                                                       if (sucess) {
+                                                                                                           NSLog(@"This is second step");
+                                                                                                           completion(nil);
+                                                                                                       }
+                                                                                                   }];
+            }
+        }];
+    }];
+    
+    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+        FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
+        [self_.navigationController pushViewController:friendsTVC animated:YES];
+        NSLog(@"This is last step");
+        completion(nil);
+    }];
+    
+    [[Sequencer sharedInstance] run];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,23 +83,6 @@
 
 - (IBAction)loginButtonDidPressed:(id)sender {
     [[[FCAPIController sharedInstance] authFacebookManager] authorize];
-}
-
-- (void)getFriends
-{
-    __weak FCLoginVC *self_ = self;
-    [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
-        if (!error) {
-            [[[FCAPIController sharedInstance] chatDataStoreManager] differenceOfFriendsIdWithNewConversation:responseArray
-                                                                                               withCompletion:^(NSNumber *sucess, NSError *eror){
-                                                                                                   if (sucess) {
-                                                                                                       FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
-                                                                                                       [self_.navigationController pushViewController:friendsTVC
-                                                                                                                                             animated:YES];
-                                                                                                   }
-                                                                                               }];
-        }
-    }];
 }
 
 @end

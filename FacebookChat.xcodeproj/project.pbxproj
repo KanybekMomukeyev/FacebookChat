@@ -109,6 +109,7 @@
 		A85ABCC617A484C900BEF168 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABCA917A484C900BEF168 /* MagicalRecord+ShorthandSupport.m */; };
 		A85ABCC717A484C900BEF168 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABCAB17A484C900BEF168 /* MagicalRecord.m */; };
 		A85ABCCA17A4894100BEF168 /* FCConversationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABCC917A4894100BEF168 /* FCConversationModel.m */; };
+		A877CA1617A8F2F000512991 /* Sequencer.m in Sources */ = {isa = PBXBuildFile; fileRef = A877CA1517A8F2F000512991 /* Sequencer.m */; };
 		A8A1786817A4322B00EA2C23 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785D17A4322B00EA2C23 /* basicsound.wav */; };
 		A8A1786917A4322B00EA2C23 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785E17A4322B00EA2C23 /* ChatBar.png */; };
 		A8A1786A17A4322B00EA2C23 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */; };
@@ -388,6 +389,8 @@
 		A85ABCAD17A484C900BEF168 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		A85ABCC817A4894100BEF168 /* FCConversationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCConversationModel.h; sourceTree = "<group>"; };
 		A85ABCC917A4894100BEF168 /* FCConversationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCConversationModel.m; sourceTree = "<group>"; };
+		A877CA1417A8F2F000512991 /* Sequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sequencer.h; sourceTree = "<group>"; };
+		A877CA1517A8F2F000512991 /* Sequencer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sequencer.m; sourceTree = "<group>"; };
 		A8A1785D17A4322B00EA2C23 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
 		A8A1785E17A4322B00EA2C23 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
 		A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
@@ -598,6 +601,7 @@
 		A85ABB5317A44B1F00BEF168 /* 3RD_Library */ = {
 			isa = PBXGroup;
 			children = (
+				A877CA1317A8F2F000512991 /* Sequencer */,
 				A8BCC1C817A5263100C8E158 /* AFNetworking */,
 				A8BCC15617A5064E00C8E158 /* JSMessagesTableViewController */,
 				A85ABC7217A484C800BEF168 /* MagicalRecord */,
@@ -998,6 +1002,15 @@
 				A85ABCAC17A484C900BEF168 /* MagicalRecordShorthand.h */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		A877CA1317A8F2F000512991 /* Sequencer */ = {
+			isa = PBXGroup;
+			children = (
+				A877CA1417A8F2F000512991 /* Sequencer.h */,
+				A877CA1517A8F2F000512991 /* Sequencer.m */,
+			);
+			path = Sequencer;
 			sourceTree = "<group>";
 		};
 		A8A1785817A4322B00EA2C23 /* FCUI */ = {
@@ -1405,6 +1418,7 @@
 				A8BCC1E717A5270000C8E158 /* FCRequestFacebookManager.m in Sources */,
 				A8BCC1EB17A553BA00C8E158 /* IQSocialRequestBaseClient.m in Sources */,
 				A8BCC1EE17A5561B00C8E158 /* FCUser.m in Sources */,
+				A877CA1617A8F2F000512991 /* Sequencer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
