@@ -57,7 +57,8 @@
 - (void)setUpSequencer
 {
     __weak FCMessageVC *self_ = self;
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    Sequencer *sequencer = [Sequencer new];
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         NSString *url = [[NSString alloc]
                          initWithFormat:@"https://graph.facebook.com/%@/picture",self_.conversation.facebookId];
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:url]
@@ -71,7 +72,7 @@
                                                             }];
     }];
     
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         NSString *urlMine = [[NSString alloc]
                              initWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
@@ -85,14 +86,15 @@
                                                             }];
     }];
     
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         self_.messages = [NSMutableArray arrayWithArray:[[[FCAPIController sharedInstance] chatDataStoreManager] fetchAllMessagesInConversation:self_.conversation]];
         self_.delegate = self_;
         self_.dataSource = self_;
         [self_.tableView reloadData];
+        completion(nil);
     }];
     
-    [[Sequencer sharedInstance] run];
+    [sequencer run];
 }
 
 #pragma mark - Table view data source

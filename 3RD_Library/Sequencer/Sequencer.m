@@ -13,8 +13,6 @@
 
 @implementation Sequencer
 
-SINGLETON_GCD(Sequencer);
-
 - (NSMutableArray *)steps {
     if (!_steps) {
         _steps = [NSMutableArray new];

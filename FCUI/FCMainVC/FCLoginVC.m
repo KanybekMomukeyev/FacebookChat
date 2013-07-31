@@ -32,10 +32,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (IBAction)loginButtonDidPressed:(id)sender
+{
     __weak FCLoginVC *self_ = self;
-    
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    [[[FCAPIController sharedInstance] authFacebookManager] authorize];
+    [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
+        if (!error) {
+            [self_ runSequncer];
+        }
+    };
+}
+
+- (void)runSequncer
+{
+    __weak FCLoginVC *self_ = self;
+    Sequencer *sequencer = [Sequencer new];
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         
         [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphMeWithCompletion:^(NSDictionary *response, NSError *error){
             if (!error) {
@@ -47,7 +66,7 @@
         }];
     }];
     
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         
         [[[FCAPIController sharedInstance] requestFacebookManager] requestGraphFriendsWithCompletion:^(NSArray *responseArray, NSError *error) {
             if (!error) {
@@ -62,26 +81,14 @@
         }];
     }];
     
-    [[Sequencer sharedInstance] enqueueStep:^(id result, SequencerCompletion completion) {
+    [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
         [self_.navigationController pushViewController:friendsTVC animated:YES];
         NSLog(@"This is last step");
         completion(nil);
     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (IBAction)loginButtonDidPressed:(id)sender {
-    [[[FCAPIController sharedInstance] authFacebookManager] authorize];
-    [[FCAPIController sharedInstance] authFacebookManager].facebookAuthHandler = ^(NSNumber *sucess, NSError *error){
-        if (!error) {
-            [[Sequencer sharedInstance] run];
-        }
-    };
+    
+    [sequencer run];
 }
 
 @end

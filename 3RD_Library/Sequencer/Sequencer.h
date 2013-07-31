@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
 
 typedef void(^SequencerCompletion)(id result);
 typedef void(^SequencerStep)(id result, SequencerCompletion completion);
@@ -15,7 +14,6 @@ typedef void(^SequencerStep)(id result, SequencerCompletion completion);
 
 @interface Sequencer : NSObject {}
 
-+ (Sequencer *)sharedInstance;
 - (void)run;
 - (void)enqueueStep:(SequencerStep)step;
 
