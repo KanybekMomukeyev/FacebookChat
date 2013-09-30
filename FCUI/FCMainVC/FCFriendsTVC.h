@@ -7,6 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface FCFriendsTVC : UITableViewController
+#import "FCBaseFriendsTVC.h"
+@interface FCFriendsTVC : FCBaseFriendsTVC
 @end

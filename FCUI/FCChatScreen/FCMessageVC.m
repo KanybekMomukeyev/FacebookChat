@@ -59,8 +59,7 @@
     __weak FCMessageVC *self_ = self;
     Sequencer *sequencer = [Sequencer new];
     [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-        NSString *url = [[NSString alloc]
-                         initWithFormat:@"https://graph.facebook.com/%@/picture",self_.conversation.facebookId];
+        NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture",self_.conversation.facebookId];
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:url]
                                                               options:0
                                                              progress:nil
@@ -73,8 +72,7 @@
     }];
     
     [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-        NSString *urlMine = [[NSString alloc]
-                             initWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
+        NSString *urlMine = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture",[FCAPIController sharedInstance].currentUser.userId];
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:urlMine]
                                                               options:0
                                                              progress:nil

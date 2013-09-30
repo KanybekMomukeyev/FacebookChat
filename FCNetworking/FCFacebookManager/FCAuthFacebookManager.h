@@ -23,5 +23,5 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 - (void)authorize;
-
+- (void)logOut;
 @end

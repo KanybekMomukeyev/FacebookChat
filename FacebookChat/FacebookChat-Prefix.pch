@@ -16,3 +16,7 @@
 
 #import "CoreData+MagicalRecord.h"
 #import "BlocksTypedefs.h"
+
+#pragma mark - AFNetworking
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>

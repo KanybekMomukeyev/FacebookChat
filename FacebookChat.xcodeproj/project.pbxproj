@@ -110,6 +110,10 @@
 		A85ABCC717A484C900BEF168 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABCAB17A484C900BEF168 /* MagicalRecord.m */; };
 		A85ABCCA17A4894100BEF168 /* FCConversationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABCC917A4894100BEF168 /* FCConversationModel.m */; };
 		A877CA1617A8F2F000512991 /* Sequencer.m in Sources */ = {isa = PBXBuildFile; fileRef = A877CA1517A8F2F000512991 /* Sequencer.m */; };
+		A88EE73917ACCAB800DC75A2 /* FCBaseFriendsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A88EE73817ACCAB800DC75A2 /* FCBaseFriendsTVC.m */; };
+		A88EE74017ACDAE200DC75A2 /* FCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = A88EE73F17ACDAE200DC75A2 /* FCAccount.m */; };
+		A88EE74217ACDB2F00DC75A2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88EE74117ACDB2F00DC75A2 /* MobileCoreServices.framework */; };
+		A88EE74417ACDB4200DC75A2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88EE74317ACDB4200DC75A2 /* SystemConfiguration.framework */; };
 		A8A1786817A4322B00EA2C23 /* basicsound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785D17A4322B00EA2C23 /* basicsound.wav */; };
 		A8A1786917A4322B00EA2C23 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785E17A4322B00EA2C23 /* ChatBar.png */; };
 		A8A1786A17A4322B00EA2C23 /* ChatBubbleGray.png in Resources */ = {isa = PBXBuildFile; fileRef = A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */; };
@@ -391,6 +395,12 @@
 		A85ABCC917A4894100BEF168 /* FCConversationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCConversationModel.m; sourceTree = "<group>"; };
 		A877CA1417A8F2F000512991 /* Sequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sequencer.h; sourceTree = "<group>"; };
 		A877CA1517A8F2F000512991 /* Sequencer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sequencer.m; sourceTree = "<group>"; };
+		A88EE73717ACCAB800DC75A2 /* FCBaseFriendsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseFriendsTVC.h; sourceTree = "<group>"; };
+		A88EE73817ACCAB800DC75A2 /* FCBaseFriendsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseFriendsTVC.m; sourceTree = "<group>"; };
+		A88EE73E17ACDAE200DC75A2 /* FCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCAccount.h; sourceTree = "<group>"; };
+		A88EE73F17ACDAE200DC75A2 /* FCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCAccount.m; sourceTree = "<group>"; };
+		A88EE74117ACDB2F00DC75A2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		A88EE74317ACDB4200DC75A2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A8A1785D17A4322B00EA2C23 /* basicsound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = basicsound.wav; sourceTree = "<group>"; };
 		A8A1785E17A4322B00EA2C23 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
 		A8A1785F17A4322B00EA2C23 /* ChatBubbleGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBubbleGray.png; sourceTree = "<group>"; };
@@ -496,6 +506,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A88EE74417ACDB4200DC75A2 /* SystemConfiguration.framework in Frameworks */,
+				A88EE74217ACDB2F00DC75A2 /* MobileCoreServices.framework in Frameworks */,
 				A85ABC7117A481B900BEF168 /* ImageIO.framework in Frameworks */,
 				A83714C3157153C500838DFD /* QuartzCore.framework in Frameworks */,
 				A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */,
@@ -515,6 +527,8 @@
 		A8013EA014C5692800B557E0 = {
 			isa = PBXGroup;
 			children = (
+				A88EE74317ACDB4200DC75A2 /* SystemConfiguration.framework */,
+				A88EE74117ACDB2F00DC75A2 /* MobileCoreServices.framework */,
 				A85ABB5317A44B1F00BEF168 /* 3RD_Library */,
 				A8013EB714C5692800B557E0 /* FacebookChat */,
 				A8013EAE14C5692800B557E0 /* Frameworks */,
@@ -579,6 +593,8 @@
 				A85ABC1917A47E9D00BEF168 /* FCLoginVC.h */,
 				A85ABC1A17A47E9D00BEF168 /* FCLoginVC.m */,
 				A85ABC1B17A47E9D00BEF168 /* FCLoginVC.xib */,
+				A88EE73717ACCAB800DC75A2 /* FCBaseFriendsTVC.h */,
+				A88EE73817ACCAB800DC75A2 /* FCBaseFriendsTVC.m */,
 				A85ABC1417A469C400BEF168 /* FCFriendsTVC.h */,
 				A85ABC1517A469C400BEF168 /* FCFriendsTVC.m */,
 				A85ABC1617A469C400BEF168 /* FCFriendsTVC.xib */,
@@ -1081,6 +1097,8 @@
 				A8A1792417A4349600EA2C23 /* Message.h */,
 				A8A1792517A4349600EA2C23 /* Message.m */,
 				A85ABB4017A43AB200BEF168 /* FCModel.xcdatamodeld */,
+				A88EE73E17ACDAE200DC75A2 /* FCAccount.h */,
+				A88EE73F17ACDAE200DC75A2 /* FCAccount.m */,
 			);
 			name = Models;
 			path = ../Models;
@@ -1419,6 +1437,8 @@
 				A8BCC1EB17A553BA00C8E158 /* IQSocialRequestBaseClient.m in Sources */,
 				A8BCC1EE17A5561B00C8E158 /* FCUser.m in Sources */,
 				A877CA1617A8F2F000512991 /* Sequencer.m in Sources */,
+				A88EE73917ACCAB800DC75A2 /* FCBaseFriendsTVC.m in Sources */,
+				A88EE74017ACDAE200DC75A2 /* FCAccount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

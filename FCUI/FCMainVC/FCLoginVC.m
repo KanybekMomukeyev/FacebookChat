@@ -83,7 +83,7 @@
     
     [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
         FCFriendsTVC *friendsTVC = [[FCFriendsTVC alloc] initWithNibName:@"FCFriendsTVC" bundle:nil];
-        [self_.navigationController pushViewController:friendsTVC animated:YES];
+        [self_.navigationController setViewControllers:@[friendsTVC] animated:YES];
         NSLog(@"This is last step");
         completion(nil);
     }];
