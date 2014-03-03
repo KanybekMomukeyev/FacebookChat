@@ -32,7 +32,8 @@
     self.title = [NSString stringWithFormat:@"Friends of %@",[FCAPIController sharedInstance].currentUser.name];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageReceived:)
