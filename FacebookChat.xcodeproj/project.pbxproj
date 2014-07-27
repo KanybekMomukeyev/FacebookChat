@@ -19,6 +19,8 @@
 		A801402214C59CDF00B557E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A801402114C59CDF00B557E0 /* AudioToolbox.framework */; };
 		A81A4881156FF04300492E4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A81A4880156FF04300492E4C /* README.md */; };
 		A83714C3157153C500838DFD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83714C2157153C500838DFD /* QuartzCore.framework */; };
+		A849A42E198531EF0066FA97 /* FCBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A849A42D198531EF0066FA97 /* FCBaseVC.m */; };
+		A849A431198532070066FA97 /* FCBaseTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A849A430198532070066FA97 /* FCBaseTVC.m */; };
 		A85ABB4217A43AB200BEF168 /* FCModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4017A43AB200BEF168 /* FCModel.xcdatamodeld */; };
 		A85ABB4C17A448E500BEF168 /* FCAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB4B17A448E500BEF168 /* FCAPIController.m */; };
 		A85ABBD917A44B1F00BEF168 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = A85ABB6817A44B1F00BEF168 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -202,6 +204,10 @@
 		A801402114C59CDF00B557E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A81A4880156FF04300492E4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A83714C2157153C500838DFD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A849A42C198531EF0066FA97 /* FCBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseVC.h; sourceTree = "<group>"; };
+		A849A42D198531EF0066FA97 /* FCBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseVC.m; sourceTree = "<group>"; };
+		A849A42F198532070066FA97 /* FCBaseTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBaseTVC.h; sourceTree = "<group>"; };
+		A849A430198532070066FA97 /* FCBaseTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBaseTVC.m; sourceTree = "<group>"; };
 		A85ABB4117A43AB200BEF168 /* FCModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FCModel.xcdatamodel; sourceTree = "<group>"; };
 		A85ABB4A17A448E500BEF168 /* FCAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCAPIController.h; sourceTree = "<group>"; };
 		A85ABB4B17A448E500BEF168 /* FCAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCAPIController.m; sourceTree = "<group>"; };
@@ -598,6 +604,10 @@
 				A85ABC1417A469C400BEF168 /* FCFriendsTVC.h */,
 				A85ABC1517A469C400BEF168 /* FCFriendsTVC.m */,
 				A85ABC1617A469C400BEF168 /* FCFriendsTVC.xib */,
+				A849A42C198531EF0066FA97 /* FCBaseVC.h */,
+				A849A42D198531EF0066FA97 /* FCBaseVC.m */,
+				A849A42F198532070066FA97 /* FCBaseTVC.h */,
+				A849A430198532070066FA97 /* FCBaseTVC.m */,
 			);
 			path = FCMainVC;
 			sourceTree = "<group>";
@@ -1394,6 +1404,7 @@
 				A85ABCB517A484C900BEF168 /* NSManagedObject+MagicalAggregation.m in Sources */,
 				A85ABCB617A484C900BEF168 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				A85ABCB717A484C900BEF168 /* NSManagedObject+MagicalFinders.m in Sources */,
+				A849A42E198531EF0066FA97 /* FCBaseVC.m in Sources */,
 				A85ABCB817A484C900BEF168 /* NSManagedObject+MagicalRecord.m in Sources */,
 				A85ABCB917A484C900BEF168 /* NSManagedObject+MagicalRequests.m in Sources */,
 				A85ABCBA17A484C900BEF168 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
@@ -1431,6 +1442,7 @@
 				A8BCC1E017A5263100C8E158 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				A8BCC1E117A5263100C8E158 /* AFPropertyListRequestOperation.m in Sources */,
 				A8BCC1E217A5263100C8E158 /* AFURLConnectionOperation.m in Sources */,
+				A849A431198532070066FA97 /* FCBaseTVC.m in Sources */,
 				A8BCC1E317A5263100C8E158 /* AFXMLRequestOperation.m in Sources */,
 				A8BCC1E417A5263100C8E158 /* UIImageView+AFNetworking.m in Sources */,
 				A8BCC1E717A5270000C8E158 /* FCRequestFacebookManager.m in Sources */,
